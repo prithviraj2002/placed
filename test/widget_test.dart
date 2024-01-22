@@ -7,13 +7,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:placed_mobile_app/Screens/Auth/SignUp.dart';
+import 'package:appwrite/appwrite.dart';
 
 import 'package:placed_mobile_app/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    Client client = Client();
+    client = Client()
+        .setEndpoint("https://cloud.appwrite.io/v1")
+        .setProject("650209298acac4ee1bb6");
+    ;
+    Account account = Account(client);
+    await tester.pumpWidget( MyApp(account: account,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
