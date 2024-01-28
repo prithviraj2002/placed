@@ -7,7 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:placed_mobile_app/Screens/Auth/SignUp.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
+import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:appwrite/appwrite.dart';
 
 import 'package:placed_mobile_app/main.dart';
@@ -21,7 +22,7 @@ void main() {
         .setProject("650209298acac4ee1bb6");
     ;
     Account account = Account(client);
-    await tester.pumpWidget( MyApp(account: account,));
+    await tester.pumpWidget(MyApp(account: account,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

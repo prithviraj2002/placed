@@ -1,7 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
-import 'package:placed_mobile_app/Screens/Home.dart';
+import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 
 class MyApp extends StatefulWidget {
   final Account account;
