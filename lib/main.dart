@@ -24,7 +24,7 @@ void main() {
           debugShowCheckedModeBanner: false,
           initialBinding: PageBindings(),
           getPages: pages,
-          home: Home(),
+          home: SignupScreen(account: account,),
     )
   );
 }
