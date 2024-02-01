@@ -1,4 +1,3 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
@@ -7,10 +6,6 @@ import '../../../widgets/gradiant_button.dart';
 import '../../home_module/view/Home.dart';
 
 class SignupScreen extends StatefulWidget {
-
-  final Account account;
-
-  SignupScreen({super.key, required this.account});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
