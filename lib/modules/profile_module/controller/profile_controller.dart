@@ -1,15 +1,11 @@
 import 'dart:io' as file;
-
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_storage/appwrite_storage.dart';
-import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
-import 'package:uuid/uuid.dart';
 import 'package:uuid/v4.dart';
-
 import '../../../utils/utils.dart';
 
 class ProfileController extends GetxController {

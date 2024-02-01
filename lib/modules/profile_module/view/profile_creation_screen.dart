@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/constants/placed_dimensions.dart';
 import 'package:placed_mobile_app/modules/profile_module/controller/profile_controller.dart';
-import 'package:placed_mobile_app/modules/profile_module/strings/profile_strings.dart';
 
 import '../../../utils/utils.dart';
 

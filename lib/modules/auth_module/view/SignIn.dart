@@ -1,41 +1,37 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
-import '../../home_module/view/Home.dart';
+import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 
-class SignupScreen extends StatefulWidget {
-
+class SignInScreen extends StatefulWidget {
   final Account account;
 
-  SignupScreen({super.key, required this.account});
+  SignInScreen({required this.account});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  SignInScreenState createState() {
+    return SignInScreenState();
+  }
 }
 
-class _SignupScreenState extends State<SignupScreen> {
-
-
+class SignInScreenState extends State<SignInScreen> {
   models.User? loggedInUser;
-
-  final AuthController controller = Get.find<AuthController>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController cpasswordController = TextEditingController();
 
-  Future<void> register(String email, String password, String name) async {
-    await widget.account.create(
-        userId: ID.unique(), email: email, password: password, name: name);
-    await login(email, password);
-  }
   Future<void> login(String email, String password) async {
     await widget.account.createEmailSession(email: email, password: password);
     final user = await widget.account.get();
     setState(() {
       loggedInUser = user;
+    });
+  }
+
+  Future<void> logout() async {
+    await widget.account.deleteSession(sessionId: 'current');
+    setState(() {
+      loggedInUser = null;
     });
   }
 
@@ -45,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
-              Icons.arrow_back,
+            Icons.arrow_back,
             color: Colors.blue,
             size: 25,
           ),
@@ -61,11 +57,11 @@ class _SignupScreenState extends State<SignupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sign Up',
+              'Sign In',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+                fontSize: 36,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 26.0),
@@ -82,6 +78,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   contentPadding: const EdgeInsets.all(12.0),
+                    fillColor: Color(0xFFE5ECF6),
+                    filled: true,
                 ),
               ),
             ),
@@ -100,6 +98,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   contentPadding: EdgeInsets.all(12.0),
+                  fillColor: Color(0xFFE5ECF6),
+                  filled: true,
                 ),
               ),
             ),
@@ -111,13 +111,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   Container(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                          colors: [Colors.blue, Colors.greenAccent]),
+                          colors: [Color(0XFF2D64FA), Color(0XFF43D2DF)]),
                     ),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        register(emailController.text, passwordController.text,
-                            cpasswordController.text);
+                       login(emailController.text, passwordController.text);
                         Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home()));
                       },
                       style: ButtonStyle(
@@ -133,11 +132,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           Colors.transparent,
                         ),
                       ),
-                      child: Text(
-                        'Sign Up',
+                      child: const Text(
+                        'Sign In',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.0,
                         ),
                       ),
                     ),
@@ -154,7 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Already Have an Account?',
+                        'Don''t Have an Account?',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16.0,
@@ -162,10 +162,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen(account: account)));
                         },
                         child: const Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 16.0,
