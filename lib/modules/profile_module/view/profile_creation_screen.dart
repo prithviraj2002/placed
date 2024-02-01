@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/constants/placed_dimensions.dart';
+import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/profile_module/controller/profile_controller.dart';
 
 import '../../../utils/utils.dart';
@@ -681,6 +682,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
           controller.totalBackLog.value = int.parse(totalBackLogController.text);
           controller.address.value = addressController.text;
           controller.createProfileAndUpload().then((value) {
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => const Home()), (route) => false);
             if (value.$createdAt.isNotEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Row(
