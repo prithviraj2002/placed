@@ -26,6 +26,7 @@ class HomeController extends GetxController{
     try{
       final response = await AppWriteDb.getJobPosts();
       for(Document job in response.documents){
+        print(job.data['title']);
         jobPosts.add(JobPost.fromJson(job.data));
       }
     } on AppwriteException catch(e){

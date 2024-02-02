@@ -1,43 +1,26 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
+import '../../../widgets/custom_text_field.dart';
+import '../../../widgets/gradiant_button.dart';
 import '../../home_module/view/Home.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
-  final Account account;
-
-  SignupScreen({super.key, required this.account});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
 
 
   models.User? loggedInUser;
 
-  final AuthController controller = Get.find<AuthController>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController cpasswordController = TextEditingController();
-
-  Future<void> register(String email, String password, String name) async {
-    await widget.account.create(
-        userId: ID.unique(), email: email, password: password, name: name);
-    await login(email, password);
-  }
-  Future<void> login(String email, String password) async {
-    await widget.account.createEmailSession(email: email, password: password);
-    final user = await widget.account.get();
-    setState(() {
-      loggedInUser = user;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +57,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 color: Colors.white70,
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter University Email',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(12.0),
-                ),
+              child: CustomTextFieldForm(
+                hintText: 'Enter University Email',
+                textInputType: TextInputType.emailAddress,
+                validator: (val) => val!.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                controller: emailController,
+                obscureText: false,
               ),
             ),
             SizedBox(height: 16.0),
@@ -91,16 +71,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 color: Colors.white70,
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: TextField(
+              child: CustomTextFieldForm(
+                hintText: 'Set Password',
+                textInputType: TextInputType.visiblePassword,
                 obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Set Password',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  contentPadding: EdgeInsets.all(12.0),
-                ),
+                validator: (val) => val!.length == 0 ? 'Empty name' : val.length < 8 ? 'More than 8 char req' : null,
+                controller: passwordController,
               ),
             ),
             SizedBox(height: 32.0),
@@ -108,41 +84,13 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          colors: [Colors.blue, Colors.greenAccent]),
-                    ),
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        register(emailController.text, passwordController.text,
-                            cpasswordController.text);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home()));
-                      },
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.all(12.0),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.transparent,
-                        ),
-                      ),
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ),
+                  GradiantButton(
+                    onPressed: () {
+                      AuthController.signup(emailController.text, passwordController.text);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                    },
+                    text: 'Sign Up',
                   ),
-
                   SizedBox(height: 16.0),
                   Container(
                     width: double.infinity,
@@ -162,7 +110,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
                         },
                         child: const Text(
                           'Sign In',

@@ -1,12 +1,13 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
+import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field.dart';
+
+import '../../../widgets/gradiant_button.dart';
 
 class SignInScreen extends StatefulWidget {
-  final Account account;
-
-  SignInScreen({required this.account});
 
   @override
   SignInScreenState createState() {
@@ -15,25 +16,10 @@ class SignInScreen extends StatefulWidget {
 }
 
 class SignInScreenState extends State<SignInScreen> {
+
   models.User? loggedInUser;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController cpasswordController = TextEditingController();
-
-  Future<void> login(String email, String password) async {
-    await widget.account.createEmailSession(email: email, password: password);
-    final user = await widget.account.get();
-    setState(() {
-      loggedInUser = user;
-    });
-  }
-
-  Future<void> logout() async {
-    await widget.account.deleteSession(sessionId: 'current');
-    setState(() {
-      loggedInUser = null;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +56,16 @@ class SignInScreenState extends State<SignInScreen> {
                 color: Colors.white70,
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter University Email',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(12.0),
-                    fillColor: Color(0xFFE5ECF6),
-                    filled: true,
-                ),
+              child: CustomTextFieldForm(
+                hintText: 'Enter University Email',
+                textInputType: TextInputType.emailAddress,
+                validator: (val) => val!.length == 0
+                    ? 'Empty name'
+                    : val.length < 2
+                        ? 'Invalid name'
+                        : null,
+                controller: emailController,
+                obscureText: false,
               ),
             ),
             SizedBox(height: 16.0),
@@ -89,18 +74,16 @@ class SignInScreenState extends State<SignInScreen> {
                 color: Colors.white70,
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: TextField(
+              child: CustomTextFieldForm(
+                hintText: 'Set Password',
+                textInputType: TextInputType.visiblePassword,
                 obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Set Password',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  contentPadding: EdgeInsets.all(12.0),
-                  fillColor: Color(0xFFE5ECF6),
-                  filled: true,
-                ),
+                validator: (val) => val!.length == 0
+                    ? 'Empty name'
+                    : val.length < 8
+                        ? 'More than 8 char req'
+                        : null,
+                controller: passwordController,
               ),
             ),
             SizedBox(height: 32.0),
@@ -108,41 +91,13 @@ class SignInScreenState extends State<SignInScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          colors: [Color(0XFF2D64FA), Color(0XFF43D2DF)]),
-                    ),
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                       login(emailController.text, passwordController.text);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home()));
-                      },
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.all(12.0),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.transparent,
-                        ),
-                      ),
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ),
+                  GradiantButton(
+                    onPressed: () {
+                      AuthController.login(emailController.text, passwordController.text);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                    },
+                    text: 'Sign In',
                   ),
-
                   SizedBox(height: 16.0),
                   Container(
                     width: double.infinity,
@@ -154,7 +109,7 @@ class SignInScreenState extends State<SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Don''t Have an Account?',
+                        'Don' 't Have an Account?',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16.0,
@@ -162,7 +117,7 @@ class SignInScreenState extends State<SignInScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen(account: account)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
                         },
                         child: const Text(
                           'Sign Up',
