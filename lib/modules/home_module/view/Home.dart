@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
                   return Container(
                     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
                     width: MediaQuery.of(context).size.width * 0.8,
-                    height: 180,
+                    height: 220,
                     decoration: BoxDecoration(
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(10)
