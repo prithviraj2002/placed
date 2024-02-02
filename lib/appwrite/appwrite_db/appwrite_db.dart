@@ -47,6 +47,7 @@ class AppWriteDb {
       final response = await databases.listDocuments(
           databaseId: AppWriteStrings.dbID,
           collectionId: AppWriteStrings.jobsCollectionId);
+      print(response.documents[0].data);
       return response;
     } on AppwriteException catch (e) {
       print('An exception occurred while loading job posts from database: $e');

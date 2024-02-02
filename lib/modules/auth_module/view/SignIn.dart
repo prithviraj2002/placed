@@ -1,6 +1,7 @@
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 
@@ -116,7 +117,7 @@ class SignInScreenState extends State<SignInScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen(account: account)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
                         },
                         child: const Text(
                           'Sign Up',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 
 
@@ -38,7 +39,7 @@ class OnBoardingPage extends StatelessWidget {
       padding: const EdgeInsets.all(24.0),
       child: GradiantButton(
         text: 'Get Started',
-        onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignInScreen())),
+        onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignUpScreen())),
       ),
     );
   }

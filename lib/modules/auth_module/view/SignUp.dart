@@ -1,24 +1,26 @@
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
 import '../../home_module/view/Home.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
 
 
   models.User? loggedInUser;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController cpasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
                         },
                         child: const Text(
                           'Sign In',
