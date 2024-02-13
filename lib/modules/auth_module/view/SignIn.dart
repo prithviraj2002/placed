@@ -2,13 +2,14 @@ import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
-import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
+import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_email.dart';
+import 'package:placed_mobile_app/modules/profile_module/view/personal_detail.dart';
+import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 
 import '../../../widgets/gradiant_button.dart';
 
 class SignInScreen extends StatefulWidget {
-
   @override
   SignInScreenState createState() {
     return SignInScreenState();
@@ -16,7 +17,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class SignInScreenState extends State<SignInScreen> {
-
   models.User? loggedInUser;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -25,16 +25,7 @@ class SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.blue,
-            size: 25,
-          ),
-          onPressed: () {
-            // Handle back button press
-          },
-        ),
+        leading: BackArrow(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,7 +33,7 @@ class SignInScreenState extends State<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Sign In',
               style: TextStyle(
                 color: Colors.black,
@@ -91,10 +82,26 @@ class SignInScreenState extends State<SignInScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EnterEmail()));
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
                   GradiantButton(
                     onPressed: () {
-                      AuthController.login(emailController.text, passwordController.text);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                      AuthController.login(
+                          emailController.text, passwordController.text);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PersonalDetail()));
                     },
                     text: 'Sign In',
                   ),
@@ -117,7 +124,10 @@ class SignInScreenState extends State<SignInScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpScreen()));
                         },
                         child: const Text(
                           'Sign Up',

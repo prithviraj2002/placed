@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 
 class GradiantButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -12,8 +13,9 @@ class GradiantButton extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-            colors: [Color(0XFF2D64FA), Color(0XFF43D2DF)]),
+        borderRadius: BorderRadius.circular(12.0),
+        gradient: LinearGradient(
+            colors: PlacedColors.gradiantColor),
       ),
       width: double.infinity,
       child: ElevatedButton(
@@ -22,7 +24,7 @@ class GradiantButton extends StatelessWidget {
           shape:
           MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(12.0),
             ),
           ),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

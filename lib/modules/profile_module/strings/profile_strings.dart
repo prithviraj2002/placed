@@ -9,4 +9,6 @@ class ProfileStrings {
   ];
 
   static const List<String> branchOptions = ['CSE', 'CE', 'IT'];
+
+
 }
