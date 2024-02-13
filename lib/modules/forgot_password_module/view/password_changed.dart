@@ -5,8 +5,9 @@ import 'package:placed_mobile_app/widgets/final_screen/buildImage.dart';
 import 'package:placed_mobile_app/widgets/final_screen/buildMessage.dart';
 import 'package:placed_mobile_app/widgets/final_screen/buildTitle.dart';
 
-class OnBoardingPage extends StatelessWidget {
-  const OnBoardingPage({super.key});
+
+class PasswordChangedPage extends StatelessWidget {
+  const PasswordChangedPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +16,16 @@ class OnBoardingPage extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: <Widget>[
-          BuildImage(
-            imageString: 'assets/onboarding.svg',
-          ),
+          BuildImage(imageString: 'assets/password_reset.svg',),
           BuildTitle(
-            text: 'Elevate your placement journey',
+            text: 'Password changed!',
           ),
           SizedBox(
             height: 8,
           ),
-          BuildMessage(
-              text:
-                  'Streamline your placements with one-click\n apply, timely updates, and more'),
+          BuildMessage(text: 'Your password was successfully changed.\nClick below to continue logging in.',),
           BuildButton(
-            text: 'Get Started',
+            text: 'Continue',
             onPressed: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => SignInScreen())),
           )

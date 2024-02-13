@@ -1,10 +1,12 @@
 import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
+import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
-import '../../home_module/view/Home.dart';
+import '../../profile_module/view/personal_detail.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -26,16 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-              Icons.arrow_back,
-            color: Colors.blue,
-            size: 25,
-          ),
-          onPressed: () {
-            // Handle back button press
-          },
-        ),
+        leading: BackArrow(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Text(
               'Sign Up',
               style: TextStyle(
-                color: Colors.black,
+                color: PlacedColors.PrimaryBlack,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
@@ -87,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   GradiantButton(
                     onPressed: () {
                       AuthController.signup(emailController.text, passwordController.text);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
                     },
                     text: 'Sign Up',
                   ),

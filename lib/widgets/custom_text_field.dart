@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextFieldForm extends StatelessWidget {
   final TextEditingController controller;
@@ -12,10 +12,11 @@ class CustomTextFieldForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscureText,
-      style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.shortestSide * 0.05,
-          letterSpacing: 1.2),
+      style: GoogleFonts.lato(
+            color: Colors.black,
+            fontSize: 16,
+            letterSpacing: 1.2,
+      ),
       decoration: InputDecoration(
         fillColor: Color(0xFFE5ECF6),
         filled: true,
@@ -29,7 +30,6 @@ class CustomTextFieldForm extends StatelessWidget {
           color: Colors.black54,
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          fontFamily: 'Latao',
         ),
         errorStyle: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, letterSpacing: 0.8),
       ),

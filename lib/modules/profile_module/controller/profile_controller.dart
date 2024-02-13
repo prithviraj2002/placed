@@ -75,7 +75,8 @@ class ProfileController extends GetxController {
   Future<Document> createProfileAndUpload() async {
     try {
       //ToDo: Create profile with the above details!
-      Profile profile = Profile(name: name.value,
+      Profile profile = Profile(
+          name: name.value,
           id: profileId,
           email: email.value,
           dateOfBirth: dateOfBirth.value,

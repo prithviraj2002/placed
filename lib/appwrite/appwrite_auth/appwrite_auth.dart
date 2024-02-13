@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
+import 'package:flutter/foundation.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
 
 class AppWriteAuth{
@@ -9,15 +10,18 @@ class AppWriteAuth{
 
   static Account account = Account(client);
 
-  static Future<Session> signup(String email, String password) async{
+  static Future<User> signup(String email, String password) async{
     try{
-      final response = account.createEmailSession(
+      final response = account.create(
           email: email,
-          password: password
+          password: password,
+          userId: '',
       );
       return response;
     } on AppwriteException catch(e){
-      print('An error occurred while signing up user!: $e');
+      if (kDebugMode) {
+        print('An error occurred while signing up user!: $e');
+      }
       rethrow;
     }
   }
@@ -30,19 +34,23 @@ class AppWriteAuth{
       );
       return response;
     } on AppwriteException catch(e){
-      print('An error occurred while signing up user!: $e');
+      if (kDebugMode) {
+        print('An error occurred while signing up user!: $e');
+      }
       rethrow;
     }
   }
 
-  static Future<dynamic> logout(String email, String password) async{
+  static Future<dynamic> logout() async{
     try{
       final response = account.deleteSession(
         sessionId: 'current'
       );
       return response;
     } on AppwriteException catch(e){
-      print('An error occurred while signing up user!: $e');
+      if (kDebugMode) {
+        print('An error occurred while signing up user!: $e');
+      }
       rethrow;
     }
   }

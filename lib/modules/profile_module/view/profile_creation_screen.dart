@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/constants/placed_dimensions.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/profile_module/controller/profile_controller.dart';
-
 import '../../../utils/utils.dart';
 
 class ProfileCreationScreen extends StatefulWidget {
