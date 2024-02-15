@@ -25,6 +25,11 @@ class Profile {
   int activeBackLog;
   int totalBackLog;
   String address;
+  List<String>? appliedJobs;
+  String? githubProfile;
+  String? linkedinProfile;
+  String? otherLink;
+  bool status;
 
   Profile({
     required this.name,
@@ -50,7 +55,12 @@ class Profile {
     required this.cgpa,
     required this.activeBackLog,
     required this.totalBackLog,
-    required this.address
+    required this.address,
+    this.appliedJobs,
+    this.githubProfile,
+    this.linkedinProfile,
+    this.otherLink,
+    required this.status,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json){
@@ -77,7 +87,13 @@ class Profile {
         cgpa: json['cgpa'],
         activeBackLog: json['activeBackLog'],
         totalBackLog: json['totalBackLog'],
-        address: json['address']);
+        address: json['address'],
+      appliedJobs: json['appliedJobs'],
+      linkedinProfile: json['linkedinProfile'],
+      githubProfile: json['githubProfile'],
+      otherLink: json['otherLink'],
+      status: json['status'],
+    );
   }
 
   Map<String, dynamic> toMap(){
@@ -104,7 +120,12 @@ class Profile {
       'XIIPassingYear' : XIIPassingYear ?? 0.0,
       'diplomaBranch' : diplomaBranch ?? '',
       'diplomaPassingYear': diplomaPassingYear ?? '',
-      'diplomaMarks': diplomaMarks ?? 0.0
+      'diplomaMarks': diplomaMarks ?? 0.0,
+      'appliedJobs' : appliedJobs ?? [],
+      'linkedinProfile': linkedinProfile,
+      'githubProfile': githubProfile,
+      'otherLink': otherLink,
+      'status': status,
     };
   }
 

@@ -3,6 +3,7 @@ import 'package:appwrite/models.dart' as models;
 import 'package:appwrite/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_auth/appwrite_auth.dart';
 
 class AuthController extends GetxController{
@@ -12,6 +13,8 @@ class AuthController extends GetxController{
   static Future<User> signup(String email, String password) async{
     try{
       final response = await AppWriteAuth.signup(email, password);
+      final box = GetStorage();
+      box.write('userId', response.$id);
       return response;
     } on AppwriteException catch(e){
       if (kDebugMode) {
@@ -24,6 +27,8 @@ class AuthController extends GetxController{
   static Future<Session> login(String email, String password) async{
     try{
       final response = await AppWriteAuth.signin(email, password);
+      final box = GetStorage();
+      box.write('userId', response.userId);
       return response;
     } on AppwriteException catch(e){
       if (kDebugMode) {

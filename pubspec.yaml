@@ -46,6 +46,9 @@ dependencies:
   country_code_picker: ^3.0.0
   http: ^1.0.0
   flutter_svg: ^2.0.9
+  get_storage: ^2.1.1
+  syncfusion_flutter_datepicker: ^24.2.5
+  intl: ^0.19.0
 
 
 dev_dependencies:

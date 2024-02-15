@@ -2,6 +2,7 @@ import 'dart:io' as file;
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_storage/appwrite_storage.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
@@ -14,10 +15,15 @@ class ProfileController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    generateRandomId();
+    getUserId();
   }
 
-  Rx<bool> isLoading = true.obs;
+  void getUserId(){
+    final box = GetStorage();
+    profileId = box.read('userId');
+  }
+
+  Rx<bool> isLoading = false.obs;
 
   void toggleLoading() {
     isLoading.value = !isLoading.value;
@@ -53,6 +59,9 @@ class ProfileController extends GetxController {
   Rx<int> activeBackLog = 0.obs;
   Rx<int> totalBackLog = 0.obs;
   Rx<String> address = ''.obs;
+  Rx<String> linkedinProfile = ''.obs;
+  Rx<String> githubProfile = ''.obs;
+  Rx<String> otherLink = ''.obs;
 
   file.File? selectedPdf;
   Rx<String> selectedResumePath = ''.obs;
@@ -99,7 +108,13 @@ class ProfileController extends GetxController {
           cgpa: cgpa.value,
           activeBackLog: activeBackLog.value,
           totalBackLog: totalBackLog.value,
-          address: address.value);
+          address: address.value,
+        linkedinProfile: linkedinProfile.value,
+        githubProfile: githubProfile.value,
+        otherLink: otherLink.value,
+        appliedJobs: [],
+        status: true,
+      );
       final response = await AppWriteDb.uploadProfile(profile, profileId);
       return response;
     } on AppwriteException catch (e) {

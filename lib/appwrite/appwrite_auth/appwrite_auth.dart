@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
 
 class AppWriteAuth{
@@ -51,6 +52,15 @@ class AppWriteAuth{
       if (kDebugMode) {
         print('An error occurred while signing up user!: $e');
       }
+      rethrow;
+    }
+  }
+
+  static forgotPassword() async{
+    try{
+
+    } on AppwriteException catch(e){
+      print('AN error occurred while forgot password!');
       rethrow;
     }
   }

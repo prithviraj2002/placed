@@ -33,7 +33,7 @@ class CustomTextFieldForm extends StatelessWidget {
         ),
         errorStyle: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, letterSpacing: 0.8),
       ),
-      keyboardType: TextInputType.text,
+      keyboardType: textInputType,
       controller: controller,
       validator: validator,
     );
