@@ -12,11 +12,12 @@ class AppWriteAuth{
   static Account account = Account(client);
 
   static Future<User> signup(String email, String password) async{
+    print('Entered appwrite auth');
     try{
-      final response = account.create(
+      final response = await account.create(
           email: email,
           password: password,
-          userId: '',
+          userId: ID.unique(),
       );
       return response;
     } on AppwriteException catch(e){
@@ -28,8 +29,9 @@ class AppWriteAuth{
   }
 
   static Future<Session> signin(String email, String password) async{
+    print('User was signed in!');
     try{
-      final response = account.createEmailSession(
+      final response = await account.createEmailSession(
           email: email,
           password: password
       );
@@ -40,6 +42,10 @@ class AppWriteAuth{
       }
       rethrow;
     }
+  }
+
+  static Future<void> anonymousSession() async{
+    await account.createAnonymousSession();
   }
 
   static Future<dynamic> logout() async{
@@ -61,6 +67,16 @@ class AppWriteAuth{
 
     } on AppwriteException catch(e){
       print('AN error occurred while forgot password!');
+      rethrow;
+    }
+  }
+
+  static Future<User> getUser() async{
+    try{
+      final User response = await account.get();
+      return response;
+    } on AppwriteException catch(e){
+      print('An error occurred while getting user email in appwrite auth: $e');
       rethrow;
     }
   }

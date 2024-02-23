@@ -25,7 +25,7 @@ class Profile {
   int activeBackLog;
   int totalBackLog;
   String address;
-  List<String>? appliedJobs;
+  List<dynamic>? appliedJobs;
   String? githubProfile;
   String? linkedinProfile;
   String? otherLink;
@@ -63,9 +63,9 @@ class Profile {
     required this.status,
   });
 
-  factory Profile.fromJson(Map<String, dynamic> json){
+  factory Profile.fromJson(Map<String, dynamic> json, String id){
     return Profile(name: json['name'],
-        id: json['id'],
+        id: id,
         email: json['email'],
         dateOfBirth: json['dateOfBirth'],
         IU: json['IU'],
@@ -74,12 +74,12 @@ class Profile {
         degree: json['degree'],
         year: json['year'],
         sem: json['sem'],
-        XMarks: json['XMarks'],
+        XMarks: double.parse(json['XMarks'].toString()),
         XPassingYear: json['XPassingYear'],
-        XIIMarks: json['XIIMarks'] ?? '',
+        XIIMarks: double.parse(json['XIIMarks'].toString()) ?? 0.0,
         XIIPassingYear: json['XIIPassingYear'] ?? '',
         diplomaBranch: json['diplomaBranch'] ?? '',
-        diplomaMarks: json['diplomaMarks'] ?? 0.0,
+        diplomaMarks: double.parse(json['diplomaMarks'].toString()) ?? 0.0,
         diplomaPassingYear: json['diplomaPassingYear'] ?? '',
         gender: json['gender'],
         board: json['board'],
@@ -88,11 +88,11 @@ class Profile {
         activeBackLog: json['activeBackLog'],
         totalBackLog: json['totalBackLog'],
         address: json['address'],
-      appliedJobs: json['appliedJobs'],
-      linkedinProfile: json['linkedinProfile'],
-      githubProfile: json['githubProfile'],
-      otherLink: json['otherLink'],
-      status: json['status'],
+      appliedJobs: json['appliedJobs'] ?? [''],
+      linkedinProfile: json['linkedinProfile'] ?? '',
+      githubProfile: json['githubProfile'] ?? '',
+      otherLink: json['otherLink'] ?? '',
+      status: json['status'] ?? true,
     );
   }
 

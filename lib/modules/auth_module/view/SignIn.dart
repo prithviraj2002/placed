@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_email.dart';
+import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/profile_module/view/personal_detail.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
@@ -66,7 +67,7 @@ class SignInScreenState extends State<SignInScreen> {
                     if(val == null || val.isEmpty){
                       return 'Empty Email';
                     }
-                    else if(!val.contains('@') || !val.contains('.com')){
+                    else if(!val.contains('@')){
                       return 'Invalid Email';
                     }
                     return null;
@@ -113,7 +114,14 @@ class SignInScreenState extends State<SignInScreen> {
                           AuthController.login(
                               emailController.text, passwordController.text).then((value) {
                             if(value.$createdAt.isNotEmpty){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
+                              final box = GetStorage();
+                              final String userId = box.read('userId');
+                              if(userId.isNotEmpty){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                              }
+                              else if(userId.isEmpty){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
+                              }
                             }
                             else {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred!')));

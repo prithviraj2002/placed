@@ -11,6 +11,7 @@ class AuthController extends GetxController{
   models.User? loggedInUser;
 
   static Future<User> signup(String email, String password) async{
+    print('Entered authcontroller');
     try{
       final response = await AppWriteAuth.signup(email, password);
       final box = GetStorage();

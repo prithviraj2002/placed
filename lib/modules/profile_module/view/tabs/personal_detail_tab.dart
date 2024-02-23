@@ -356,18 +356,3 @@ class _PersonalTabState extends State<PersonalTab> {
   }
 }
 
-// showCupertinoModalPopup(context: context, builder: (context){
-// return Container(
-// height: MediaQuery.of(context).size.height * 0.3,
-// color: Colors.white,
-// child: CupertinoDatePicker(
-// initialDateTime: dateTime,
-// mode: CupertinoDatePickerMode.date,
-// onDateTimeChanged: (date){
-// setState(() {
-// dateTime = date;
-// });
-// },
-// ),
-// );
-// });
