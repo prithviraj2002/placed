@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
-import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
+import 'package:placed_mobile_app/modules/profile_module/view/tabs/resume_uploaded.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../controller/profile_controller.dart';
 
@@ -72,7 +72,7 @@ class ResumeTab extends StatelessWidget {
                 if(value.$createdAt.isNotEmpty){
                   controller.uploadResume();
                   controller.uploadProfileImage();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Resume_Uploaded(controller: controller, tabController: tabController)));
                 }
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred!')));

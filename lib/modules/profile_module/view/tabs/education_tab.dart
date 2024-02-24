@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/profile_module/controller/profile_controller.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../../../constants/placed_dimensions.dart';
+import '../../../../constants/placed_strings.dart';
+import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/custom_text_field.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class EducationTab extends StatefulWidget {
+
   ProfileController controller;
   TabController tabController;
   EducationTab({required this.controller, required this.tabController, super.key});
@@ -106,38 +104,28 @@ class _EducationTabState extends State<EducationTab> {
                   },
                   controller: cgpaController,
                   obscureText: false),
+              const SizedBox(height: PlacedDimens.textfield_space_height),
+
               SizedBox(height: PlacedDimens.textfield_space_height),
-              //ToDo: Implement drop down to select from options
-              CustomTextFieldForm(
-                  hintText: 'Degree',
-                  textInputType: TextInputType.text,
-                  validator: (val) {
-                   if(val == null){
-                     return 'Empty Degree';
-                   }
-                   else if(val.length < 2){
-                     return 'Invalid Degree';
-                   }
-                   return null;
-                  },
-                  controller: degreeController,
-                  obscureText: false),
+              CustomDropDown(
+                dropDownOption: PlacedStrings.degreeOption().map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                text: 'Choose Degree',
+              ),
               SizedBox(height: PlacedDimens.textfield_space_height),
-              //ToDo: Implement drop down to select from options
-              CustomTextFieldForm(
-                  hintText: 'Branch',
-                  textInputType: TextInputType.text,
-                  validator: (val) {
-                    if(val == null){
-                      return 'Empty Branch';
-                    }
-                    else if(val.length < 2 || val.isEmpty){
-                      return 'Invalid Branch';
-                    }
-                    return null;
-                  },
-                  controller: degreeBranchController,
-                  obscureText: false),
+              CustomDropDown(
+                dropDownOption: PlacedStrings.branchOption().map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                text: 'Choose Branch',
+              ),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Year',
