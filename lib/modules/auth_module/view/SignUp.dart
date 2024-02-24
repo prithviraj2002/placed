@@ -89,8 +89,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if(val == null || val.isEmpty){
                       return "Empty Password!";
                     }
-                    else if(val.length < 6){
-                      return 'Password should be at least of 6 characters!';
+                    else if(val.length < 8){
+                      return 'Password should be at least of 8 characters!';
                     }
                     return null;
                   },
