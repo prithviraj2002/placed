@@ -1,34 +1,38 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
+import 'package:placed_mobile_app/constants/placed_dimensions.dart';
+import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
+import 'package:placed_mobile_app/modules/edit_profile_module/controller/edit_profile_controller.dart';
+import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
+import 'package:placed_mobile_app/utils/utils.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
-import '../../../../constants/placed_dimensions.dart';
-import '../../../../utils/utils.dart';
-import '../../controller/profile_controller.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class PersonalTab extends StatefulWidget {
+class EditPersonalTab extends StatefulWidget {
+  EditProfileController controller;
   TabController tabController;
-  ProfileController controller;
+  Profile profile;
 
-  PersonalTab(
-      {required this.controller, required this.tabController, super.key});
+  EditPersonalTab(
+      {required this.controller, required this.tabController, required this.profile, super.key});
 
   @override
-  State<PersonalTab> createState() => _PersonalTabState();
+  State<EditPersonalTab> createState() => _EditPersonalTabState();
 }
 
-class _PersonalTabState extends State<PersonalTab> {
+class _EditPersonalTabState extends State<EditPersonalTab> {
+
+  HomeController homeController = Get.find<HomeController>();
+
   final formKey = GlobalKey<FormState>();
+
   DateRangePickerController dateController = DateRangePickerController();
 
   TextEditingController nameController = TextEditingController();
@@ -55,10 +59,34 @@ class _PersonalTabState extends State<PersonalTab> {
 
   DateTime dateTime = DateTime.now();
 
-  String selectedDate = 'Date of Birth';
+  String selectedDate = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController = TextEditingController(text: widget.profile.name);
+    emailController = TextEditingController(text: widget.profile.email);
+    IUController = TextEditingController(text: widget.profile.IU);
+    phoneNumberController =
+        TextEditingController(text: widget.profile.phoneNumber);
+    dateOfBirthController =
+        TextEditingController(text: widget.profile.dateOfBirth);
+    AddressController = TextEditingController(text: widget.profile.address);
+    GithubLinkController =
+        TextEditingController(text: widget.profile.githubProfile);
+    LinkedinLinkController =
+        TextEditingController(text: widget.profile.linkedinProfile);
+    OtherWebsiteLinkController =
+        TextEditingController(text: widget.profile.otherLink);
+    genderController = TextEditingController(text: widget.profile.gender);
+    selectedDate = widget.profile.dateOfBirth;
+  }
 
   @override
   void dispose() {
+    // TODO: implement dispose
+    super.dispose();
     nameController.dispose();
     emailController.dispose();
     IUController.dispose();
@@ -71,18 +99,17 @@ class _PersonalTabState extends State<PersonalTab> {
     OtherWebsiteLinkController.dispose();
     genderController.dispose();
     dateController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: formKey,
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            children: [
+            children: <Widget>[
               Stack(
                 children: [
                   Container(
@@ -96,10 +123,12 @@ class _PersonalTabState extends State<PersonalTab> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Obx(() => widget.controller.imagePath.isEmpty
-                        ? Container()
+                    child: Obx(() =>
+                    widget.controller.imagePath.isEmpty
+                        ? Image.memory(
+                      homeController.profileImage.value, fit: BoxFit.cover,)
                         : Image.file(File(widget.controller.imagePath.value),
-                            fit: BoxFit.cover)),
+                        fit: BoxFit.cover)),
                   ),
                   Positioned(
                     bottom: 2.0,
@@ -126,13 +155,12 @@ class _PersonalTabState extends State<PersonalTab> {
               const SizedBox(height: 16.0),
               // Text Fields
               CustomTextFieldForm(
-                  hintText: 'Full Name',
+                  hintText: 'Enter name',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
-                      ? 'Empty name'
-                      : val.length < 2
-                          ? 'Invalid name'
-                          : null,
+                  validator: (val) =>
+                  val!.length < 2
+                      ? 'Invalid name'
+                      : null,
                   controller: nameController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
@@ -140,9 +168,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   hintText: 'Email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Empty Email';
-                    } else if (!val.contains('@') || !val.contains('indus')) {
+                    if (!val!.contains('@') || !val.contains('indus')) {
                       return 'Enter a valid Indus Id';
                     }
                     return null;
@@ -172,11 +198,12 @@ class _PersonalTabState extends State<PersonalTab> {
                     child: CustomTextFieldForm(
                         hintText: 'Phone Number',
                         textInputType: TextInputType.number,
-                        validator: (val) => val!.isEmpty
+                        validator: (val) =>
+                        val!.isEmpty
                             ? 'Empty number'
                             : val.length < 10
-                                ? 'Invalid number'
-                                : null,
+                            ? 'Invalid number'
+                            : null,
                         controller: phoneNumberController,
                         obscureText: false),
                   ),
@@ -186,11 +213,12 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'Enrollment Number',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  validator: (val) =>
+                  val!.length == 0
                       ? 'Empty IU'
                       : val.length <= 12
-                          ? 'Invalid IU'
-                          : null,
+                      ? 'Invalid IU'
+                      : null,
                   controller: IUController,
                   obscureText: false),
               const SizedBox(height: 16.0),
@@ -215,7 +243,8 @@ class _PersonalTabState extends State<PersonalTab> {
                         return Dialog(
                           surfaceTintColor: Colors.white,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 4),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,18 +253,25 @@ class _PersonalTabState extends State<PersonalTab> {
                                 SfDateRangePicker(
                                   showNavigationArrow: true,
                                   controller: dateController,
-                                  selectionColor: PlacedColors.PrimaryBlueMain,
+                                  selectionColor: PlacedColors
+                                      .PrimaryBlueMain,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
                                     TextButton(onPressed: () {
                                       setState(() {
-                                        selectedDate = DateFormat('dd-MM-yyyy').format(dateController.selectedDate!).toString();
+                                        selectedDate =
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(
+                                                dateController.selectedDate!)
+                                                .toString();
                                       });
                                       Navigator.pop(context);
                                     }, child: Text('OK')),
-                                    TextButton(onPressed: () {Navigator.pop(context);}, child: Text('Cancel'))
+                                    TextButton(onPressed: () {
+                                      Navigator.pop(context);
+                                    }, child: Text('Cancel'))
                                   ],
                                 ),
                               ],
@@ -273,44 +309,48 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'Residential Address',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  validator: (val) =>
+                  val!.length == 0
                       ? 'Empty Address'
                       : val.length < 2
-                          ? 'Invalid Address'
-                          : null,
+                      ? 'Invalid Address'
+                      : null,
                   controller: AddressController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Github Link',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  validator: (val) =>
+                  val!.length == 0
                       ? 'Empty Link'
                       : val.length < 2
-                          ? 'Invalid Link'
-                          : null,
+                      ? 'Invalid Link'
+                      : null,
                   controller: GithubLinkController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'LinkedIn Profile Link',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  validator: (val) =>
+                  val!.length == 0
                       ? 'Empty Link'
                       : val.length < 2
-                          ? 'Invalid Link'
-                          : null,
+                      ? 'Invalid Link'
+                      : null,
                   controller: LinkedinLinkController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Other Website Link (optional)',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  validator: (val) =>
+                  val!.length == 0
                       ? 'Empty Link'
                       : val.length < 2
-                          ? 'Invalid Link'
-                          : null,
+                      ? 'Invalid Link'
+                      : null,
                   controller: OtherWebsiteLinkController,
                   obscureText: false),
               const SizedBox(
@@ -322,13 +362,16 @@ class _PersonalTabState extends State<PersonalTab> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.9,
         child: GradiantButton(
           onPressed: () {
             if (widget.tabController.index == 2) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Home()));
-            } else {
+              Navigator.pop(context);
+            }
+            else {
               if (formKey.currentState!.validate()) {
                 widget.controller.name.value = nameController.text;
                 widget.controller.email.value = emailController.text;
@@ -345,14 +388,16 @@ class _PersonalTabState extends State<PersonalTab> {
                 widget.controller.gender.value = genderController.text;
                 widget.tabController
                     .animateTo((widget.tabController.index + 1));
-                widget.controller.dateOfBirth.value = selectedDate == 'Date of Birth' ? DateTime.now().toString() : selectedDate;
+                widget.controller.dateOfBirth.value =
+                selectedDate == 'Date of Birth'
+                    ? DateTime.now().toString()
+                    : selectedDate;
               }
             }
           },
-          text: 'Save & Continue',
+          text: 'Continue',
         ),
       ),
     );
   }
 }
-

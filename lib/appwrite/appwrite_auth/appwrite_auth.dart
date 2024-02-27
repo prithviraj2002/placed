@@ -62,12 +62,46 @@ class AppWriteAuth{
     }
   }
 
-  static forgotPassword() async{
+  //To reset password of the user account in appwrite by confirming old password!
+  static Future<User> resetPassword(String password, String oldPassword) async{
     try{
-
+      final response = await account.updatePassword(
+          password: password,
+        oldPassword: oldPassword
+      );
+      return response;
     } on AppwriteException catch(e){
-      print('AN error occurred while forgot password!');
+      print('An error occurred while reseting password in Appwrite Auth!: $e');
       rethrow;
+    }
+  }
+
+  //Sends a recovery email to the provided email address.
+  static Future<void> createRecovery(String email) async{
+    print('Entering create recovery in appwriteauth');
+    try{
+      await account.createRecovery(email: email, url: 'http://localhost:51228/');
+      print('Sending a recovery mail to $email');
+    } on AppwriteException catch(e){
+      print('An error occurred while creating recovery with $email!: $e');
+    }
+  }
+
+  //Updates the password with the given email, temp reset code, password and password again.
+  static Future<void> updatePassword(String email, String code, String password, String passwordAgain) async{
+    final box = GetStorage();
+    final String userId = box.read('userId');
+    print('Entering updatePassword in appwriteauth');
+    try{
+      final response = await account.updateRecovery(
+          userId: userId,
+          secret: code,
+          password: password,
+          passwordAgain: passwordAgain
+      );
+      print('Here is the response of updateRecovery in updatePassword: ${response.secret}');
+    } on AppwriteException catch(e){
+      print('An error occurred while updating password with $email!: $e');
     }
   }
 

@@ -138,7 +138,7 @@ class ProfileController extends GetxController {
   Future<File> uploadResume() async {
     try {
       final response = await AppWriteStorage.uploadResume(
-          selectedResumePath.value, profileId);
+          selectedResumePath.value, profileId, selectedPdf!.path);
       return response;
     } on AppwriteException catch (e) {
       print('An Exception occurred while uploading resume: ${e}');
