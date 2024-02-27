@@ -13,9 +13,12 @@ class GradiantButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         gradient: LinearGradient(
+            begin: Alignment(1.00, -0.09),
+            end: Alignment(-1, 0.09),
             colors: PlacedColors.gradiantColor),
       ),
       width: double.infinity,

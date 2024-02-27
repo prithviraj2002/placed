@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/tabs/resume_uploaded.dart';
+import 'package:placed_mobile_app/modules/personal_details_module/view/tabs/resume_uploaded.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../controller/profile_controller.dart';
 
@@ -14,47 +15,51 @@ class ResumeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
-          GestureDetector(
-            onTap: (){
-              controller.getResumePdf();
-            },
-            child: Container(
-              margin: EdgeInsets.fromLTRB(16, 16,16,140),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(14.0)),
-                color: PlacedColors.bgColor
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.file_upload_outlined,
-                    size: 64,
-                    color: PlacedColors.textColor,
-                  ),
-                  SizedBox(height: 20),
-                  Column(
-                    children: [
-                      Text(
-                        'Upload your resume now to',
-                        style: TextStyle(
-                            fontSize: 18,
-                          color: PlacedColors.textColor
-                        ),
-                      ),
-                      Text(
-                        'seamlessly apply for jobs',
-                        style: TextStyle(
-                            fontSize: 18,
+          Container(
+            margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            height: 330,
+            width: 330,
+            child: GestureDetector(
+              onTap: (){
+                controller.getResumePdf();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(14.0)),
+                  color: PlacedColors.bgColor
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.file_upload_outlined,
+                      size: 64,
+                      color: PlacedColors.textColor,
+                    ),
+                    SizedBox(height: 20),
+                    Column(
+                      children: [
+                        Text(
+                          'Upload your resume now to',
+                          style: TextStyle(
+                              fontSize: 18,
                             color: PlacedColors.textColor
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Text(
+                          'seamlessly apply for jobs',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: PlacedColors.textColor
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

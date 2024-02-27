@@ -4,7 +4,6 @@ import 'package:placed_mobile_app/modules/forgot_password_module/view/password_c
 import '../../../widgets/back_arrow.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
-import '../../profile_module/view/personal_detail.dart';
 
 class ResetPassword extends StatelessWidget {
   String otp; String email;

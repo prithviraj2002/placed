@@ -5,7 +5,7 @@ import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller
 import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_email.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/personal_detail.dart';
+import 'package:placed_mobile_app/modules/personal_details_module/view/personal_detail.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 

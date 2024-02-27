@@ -36,12 +36,10 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: SvgPicture.asset(
-                        'assets/application_submitted.svg',
-                        height: 32,
-                        width: 32,
-                      ),
+                    SvgPicture.asset(
+                      'assets/application_submitted.svg',
+                      height: 32,
+                      width: 32,
                     ),
                     const SizedBox(
                       width: 14,
