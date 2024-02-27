@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,17 +70,17 @@ class JobDescription extends StatelessWidget {
             ),
             SizedBox(height: 37),
             // 4. Row of 4 custom containers
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomContainer(),
-                CustomContainer(),
-                CustomContainer(),
-                CustomContainer(),
+                CustomContainer(icon: 'assets/rupee.svg', text: 'Range', value: '4-5 LPA',),
+                CustomContainer(icon: 'assets/suitcase.svg', text: 'Job Type', value: 'Internship',),
+                CustomContainer(icon: 'assets/location.svg', text: 'Location', value: 'Ahmedabad',),
+                CustomContainer(icon: 'assets/calendar.svg', text: 'Last Date', value: '12-02-2024',),
               ],
             ),
             SizedBox(height: 56),
-            // 5. Text widget
             Text(
               'Job Description',
               style: GoogleFonts.poppins(
@@ -88,13 +89,14 @@ class JobDescription extends StatelessWidget {
                   fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 10),
-            // 6. Text widget
-            Text(
-              "vn skdvnskdmnskvkdvnskdvnsdlkvnskdvnkvnasdjnvsjodvnsjnvdjvnjldwcvnljsvnewjvndjkcnlknvslkdnvsljfvnlsjdvnsjvnjesonvojdvnljdvnsljfdvlsjvnsdvnlsjkdvnlsjkdvnsdljvnsvjndjvnsdjvnl",
-              style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: PlacedColors.PrimaryGrey2,
-                  fontWeight: FontWeight.normal
+            Flexible(
+              child: Text(
+                "vn skdvnskdmnskvkdvnskdvnsdlkvnskdvnkvnasdjnvsjodvnsjnvdjvnjldwcvnljsvnewjvndjkcnlknvslkdnvsljfvnlsjdvnsjvnjesonvojdvnljdvnsljfdvlsjvnsdvnlsjkdvnlsjkdvnsdljvnsvjndjvnsdjvnl",
+                style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: PlacedColors.PrimaryGrey2,
+                    fontWeight: FontWeight.normal
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -106,31 +108,33 @@ class JobDescription extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
                   SvgPicture.asset(
                     'assets/pdf_icon.svg',
                     height: 48,
                     width: 36,
                   ),
                   SizedBox(width: 8.0,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Campus Drive Nextnode Solu...PVT LTD',
-                        style: GoogleFonts.poppins(fontSize: 12, color: PlacedColors.PrimaryBlack),
-                      ),
-                      Text(
-                        '4.1 MB',
-                        style: GoogleFonts.poppins(
-                            fontSize: 8,
-                            color: PlacedColors.PrimaryGrey2,
-                            fontWeight: FontWeight.normal
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 18,horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Campus Drive Nextnode Solu...PVT LTD',
+                          style: GoogleFonts.poppins(fontSize: 12, color: PlacedColors.PrimaryBlack),
                         ),
-                      )
-                    ],
+                        Text(
+                          '4.1 MB',
+                          style: GoogleFonts.poppins(
+                              fontSize: 8,
+                              color: PlacedColors.PrimaryGrey2,
+                              fontWeight: FontWeight.normal
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-
                 ],
               ),
             ),
@@ -142,14 +146,42 @@ class JobDescription extends StatelessWidget {
 }
 
 class CustomContainer extends StatelessWidget {
+
+  final String icon;
+  final String text;
+  final String value;
+
+  const CustomContainer({super.key, required this.icon, required this.text, required this.value});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
+      width: 68,
       height: 60,
-      color: PlacedColors.PrimaryBlueLight2,
       child: Column(
-        children: [],
+        children: [
+          SvgPicture.asset(
+            icon,
+            height: 14,
+            width: 14,
+          ),
+          SizedBox(height: 1,),
+          Text(
+            text,
+            style: GoogleFonts.poppins(
+              fontSize: 10,
+              color: PlacedColors.PrimaryGrey3,
+            ),
+          ),
+          SizedBox(height: 2,),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontSize: 10,
+              color: PlacedColors.PrimaryBlack,
+            ),
+          ),
+        ],
       ),
     );
   }

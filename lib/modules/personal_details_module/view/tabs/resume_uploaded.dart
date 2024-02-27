@@ -19,10 +19,13 @@ class Resume_Uploaded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: 400,
-            width: 400,
+            height: 330,
+            width: 330,
             margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(14.0)),
@@ -30,33 +33,50 @@ class Resume_Uploaded extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/pdf_icon.svg',
-                  height: 64,
-                  width: 64,
+                // Center widget wrapped in Expanded
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/pdf_icon.svg',
+                            height: 64,
+                            width: 64,
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Resume Name',
+                            style: TextStyle(
+                                fontSize: 18, color: PlacedColors.textColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 20),
-                Text(
-                  'Resume Name',
-                  style: TextStyle(fontSize: 18, color: PlacedColors.textColor),
+                // TextButton at the bottom
+                Container(
+                  width: double.infinity,
+                  // Make button width as wide as the screen
+                  padding: EdgeInsets.all(20.0),
+                  child: TextButton(
+                    onPressed: () {
+                      // Button onPressed callback
+                    },
+                    child: Text(
+                      'Upload New',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           Obx(() => controller.selectedResumePath.isEmpty
-              ? Container(
-                  child: TextButton(
-                    onPressed: () {
-                      controller.getResumePdf();
-                    },
-                    child: Text(
-                      'Upload New',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          fontSize: 18, color: PlacedColors.textColor),
-                    ),
-                  ),
-                )
+              ? Container()
               : const Text('Resume selected Successfully!'))
         ],
       ),
