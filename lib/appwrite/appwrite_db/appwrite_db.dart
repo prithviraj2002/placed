@@ -28,6 +28,23 @@ class AppWriteDb {
     }
   }
 
+  //To update profile to appwrite database.
+  static Future<Document> updateProfile(Profile profile,
+      String profileId) async {
+    try {
+      final response = await databases.updateDocument(
+          databaseId: AppWriteStrings.dbID,
+          collectionId: AppWriteStrings.profileCollectionsId,
+          documentId: profileId,
+          data: profile.toMap(),
+      );
+      return response;
+    } on AppwriteException catch (e) {
+      print('An exception occurred while updating Profile to database: $e');
+      rethrow;
+    }
+  }
+
   //To get profile from database using id
   static Future<Profile> getProfileById(String id) async {
     print('Getting profile from id in appwrite_db!');

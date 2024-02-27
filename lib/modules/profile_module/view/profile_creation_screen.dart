@@ -680,7 +680,7 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
           controller.totalBackLog.value = int.parse(totalBackLogController.text);
           controller.address.value = addressController.text;
           controller.createProfileAndUpload().then((value) {
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => const Home()), (route) => false);
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
             if (value.$createdAt.isNotEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Row(

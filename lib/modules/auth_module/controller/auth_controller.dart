@@ -50,4 +50,14 @@ class AuthController extends GetxController{
       rethrow;
     }
   }
+
+  static Future<void> createRecovery(String email) async{
+    print('Entered createRecovery in auth_controller!');
+    await AppWriteAuth.createRecovery(email);
+  }
+
+  static Future<void> updatePassword(String email, String code, String password, String passwordAgain) async{
+    print('Entered updatePassword in auth_controller!');
+    await AppWriteAuth.updatePassword(email, code, password, passwordAgain);
+  }
 }
