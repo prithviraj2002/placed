@@ -1,14 +1,12 @@
-import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignUp.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_email.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/personal_detail.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 
 import '../../../widgets/gradiant_button.dart';
+import '../../personal_details_module/view/personal_detail.dart';
 
 class SignInScreen extends StatefulWidget {
   @override

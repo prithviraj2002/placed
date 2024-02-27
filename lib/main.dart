@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
+import 'package:placed_mobile_app/modules/home_module/view/landing.dart';
 import 'package:placed_mobile_app/screen_bindings/bindings/bindings.dart';
 import 'package:placed_mobile_app/screen_bindings/page_bindings/page_bindings.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,7 +13,7 @@ void main() async{
           debugShowCheckedModeBanner: false,
           initialBinding: PageBindings(),
           getPages: pages,
-          home: Home(),
+          home: Landing(),
     )
   );
 }

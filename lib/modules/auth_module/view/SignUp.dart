@@ -1,4 +1,3 @@
-import 'package:appwrite/models.dart' as models;
 import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
@@ -6,7 +5,7 @@ import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
-import '../../profile_module/view/personal_detail.dart';
+import '../../personal_details_module/view/personal_detail.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

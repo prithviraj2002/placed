@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
-import 'package:placed_mobile_app/modules/profile_module/controller/profile_controller.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/tabs/education_tab.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/tabs/personal_detail_tab.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/tabs/resume_tab.dart';
-import 'package:placed_mobile_app/modules/profile_module/view/tabs/resume_uploaded.dart';
+import 'package:placed_mobile_app/modules/personal_details_module/view/tabs/education_tab.dart';
+import 'package:placed_mobile_app/modules/personal_details_module/view/tabs/personal_detail_tab.dart';
+import 'package:placed_mobile_app/modules/personal_details_module/view/tabs/resume_tab.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
+
+import '../controller/profile_controller.dart';
 
 class PersonalDetail extends StatelessWidget {
   const PersonalDetail({super.key});
@@ -68,7 +68,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
         children: [
           PersonalTab(controller: profileController, tabController: _tabController,),
           EducationTab(controller: profileController, tabController: _tabController),
-          // Resume_Uploaded(controller: profileController, tabController: _tabController),
           ResumeTab(controller: profileController, tabController: _tabController),
         ],
       ),
