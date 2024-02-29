@@ -1,13 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
+import 'package:placed_mobile_app/models/job_model.dart';
+import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
+import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
+import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/job_module/view/job_applied.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 
 class JobDescription extends StatelessWidget {
+  JobPost jobPost;
+  JobDescription({required this.jobPost, super.key});
+
+  HomeController homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +36,56 @@ class JobDescription extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: GradiantButton(
+        child: homeController.appliedJobs.contains(jobPost.jobId) ? GradiantButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => JobApplied()));
+            showDialog(context: context, builder: (ctx) {
+              return AlertDialog(
+                surfaceTintColor: Colors.white,
+                title: Text('Applied already'),
+                content: Text('You have already applied to this drive'),
+                actions: [
+                  TextButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, child: Text('Close'))
+                ],
+              );
+            });
+          },
+          text: 'Applied',
+        ) : GradiantButton(
+          onPressed: () {
+            homeController.applyToAJob(jobPost.jobId).then((value){
+              if(value.$createdAt.isNotEmpty){
+                showDialog(context: context, builder: (ctx) {
+                  return AlertDialog(
+                    title: Text('Applying to ${jobPost.companyName}'),
+                    content: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                        CircularProgressIndicator()
+                    ],
+                  ),
+                  );
+                });
+                Future.delayed(Duration(seconds: 2), () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => JobApplied(jobPost: jobPost,)));
+                });
+              }
+              else if(value.$createdAt.isEmpty){
+                showDialog(context: context, builder: (ctx) {
+                  return AlertDialog(
+                    title: Text('An error occurred!'),
+                    content: Text('Kindly go back to home screen and try again'),
+                    actions: [
+                      TextButton(onPressed: () {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
+                      }, child: Text('Go to Home'))
+                    ],
+                  );
+                });
+              }
+            });
           },
           text: 'Apply Now',
         ),
@@ -56,28 +114,28 @@ class JobDescription extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Junior Software Engineer',
+                  jobPost.positionsOffered[0],
                   style: GoogleFonts.poppins(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 7),
                 // 3. Text widget
                 Text(
-                  'Valorx india',
+                  jobPost.companyName,
                   style: GoogleFonts.poppins(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 37),
             // 4. Row of 4 custom containers
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomContainer(icon: 'assets/rupee.svg', text: 'Range', value: '4-5 LPA',),
+                CustomContainer(icon: 'assets/rupee.svg', text: 'Range', value: '${jobPost.package.first} - ${jobPost.package.last}',),
                 CustomContainer(icon: 'assets/suitcase.svg', text: 'Job Type', value: 'Internship',),
                 CustomContainer(icon: 'assets/location.svg', text: 'Location', value: 'Ahmedabad',),
-                CustomContainer(icon: 'assets/calendar.svg', text: 'Last Date', value: '12-02-2024',),
+                CustomContainer(icon: 'assets/calendar.svg', text: 'Last Date', value: '${DateFormat('dd-MM-yyyy').format(jobPost.endDate)}',),
               ],
             ),
             SizedBox(height: 56),
@@ -91,7 +149,8 @@ class JobDescription extends StatelessWidget {
             SizedBox(height: 10),
             Flexible(
               child: Text(
-                "vn skdvnskdmnskvkdvnskdvnsdlkvnskdvnkvnasdjnvsjodvnsjnvdjvnjldwcvnljsvnewjvndjkcnlknvslkdnvsljfvnlsjdvnsjvnjesonvojdvnljdvnsljfdvlsjvnsdvnlsjkdvnlsjkdvnsdljvnsvjndjvnsdjvnl",
+                jobPost.description ?? 'This is a default job Description',
+                //vn skdvnskdmnskvkdvnskdvnsdlkvnskdvnkvnasdjnvsjodvnsjnvdjvnjldwcvnljsvnewjvndjkcnlknvslkdnvsljfvnlsjdvnsjvnjesonvojdvnljdvnsljfdvlsjvnsdvnlsjkdvnlsjkdvnsdljvnsvjndjvnsdjvnl
                 style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: PlacedColors.PrimaryGrey2,

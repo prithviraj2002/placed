@@ -3,12 +3,14 @@ import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_auth/appwrite_auth.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_storage/appwrite_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
+import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 
 import '../../../models/job_model.dart';
@@ -17,7 +19,7 @@ class HomeController extends GetxController {
   RxList<JobPost> jobPosts = <JobPost>[].obs;
   late StreamSubscription<RealtimeMessage> subscription;
   String userId = '';
-  RxList<String> appliedJobs = <String>[].obs;
+  RxList<dynamic> appliedJobs = <dynamic>[].obs;
   Rx<Profile> profile = Profile(
       name: 'name',
       id: 'id',
@@ -58,6 +60,7 @@ class HomeController extends GetxController {
       final box = GetStorage();
       userId = await box.read('userId');
       profile.value = await getProfileFromUserId(userId);
+      appliedJobs.value = profile.value.appliedJobs!;
       profileImagePreview.value = await getProfileImagePreview();
       profileResumePreview.value = await getProfileResumePreview();
       profileResume.value = await AppWriteStorage.getResumeById(userId);
@@ -108,7 +111,6 @@ class HomeController extends GetxController {
     try {
       final response = await AppWriteDb.getJobPosts();
       for (Document job in response.documents) {
-        print(job.data['title']);
         jobPosts.add(JobPost.fromJson(job.data));
       }
     } on AppwriteException catch (e) {
@@ -127,6 +129,14 @@ class HomeController extends GetxController {
         .listen((event) {
           if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
+            final JobPost jobPost = JobPost.fromJson(event.payload);
+            AwesomeNotifications().createNotification(
+                content: NotificationContent(
+                    id: 11,
+                    channelKey: 'basic_channel',
+                  title: '${jobPost.companyName} is looking for ${jobPost.positionsOffered.first}'
+                )
+            );
             jobPosts.add(JobPost.fromJson(event.payload));
           } else if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {

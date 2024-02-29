@@ -46,13 +46,13 @@ class _ProfileTabState extends State<ProfileTab> {
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.black38)),
                     child: ClipOval(
-                      child: Image.memory(
+                      child: widget.controller.profileImagePreview.value.isNotEmpty ? Image.memory(
                         widget.controller.profileImagePreview.value,
                         scale: 100,
                         fit: BoxFit.cover,
                         width: 70,
                         height: 70,
-                      ),
+                      ) : CircularProgressIndicator(),
                     ),
                   ),
                   const SizedBox(

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
+import 'package:placed_mobile_app/models/job_model.dart';
+import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import '../../../constants/placed_dimensions.dart';
 import '../../../widgets/custom_card_mydrive.dart';
 import '../../home_module/controller/home_controller.dart';
 
 class ViewAll extends StatelessWidget {
-  ViewAll({super.key});
-
-  HomeController homeController = Get.find<HomeController>();
+  List<dynamic> appliedJobs;
+  ViewAll({required this.appliedJobs, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: const BackArrow(),
         title: Text(
           'My Drives',
           style: GoogleFonts.poppins(
@@ -33,31 +36,35 @@ class ViewAll extends StatelessWidget {
             .size
             .width,
         child: ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
             itemBuilder: (ctx, index) {
-              return ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (ctx, i) {
-                    return MyDriveCard(
-                      companyPosition: homeController.jobPosts[index]
-                          .positionsOffered[i].toString(),
-                      logo: 'assets/application_submitted.svg',
-                      companyName: homeController.jobPosts[index]
-                          .companyName,
-                      jobType: homeController.jobPosts[index]
-                          .endDate.toString(),
-                      );
-                  }, separatorBuilder: (ctx, index) {
-                return const SizedBox(height: 2,);
-              }, itemCount: homeController.jobPosts[index]
-                  .positionsOffered.length);
-              // return CustomCard(companyPosition: homeController.jobPosts[index].positionsOffered[i].toString(), logo: 'assets/application_submitted.svg',);
+              return FutureBuilder(
+                  future: AppWriteDb.getJobById(appliedJobs[index]),
+                  builder: (BuildContext context,
+                      AsyncSnapshot snapshot) {
+                    final JobPost? jobPost = snapshot.data;
+                    if (snapshot.hasData) {
+                      if(jobPost != null){
+                        return MyDriveCard(
+                            companyPosition: jobPost.positionsOffered.first,
+                            logo: 'assets/application_submitted.svg',
+                            companyName: jobPost.companyName,
+                            jobType: 'Internship'
+                        );
+                      }
+                      else{
+                        return const Center(child: CircularProgressIndicator(),);
+                      }
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Icon(Icons.error_outline));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  });
             },
             separatorBuilder: (ctx, index) {
-              return const SizedBox(width: 10,);
+              return const SizedBox(height: 4,);
             },
-            itemCount: homeController.jobPosts.length),
+            itemCount: appliedJobs.length),
       ),
     );
   }
