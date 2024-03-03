@@ -26,7 +26,8 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemBuilder: (ctx, index) {
+        itemBuilder: (ctx, i) {
+          int index = homeController.jobPosts.length - 1 - i;
           return Container(
             // color: PlacedColors.PrimaryBlueDark,
             decoration: BoxDecoration(
@@ -85,7 +86,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomRow(
-                      title: homeController.jobPosts[index].positionsOffered[0],
+                      title: homeController.jobPosts[index].positionOffered,
                       icon: 'assets/suitcase.svg',
                     ),
                     const SizedBox(
@@ -99,7 +100,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                       width: 4,
                     ),
                     CustomRow(
-                      title: "Apply by ${DateFormat('dd-MM-yyyy').format(homeController.jobPosts[index].endDate)}",
+                      title: "Apply by ${homeController.jobPosts[index].endDate.substring(0, 10)}",
                       icon: 'assets/hourglass.svg',
                     ),
                     const SizedBox(

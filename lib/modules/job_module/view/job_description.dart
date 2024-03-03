@@ -114,7 +114,7 @@ class JobDescription extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  jobPost.positionsOffered[0],
+                  jobPost.positionOffered,
                   style: GoogleFonts.poppins(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -134,8 +134,8 @@ class JobDescription extends StatelessWidget {
               children: [
                 CustomContainer(icon: 'assets/rupee.svg', text: 'Range', value: '${jobPost.package.first} - ${jobPost.package.last}',),
                 CustomContainer(icon: 'assets/suitcase.svg', text: 'Job Type', value: 'Internship',),
-                CustomContainer(icon: 'assets/location.svg', text: 'Location', value: 'Ahmedabad',),
-                CustomContainer(icon: 'assets/calendar.svg', text: 'Last Date', value: '${DateFormat('dd-MM-yyyy').format(jobPost.endDate)}',),
+                CustomContainer(icon: 'assets/location.svg', text: 'Location', value: '${jobPost.jobLocation}',),
+                CustomContainer(icon: 'assets/calendar.svg', text: 'Last Date', value: '${jobPost.endDate.substring(0, 10)}',),
               ],
             ),
             SizedBox(height: 56),

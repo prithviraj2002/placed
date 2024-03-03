@@ -111,7 +111,7 @@ class HomeController extends GetxController {
     try {
       final response = await AppWriteDb.getJobPosts();
       for (Document job in response.documents) {
-        jobPosts.add(JobPost.fromJson(job.data));
+        jobPosts.add(JobPost.fromJson(job.data, job.$id));
       }
     } on AppwriteException catch (e) {
       print('An error occurred while getting all jobs!: $e');
@@ -129,21 +129,21 @@ class HomeController extends GetxController {
         .listen((event) {
           if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
-            final JobPost jobPost = JobPost.fromJson(event.payload);
+            final JobPost jobPost = JobPost.fromJson(event.payload, event.payload["\$id"]);
             AwesomeNotifications().createNotification(
                 content: NotificationContent(
                     id: 11,
                     channelKey: 'basic_channel',
-                  title: '${jobPost.companyName} is looking for ${jobPost.positionsOffered.first}'
+                  title: '${jobPost.companyName} is looking for ${jobPost.positionOffered}'
                 )
             );
-            jobPosts.add(JobPost.fromJson(event.payload));
+            jobPosts.add(JobPost.fromJson(event.payload, event.payload["\$id"]));
           } else if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
             getAllJobs();
           } else if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.delete")) {
-            jobPosts.remove(JobPost.fromJson(event.payload));
+            jobPosts.remove(JobPost.fromJson(event.payload, event.payload["\$id"]));
           }
         });
   }

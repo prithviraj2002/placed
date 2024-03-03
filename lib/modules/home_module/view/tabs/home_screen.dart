@@ -81,7 +81,8 @@ class HomeTab extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             child: homeController.appliedJobs.isNotEmpty ?
                             ListView.separated(
-                                itemBuilder: (ctx, index) {
+                                itemBuilder: (ctx, i) {
+                                  int index = homeController.appliedJobs.length - 1 - i;
                                   return FutureBuilder(
                                       future: AppWriteDb.getJobById(homeController.appliedJobs[index]),
                                       builder: (BuildContext context,
@@ -90,7 +91,7 @@ class HomeTab extends StatelessWidget {
                                         if (snapshot.hasData) {
                                           if(jobPost != null){
                                             return MyDriveCard(
-                                                companyPosition: jobPost.positionsOffered.first,
+                                                companyPosition: jobPost.positionOffered,
                                                 logo: 'assets/application_submitted.svg',
                                                 companyName: jobPost.companyName,
                                                 jobType: 'Internship'

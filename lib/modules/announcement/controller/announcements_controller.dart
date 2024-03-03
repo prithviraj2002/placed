@@ -63,16 +63,18 @@ class AnnouncementController extends GetxController{
           .listen((event) {
         if (event.events.contains(
             "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.broadcastCollectionId}.documents.*.create")) {
-          final String title = event.payload['message'];
-          AwesomeNotifications().createNotification(
-              content: NotificationContent(
-                  id: 10,
-                  channelKey: 'basic_channel',
-                  title: title,
-                wakeUpScreen: true,
-                fullScreenIntent: true
-              )
-          );
+          BroadcastMessage msg = BroadcastMessage.fromJson(event.payload);
+          if(homeController.appliedJobs.contains(msg.jobId)){
+            AwesomeNotifications().createNotification(
+                content: NotificationContent(
+                    id: 10,
+                    channelKey: 'basic_channel',
+                    title: msg.message,
+                    wakeUpScreen: true,
+                    fullScreenIntent: true
+                )
+            );
+          }
           getAllMessages().then((value) {
             getRelevantMessages();
           });

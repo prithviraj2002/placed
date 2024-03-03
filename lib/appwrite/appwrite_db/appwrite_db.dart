@@ -120,7 +120,7 @@ class AppWriteDb {
             Query.equal('jobId', id)
           ]
       );
-      return JobPost.fromJson(response.documents[0].data);
+      return JobPost.fromJson(response.documents[0].data, response.documents[0].$id);
     } on AppwriteException catch (e) {
       print(
           'An error occurred while getting job post by id from appwrite_db!: $e');
