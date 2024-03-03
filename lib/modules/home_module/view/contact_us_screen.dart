@@ -8,7 +8,6 @@ class ContactUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackArrow(),
         title: Text('Contact Us', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
       ),
       body: ListView(

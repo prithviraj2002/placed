@@ -3,22 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/announcement/view/announcement.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
-import 'package:placed_mobile_app/modules/home_module/view/tabs/announcements_screen.dart';
 import 'package:placed_mobile_app/modules/home_module/view/tabs/home_screen.dart';
 import 'package:placed_mobile_app/modules/home_module/view/tabs/profile_screen.dart';
-import 'package:placed_mobile_app/modules/job_module/view/viewAll.dart';
-
-import 'package:placed_mobile_app/widgets/custom_card_mydrive.dart';
-
 import '../../../constants/placed_dimensions.dart';
-import '../../../widgets/custom_card_upcomingdrive.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -35,19 +28,34 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _selectedIndex,
-            onTap: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+            unselectedItemColor:  PlacedColors.PrimaryBlack,
+            selectedItemColor: PlacedColors.PrimaryBlueMain,
+            onTap: _onItemTapped,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home,size: PlacedDimens.home_icon_size,),
+                icon: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/home.svg',
+                    color: _selectedIndex == 0 ? PlacedColors.PrimaryBlueMain : PlacedColors.PrimaryBlack,
+                    height: PlacedDimens.home_icon_size,
+                    width: PlacedDimens.home_icon_size,
+                  ),
+
+                ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
@@ -79,13 +87,12 @@ class _HomeState extends State<Home> {
                 ),
                 label: 'Profile',
               ),
-        ]),
+            ]),
         body: IndexedStack(
           index: _selectedIndex,
           children: [
             HomeTab(homeController: homeController),
             Announcement(),
-            // AnnouncementsTab(controller: homeController),
             ProfileTab(controller: homeController),
           ],
         )
