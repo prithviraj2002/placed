@@ -1,43 +1,59 @@
 class JobPost{
-  final String jobId;
   final String companyName;
   final String? description;
-  final List<dynamic> positionsOffered;
+  final String jobId;
+  final String positionOffered;
   final List<dynamic> package;
-  final DateTime endDate;
+  final String endDate;
+  final String jobType;
+  final String jobLocation;
   final List<dynamic> filters;
 
   JobPost({
-    required this.jobId,
     required this.companyName,
     this.description,
-    required this.positionsOffered,
+    required this.jobId,
+    required this.positionOffered,
     required this.package,
     required this.endDate,
+    required this.jobType,
+    required this.jobLocation,
     required this.filters,
   });
 
-  factory JobPost.fromJson(Map<String, dynamic> json){
+  factory JobPost.fromJson(Map<String, dynamic> json, String jobId){
     return JobPost(
-        jobId: json['jobId'],
-        companyName: json['companyName'],
-        description: json['description'] ?? '',
-        positionsOffered: json['positionsOffered'],
-        package: json['package'],
-        endDate: DateTime.parse(json['endDate']),
-        filters: json['filters']
+      companyName: json['companyName'],
+      description: json['description'],
+      jobId: jobId,
+      positionOffered: json['positionOffered'],
+      package: json['package'],
+      endDate: json['endDate'],
+      jobType: json['jobType'],
+      jobLocation: json['jobLocation'],
+      filters: json['filters'],
     );
   }
 
   Map<String, dynamic> toMap(){
     return {
-      'jobId': jobId,
       'companyName': companyName,
-      'description': description ?? '',
-      'positionsOffered': positionsOffered,
+      'description': description,
+      'jobId': jobId,
+      'positionOffered': positionOffered,
       'package': package,
       'endDate': endDate,
-      'filters': filters
+      'jobType': jobType,
+      'jobLocation': jobLocation,
+      'filters': filters,
     };
+  }
+
+  List<String> toList(){
+    return [
+      companyName,
+      description ?? '',
+      jobId,
+    ];
   }
 }

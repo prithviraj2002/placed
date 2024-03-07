@@ -16,6 +16,7 @@ class MyDriveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: PlacedColors.PrimaryOffWhite,
+      surfaceTintColor: PlacedColors.PrimaryOffWhite,
       elevation: 4,
       margin: EdgeInsets.all(5.0),
       child: Row(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../constants/placed_colors.dart';
 import '../modules/home_module/controller/home_controller.dart';
 import '../modules/job_module/view/job_description.dart';
@@ -25,9 +26,15 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemBuilder: (ctx, index) {
+        itemBuilder: (ctx, i) {
+          int index = homeController.jobPosts.length - 1 - i;
           return Container(
-            color: PlacedColors.PrimaryBlueDark,
+            // color: PlacedColors.PrimaryBlueDark,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black12),
+                borderRadius: BorderRadius.circular(16),
+                ),
             padding: const EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width * 0.8,
             height: 213,
@@ -54,20 +61,21 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                       ),
                     ),
                     const SizedBox(width: 104),
-                    Container(
-                      margin: EdgeInsets.all(6),
-                      height: 20,
-                      width: 55,
-                      decoration:
-                          BoxDecoration(color: PlacedColors.SecondaryGreen),
-                      child: Center(
-                        child: Text(
-                          'Eligible',
-                          style: TextStyle(
-                              fontSize: 12, color: PlacedColors.PrimaryBlack),
-                        ),
-                      ),
-                    )
+                    //ToDo: Check for filters and display visibility.
+                    // Container(
+                    //   margin: EdgeInsets.all(6),
+                    //   height: 20,
+                    //   width: 55,
+                    //   decoration:
+                    //       BoxDecoration(color: PlacedColors.SecondaryGreen),
+                    //   child: Center(
+                    //     child: Text(
+                    //       'Eligible',
+                    //       style: TextStyle(
+                    //           fontSize: 12, color: PlacedColors.PrimaryBlack),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
                 const SizedBox(
@@ -78,7 +86,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomRow(
-                      title: 'Junior Software Engineer',
+                      title: homeController.jobPosts[index].positionOffered,
                       icon: 'assets/suitcase.svg',
                     ),
                     const SizedBox(
@@ -92,7 +100,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                       width: 4,
                     ),
                     CustomRow(
-                      title: "Apply by 31/01/2024",
+                      title: "Apply by ${homeController.jobPosts[index].endDate.substring(0, 10)}",
                       icon: 'assets/hourglass.svg',
                     ),
                     const SizedBox(
@@ -113,7 +121,10 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                   height: 45,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => JobDescription()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => JobDescription(jobPost: homeController.jobPosts[index])));
                       },
                       style: ButtonStyle(
                         shape:
@@ -146,7 +157,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
-            width: 4,
+            width: 8,
           );
         },
         itemCount: homeController.jobPosts.length,
