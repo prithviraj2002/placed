@@ -41,7 +41,7 @@ class ViewAll extends StatelessWidget {
                   itemBuilder: (ctx, i) {
                     return MyDriveCard(
                       companyPosition: homeController.jobPosts[index]
-                          .positionsOffered[i].toString(),
+                          .positionOffered[i].toString(),
                       logo: 'assets/application_submitted.svg',
                       companyName: homeController.jobPosts[index]
                           .companyName,
@@ -51,7 +51,7 @@ class ViewAll extends StatelessWidget {
                   }, separatorBuilder: (ctx, index) {
                 return const SizedBox(height: 2,);
               }, itemCount: homeController.jobPosts[index]
-                  .positionsOffered.length);
+                  .positionOffered.length);
               // return CustomCard(companyPosition: homeController.jobPosts[index].positionsOffered[i].toString(), logo: 'assets/application_submitted.svg',);
             },
             separatorBuilder: (ctx, index) {

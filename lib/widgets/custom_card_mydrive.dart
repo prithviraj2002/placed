@@ -14,9 +14,18 @@ class MyDriveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: PlacedColors.PrimaryOffWhite,
-      elevation: 4,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: PlacedColors.PrimaryBlueMain.withOpacity(0.1),
+            blurRadius: 16,
+            offset: Offset(3, 4), // changes position of shadow
+          ),
+        ],
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        color: PlacedColors.PrimaryOffWhite,
+      ),
       margin: EdgeInsets.all(5.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +35,7 @@ class MyDriveCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 14,horizontal: 12),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Color(0xFFE5ECF6), width: 1.0),
+              border: Border.all(color: PlacedColors.PrimaryWhite, width: 1.0),
             ),
             child: SvgPicture.asset(
               logo,

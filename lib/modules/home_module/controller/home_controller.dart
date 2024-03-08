@@ -109,7 +109,7 @@ class HomeController extends GetxController {
       final response = await AppWriteDb.getJobPosts();
       for (Document job in response.documents) {
         print(job.data['title']);
-        jobPosts.add(JobPost.fromJson(job.data));
+        jobPosts.add(JobPost.fromJson(job.data, AppWriteStrings.dbID,));
       }
     } on AppwriteException catch (e) {
       print('An error occurred while getting all jobs!: $e');
@@ -127,13 +127,13 @@ class HomeController extends GetxController {
         .listen((event) {
           if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
-            jobPosts.add(JobPost.fromJson(event.payload));
+            jobPosts.add(JobPost.fromJson(event.payload, AppWriteStrings.dbID,));
           } else if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
             getAllJobs();
           } else if (event.events.contains(
               "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.delete")) {
-            jobPosts.remove(JobPost.fromJson(event.payload));
+            jobPosts.remove(JobPost.fromJson(event.payload, AppWriteStrings.dbID,));
           }
         });
   }

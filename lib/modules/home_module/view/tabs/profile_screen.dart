@@ -66,13 +66,22 @@ class _ProfileTabState extends State<ProfileTab> {
                   Obx(() {
                     return Text(
                       widget.controller.profile.value.name,
-                      style: const TextStyle(fontSize: 20),
+                      style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: PlacedColors.PrimaryBlack),
                     );
                   }),
                   Row(
                     children: [
                       InkWell(
-                        child: const Text('Edit Profile'),
+                        child: Text(
+                          'Edit Profile',
+                          style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: PlacedColors.PrimaryGrey2),
+                        ),
                         onTap: () {
                           Navigator.push(
                               context,
@@ -100,9 +109,12 @@ class _ProfileTabState extends State<ProfileTab> {
             height: 20,
           ),
           InkWell(
-            child: const Text(
+            child: Text(
               'Reset Password',
-              style: TextStyle(fontSize: 18),
+              style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: PlacedColors.PrimaryBlack),
             ),
             onTap: () {
               Navigator.push(context,
@@ -113,9 +125,12 @@ class _ProfileTabState extends State<ProfileTab> {
             height: 15,
           ),
           InkWell(
-            child: const Text(
+            child: Text(
               'Contact Us',
-              style: TextStyle(fontSize: 18),
+              style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: PlacedColors.PrimaryBlack),
             ),
             onTap: () {
               Navigator.push(context,
@@ -126,9 +141,12 @@ class _ProfileTabState extends State<ProfileTab> {
             height: 15,
           ),
           InkWell(
-            child: const Text(
+            child: Text(
               'Logout',
-              style: TextStyle(fontSize: 18),
+              style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: PlacedColors.PrimaryBlack),
             ),
             onTap: () {
               showDialog(
@@ -139,13 +157,15 @@ class _ProfileTabState extends State<ProfileTab> {
                         'Log out of Placed?',
                         style: GoogleFonts.poppins(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          color: PlacedColors.PrimaryBlack
-                        ),
+                            fontWeight: FontWeight.w600,
+                            color: PlacedColors.PrimaryBlack),
                       ),
                       content: Text(
-                          'You wont be able to view new updates regarding university placements.',
-                        style: GoogleFonts.poppins(color: PlacedColors.PrimaryBlack,fontSize: 12),
+                        'You wont be able to view new updates regarding university placements.',
+                        style: GoogleFonts.poppins(
+                            color: PlacedColors.PrimaryBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
                       ),
                       actions: [
                         CupertinoDialogAction(
@@ -156,9 +176,7 @@ class _ProfileTabState extends State<ProfileTab> {
                             child: Text(
                               'Cancel',
                               style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  color: Colors.blue
-                              ),
+                                  fontSize: 16, color: Colors.blue,fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),
@@ -172,7 +190,8 @@ class _ProfileTabState extends State<ProfileTab> {
                                       title: Text('Logging you out!'),
                                       content: Padding(
                                         padding: const EdgeInsets.all(18.0),
-                                        child: Center(child: CircularProgressIndicator()),
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
                                       ),
                                     );
                                   });
@@ -184,16 +203,14 @@ class _ProfileTabState extends State<ProfileTab> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (ctx) => SignInScreen()),
-                                          (route) => false);
+                                      (route) => false);
                                 });
                               });
                             },
                             child: Text(
                               'Logout',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    color: Colors.red
-                                ),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16, color: Colors.red,fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),

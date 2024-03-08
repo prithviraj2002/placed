@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 
 class CustomTextFieldForm extends StatelessWidget {
   final TextEditingController controller;
@@ -12,13 +13,13 @@ class CustomTextFieldForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscureText,
-      style: GoogleFonts.lato(
-            color: Colors.black,
+      style: GoogleFonts.poppins(
+            color: PlacedColors.PrimaryGrey3,
             fontSize: 16,
             letterSpacing: 1.2,
       ),
       decoration: InputDecoration(
-        fillColor: Color(0xFFE5ECF6),
+        fillColor: PlacedColors.PrimaryBlueLight1,
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
@@ -26,8 +27,8 @@ class CustomTextFieldForm extends StatelessWidget {
         ),
         contentPadding: EdgeInsets.all(12.0),
         hintText: hintText,
-        hintStyle: const TextStyle(
-          color: Colors.black54,
+        hintStyle: GoogleFonts.poppins(
+          color: PlacedColors.PrimaryGrey3,
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),

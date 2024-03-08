@@ -16,11 +16,12 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'Upcoming Drives',
-            style: TextStyle(
-              fontSize: PlacedDimens.heading_text,
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              color: PlacedColors.PrimaryBlack,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
@@ -45,9 +46,10 @@ class HomeTab extends StatelessWidget {
                       children: [
                         Text(
                           'My Drives',
-                          style: TextStyle(
-                            fontSize: PlacedDimens.heading_text,
-                            fontWeight: FontWeight.bold,
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            color: PlacedColors.PrimaryBlack,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextButton(
@@ -82,9 +84,8 @@ class HomeTab extends StatelessWidget {
                               shrinkWrap: true,
                               itemBuilder: (ctx, i) {
                                 return MyDriveCard(
-                                  companyPosition: homeController
-                                      .jobPosts[index].positionsOffered[i]
-                                      .toString(),
+                                  companyPosition: homeController.jobPosts[index]
+                                      .positionOffered[i].toString(),
                                   logo: 'assets/application_submitted.svg',
                                   companyName: homeController
                                       .jobPosts[index].companyName,
@@ -106,7 +107,7 @@ class HomeTab extends StatelessWidget {
                               width: 10,
                             );
                           },
-                          itemCount: homeController.jobPosts.length),
+                          itemCount: homeController.jobPosts.length ),
                     ),
                   ],
                 ),

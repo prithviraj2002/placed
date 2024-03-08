@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/custom_message.dart';
@@ -18,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Row(
+        title: Row(
           children: [
             BackArrow(),
             SizedBox(width: 6),
@@ -26,7 +27,10 @@ class _ChatScreenState extends State<ChatScreen> {
             SizedBox(width: 8),
             Text(
               'ValorX', // Replace with the profile name
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: PlacedColors.PrimaryBlack),
             ),
           ],
         ),
@@ -43,10 +47,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(13.0)),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   'Broadcast channel was created',
-                  style: TextStyle(fontSize: 18, color: PlacedColors.PrimaryGrey2),
+                  style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: PlacedColors.PrimaryGrey4,
+                      fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
               ),

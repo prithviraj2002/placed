@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
+import 'package:placed_mobile_app/widgets/custom_eye_field.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
 import '../../personal_details_module/view/personal_detail.dart';
@@ -11,13 +14,11 @@ import '../../personal_details_module/view/personal_detail.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
-
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
@@ -34,6 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: BackArrow(),
       ),
@@ -47,26 +49,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               Text(
                 'Sign Up',
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   color: PlacedColors.PrimaryBlack,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 26.0),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white70,
+                  color: PlacedColors.PrimaryBlueLight2,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomTextFieldForm(
                   hintText: 'Enter University Email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {
-                    if(val == null || val.isEmpty){
+                    if (val == null || val.isEmpty) {
                       return 'Empty Email';
-                    }
-                    else if(!val.contains('@') || !val.contains('indus')){
+                    } else if (!val.contains('@') || !val.contains('indus')) {
                       return 'Invalid Email';
                     }
                     return null;
@@ -78,23 +79,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 16.0),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white70,
+                  color: PlacedColors.PrimaryBlueLight2,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: CustomTextFieldForm(
+                child: CustomEYEFieldForm(
                   hintText: 'Set Password',
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (val) {
-                    if(val == null || val.isEmpty){
+                    if (val == null || val.isEmpty) {
                       return "Empty Password!";
-                    }
-                    else if(val.length < 8){
+                    } else if (val.length < 8) {
                       return 'Password should be at least of 8 characters!';
                     }
                     return null;
                   },
                   controller: passwordController,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: CustomEYEFieldForm(
+                  hintText: 'Confirm Password',
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  validator: (val) {
+                    if (val == null || val.isEmpty) {
+                      return "Empty Password!";
+                    } else if (val.length < 8) {
+                      return 'Password should be at least of 8 characters!';
+                    }
+                    return null;
+                  },
+                  controller: passwordController,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(4, 4, 0, 0),
+                child: Text(
+                  'Your password must range between 8 to 12 characters including letters and numbers.',
+                  style: GoogleFonts.poppins(
+                      fontSize: 10,
+                      color: PlacedColors.PrimaryGrey3,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
               SizedBox(height: 32.0),
@@ -104,13 +135,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     GradiantButton(
                       onPressed: () {
-                        if(formKey.currentState!.validate()){
-                          AuthController.signup(emailController.text, passwordController.text).then((value) {
-                            if(value.$createdAt.isNotEmpty){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
-                            }
-                            else {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred!')));
+                        if (formKey.currentState!.validate()) {
+                          AuthController.signup(
+                                  emailController.text, passwordController.text)
+                              .then((value) {
+                            if (value.$createdAt.isNotEmpty) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PersonalDetail()));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('An error occurred!')));
                             }
                           });
                         }
@@ -127,22 +164,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Already Have an Account?',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                          ),
+                          style: GoogleFonts.poppins(
+                              color: PlacedColors.PrimaryBlack,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500),
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignInScreen()));
                           },
-                          child: const Text(
+                          child: Text(
                             'Sign In',
-                            style: TextStyle(
-                              color: Colors.blue,
+                            style: GoogleFonts.poppins(
+                              color: PlacedColors.PrimaryBlueMain,
                               fontSize: 16.0,
+                                fontWeight: FontWeight.w500
                             ),
                           ),
                         ),
