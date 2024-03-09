@@ -74,15 +74,12 @@ class AnnouncementController extends GetxController{
                     fullScreenIntent: true
                 )
             );
+            relevantMessages['${msg.jobId}']!.add(msg);
           }
-          getAllMessages().then((value) {
-            getRelevantMessages();
-          });
+          getAllMessages();
         } else if (event.events.contains(
             "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.broadcastCollectionId}.documents.*.delete")) {
-          getAllMessages().then((value) {
-            getRelevantMessages();
-          });
+          getAllMessages();
         }
       });
   }
