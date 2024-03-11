@@ -13,11 +13,7 @@ class PlacedStrings{
   }
   static List<String> degreeOption(){
     List<String> options = [
-      "IITE",
-      "IIMS",
-      "IIICT",
-      "IISHLS",
-      "IIDEA",
+      "B.Tech",
     ];
     return options;
   }

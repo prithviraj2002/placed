@@ -43,13 +43,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
             isExpanded: true,
             style: TextStyle(
                 color: PlacedColors.textfield_text_color, fontSize: 16.0),
-            onChanged: (String? changedValue) {
-              my_services = changedValue;
-              setState(() {
-                my_services;
-                _onclicked(my_services);
-              });
-            },
+            onChanged: null,
             value: my_services,
             items: dropDownOption,
           ),

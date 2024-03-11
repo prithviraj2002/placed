@@ -284,7 +284,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Github Link',
+                  hintText: 'Github link',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Link'

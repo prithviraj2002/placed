@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
 
 class Utils{
   static Future<String> chooseImage(String src) async{
@@ -40,13 +39,5 @@ class Utils{
       return File(result.files.single.path!);
     }
     return null;
-  }
-
-  static Future<String> getImageUrl(String id) async{
-    return await '${AppWriteStrings.endPoint}/storage/buckets/${AppWriteStrings.imageBucketId}/files/$id/view?project=${AppWriteStrings.projectId}&mode=admin';
-  }
-
-  static String getResumeUrl(String id){
-    return '${AppWriteStrings.endPoint}/storage/buckets/${AppWriteStrings.resumeBucketId}/files/$id/view?project=${AppWriteStrings.projectId}&mode=admin';
   }
 }

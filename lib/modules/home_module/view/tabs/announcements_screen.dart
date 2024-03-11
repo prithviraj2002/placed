@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
-import 'package:placed_mobile_app/modules/announcement/controller/announcements_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 
 class AnnouncementsTab extends StatelessWidget {

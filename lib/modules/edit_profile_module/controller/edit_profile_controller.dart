@@ -58,7 +58,6 @@ class EditProfileController extends GetxController{
   Rx<String> linkedinProfile = ''.obs;
   Rx<String> githubProfile = ''.obs;
   Rx<String> otherLink = ''.obs;
-  List<dynamic> appliedJobs = [];
 
   file.File? selectedPdf;
   Rx<String> selectedResumePath = ''.obs;
@@ -105,7 +104,6 @@ class EditProfileController extends GetxController{
       linkedinProfile.value = profile.linkedinProfile!;
       githubProfile.value = profile.githubProfile!;
       otherLink.value = profile.otherLink!;
-      appliedJobs = profile.appliedJobs!;
     } on AppwriteException catch(e){
       print('An error occurred while getting profile in edit profile controller!: $e');
     }
@@ -145,7 +143,6 @@ class EditProfileController extends GetxController{
         githubProfile: githubProfile.value,
         otherLink: otherLink.value,
         status: true,
-        appliedJobs: appliedJobs,
       );
       final response = await AppWriteDb.updateProfile(profile, userId);
       return response;

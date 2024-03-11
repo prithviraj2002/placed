@@ -11,7 +11,6 @@ class ResetPassword extends StatelessWidget {
 
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
-  AuthController authController = AuthController();
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -91,7 +90,7 @@ class ResetPassword extends StatelessWidget {
               GradiantButton(
                 onPressed: () {
                   if(formKey.currentState!.validate()){
-                    authController.updatePassword(email, otp, passwordController.text, confirmPasswordController.text).then((value){
+                    AuthController.updatePassword(email, otp, passwordController.text, confirmPasswordController.text).then((value){
                       Navigator.push(
                           context,
                           MaterialPageRoute(
