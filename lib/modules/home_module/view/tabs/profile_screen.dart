@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_auth/appwrite_auth.dart';
+import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
 import 'package:placed_mobile_app/modules/edit_profile_module/view/edit_profile_screen.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
@@ -26,6 +27,8 @@ class _ProfileTabState extends State<ProfileTab> {
     widget.controller.initializeUser();
   }
 
+  AuthController authController = AuthController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +48,18 @@ class _ProfileTabState extends State<ProfileTab> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.black38)),
-                    child: ClipOval(
-                      child: widget.controller.profileImagePreview.value.isNotEmpty ? Image.memory(
-                        widget.controller.profileImagePreview.value,
-                        scale: 100,
-                        fit: BoxFit.cover,
-                        width: 70,
-                        height: 70,
-                      ) : CircularProgressIndicator(),
-                    ),
+                    child: Obx(() {
+                      return ClipOval(
+                        child: widget.controller.profileImagePreview.value
+                            .isNotEmpty ? Image.memory(
+                          widget.controller.profileImagePreview.value,
+                          scale: 100,
+                          fit: BoxFit.cover,
+                          width: 70,
+                          height: 70,
+                        ) : CircularProgressIndicator(),
+                      );
+                    }),
                   ),
                   const SizedBox(
                     width: 10,
@@ -160,11 +166,13 @@ class _ProfileTabState extends State<ProfileTab> {
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   onTap: () {
-                                    showDialog(context: context, builder: (ctx){
+                                    showDialog(
+                                        context: context, builder: (ctx) {
                                       return AlertDialog(
                                         title: Text('Logging you out!'),
                                         content: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
                                           children: [
                                             CircularProgressIndicator(),
                                           ],
@@ -173,12 +181,13 @@ class _ProfileTabState extends State<ProfileTab> {
                                     });
                                     final box = GetStorage();
                                     box.write('userId', '');
-                                    AppWriteAuth.logout().then((value) {
+                                    authController.logout().then((value) {
                                       Future.delayed(Duration(seconds: 2), () {
                                         Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (ctx) => SignInScreen()),
+                                                builder: (ctx) =>
+                                                    SignInScreen()),
                                                 (route) => false);
                                       });
                                     });
