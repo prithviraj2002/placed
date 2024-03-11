@@ -87,7 +87,7 @@ class SignInScreenState extends State<SignInScreen> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomEYEFieldForm(
-                  hintText: 'Set Password',
+                  hintText: 'Enter Password',
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   controller: passwordController,
@@ -111,7 +111,7 @@ class SignInScreenState extends State<SignInScreen> {
                       child: Text(
                         'Forgot Password?',
                         style: GoogleFonts.poppins(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                            fontSize: 16, fontWeight: FontWeight.w600,color: PlacedColors.PrimaryBlueMain),
                       ),
                     ),
                     GradiantButton(

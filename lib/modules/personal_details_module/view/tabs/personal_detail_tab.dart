@@ -126,7 +126,7 @@ class _PersonalTabState extends State<PersonalTab> {
               const SizedBox(height: 16.0),
               // Text Fields
               CustomTextFieldForm(
-                  hintText: 'Full Name',
+                  hintText: 'Full name',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty name'
@@ -170,7 +170,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   Expanded(
                     flex: 2,
                     child: CustomTextFieldForm(
-                        hintText: 'Phone Number',
+                        hintText: 'Phone number',
                         textInputType: TextInputType.number,
                         validator: (val) => val!.isEmpty
                             ? 'Empty number'
@@ -184,7 +184,7 @@ class _PersonalTabState extends State<PersonalTab> {
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Enrollment Number',
+                  hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty IU'
@@ -273,7 +273,7 @@ class _PersonalTabState extends State<PersonalTab> {
               // Descriptive Text Field
               //ToDo: Increase the size of the address text field according to the design.
               CustomTextFieldForm(
-                  hintText: 'Residential Address',
+                  hintText: 'Residential address',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Address'
