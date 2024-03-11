@@ -10,7 +10,7 @@ class AuthController extends GetxController{
 
   models.User? loggedInUser;
 
-  static Future<User> signup(String email, String password) async{
+   Future<User> signup(String email, String password) async{
     print('Entered authcontroller');
     try{
       final response = await AppWriteAuth.signup(email, password);
@@ -25,7 +25,7 @@ class AuthController extends GetxController{
     }
   }
 
-  static Future<Session> login(String email, String password) async{
+  Future<Session> login(String email, String password) async{
     try{
       final response = await AppWriteAuth.signin(email, password);
       final box = GetStorage();
@@ -39,7 +39,7 @@ class AuthController extends GetxController{
     }
   }
 
-  static Future<dynamic> logout() async{
+  Future<dynamic> logout() async{
     try{
       final response = await AppWriteAuth.logout();
       return response;
@@ -51,12 +51,12 @@ class AuthController extends GetxController{
     }
   }
 
-  static Future<void> createRecovery(String email) async{
+  Future<void> createRecovery(String email) async{
     print('Entered createRecovery in auth_controller!');
     await AppWriteAuth.createRecovery(email);
   }
 
-  static Future<void> updatePassword(String email, String code, String password, String passwordAgain) async{
+  Future<void> updatePassword(String email, String code, String password, String passwordAgain) async{
     print('Entered updatePassword in auth_controller!');
     await AppWriteAuth.updatePassword(email, code, password, passwordAgain);
   }

@@ -20,6 +20,7 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: null,
           title: const Text(
             'Upcoming Drives',
             style: TextStyle(

@@ -22,6 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  AuthController authController = AuthController();
 
   @override
   void dispose() {
@@ -34,9 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: BackArrow(),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -105,7 +104,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     GradiantButton(
                       onPressed: () {
                         if(formKey.currentState!.validate()){
-                          AuthController.signup(emailController.text, passwordController.text).then((value) {
+                          showDialog(context: context, builder: (ctx){
+                            return AlertDialog(
+                              title: Text('Signing up'),
+                              content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()],),
+                            );
+                          });
+                          authController.signup(emailController.text, passwordController.text).then((value) {
                             if(value.$createdAt.isNotEmpty){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
                             }
@@ -136,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => SignInScreen()), (route) => false);
                           },
                           child: const Text(
                             'Sign In',

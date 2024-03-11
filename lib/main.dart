@@ -13,7 +13,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final box = GetStorage();
-  final String userId = box.read('userId');
+  final String? userId = box.read('userId');
   AwesomeNotifications().initialize(
     null,
     [

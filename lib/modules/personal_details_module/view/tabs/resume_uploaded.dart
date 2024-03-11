@@ -85,25 +85,7 @@ class Resume_Uploaded extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         child: GradiantButton(
           onPressed: () {
-            if (tabController.index == 2) {
-              controller.selectedResumePath.isNotEmpty
-                  ? controller.createProfileAndUpload().then((value) {
-                      if (value.$createdAt.isNotEmpty) {
-                        controller.uploadResume();
-                        controller.uploadProfileImage();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Home()));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('An error occurred!')));
-                      }
-                    })
-                  : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('No Resume has been selected!')));
-            } else {
-              tabController.animateTo((tabController.index + 1));
-            }
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
           },
           text: 'Save & Continue',
         ),
