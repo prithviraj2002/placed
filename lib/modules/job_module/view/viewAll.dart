@@ -48,7 +48,7 @@ class ViewAll extends StatelessWidget {
                             companyPosition: jobPost.positionOffered,
                             logo: 'assets/application_submitted.svg',
                             companyName: jobPost.companyName,
-                            jobType: 'Internship'
+                            jobType: jobPost.jobType
                         );
                       }
                       else{

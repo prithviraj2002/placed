@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/personal_details_module/view/tabs/resume_uploaded.dart';
@@ -10,6 +11,7 @@ import '../../controller/profile_controller.dart';
 class ResumeTab extends StatelessWidget {
   ProfileController controller;
   TabController tabController;
+
   ResumeTab({required this.controller, required this.tabController, super.key});
 
   @override
@@ -24,14 +26,13 @@ class ResumeTab extends StatelessWidget {
             height: 330,
             width: 330,
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 controller.getResumePdf();
               },
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(14.0)),
-                  color: PlacedColors.bgColor
-                ),
+                    borderRadius: const BorderRadius.all(Radius.circular(14.0)),
+                    color: PlacedColors.bgColor),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -45,17 +46,17 @@ class ResumeTab extends StatelessWidget {
                       children: [
                         Text(
                           'Upload your resume now to',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 18,
-                            color: PlacedColors.textColor
-                          ),
+                              color: PlacedColors.PrimaryBlueDark,
+                              fontWeight: FontWeight.w400),
                         ),
                         Text(
                           'seamlessly apply for jobs',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 18,
-                              color: PlacedColors.textColor
-                          ),
+                              color: PlacedColors.PrimaryBlueDark,
+                              fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
@@ -64,7 +65,9 @@ class ResumeTab extends StatelessWidget {
               ),
             ),
           ),
-          Obx(() => controller.selectedResumePath.isEmpty ? Container() : const Text('Resume selected Successfully!'))
+          Obx(() => controller.selectedResumePath.isEmpty
+              ? Container()
+              : const Text('Resume selected Successfully!'))
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -100,5 +103,3 @@ class ResumeTab extends StatelessWidget {
     );
   }
 }
-
-

@@ -11,9 +11,10 @@ class BuildMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.lato(
+      style: GoogleFonts.poppins(
         color: PlacedColors.greyColor,
         fontSize: 14,
+        fontWeight: FontWeight.w400,
       ),
       textAlign: TextAlign.center,
     );;

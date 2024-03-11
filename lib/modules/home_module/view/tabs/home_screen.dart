@@ -21,11 +21,12 @@ class HomeTab extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           leading: null,
-          title: const Text(
+          title: Text(
             'Upcoming Drives',
-            style: TextStyle(
-              fontSize: PlacedDimens.heading_text,
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              color: PlacedColors.PrimaryBlack,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
@@ -95,7 +96,7 @@ class HomeTab extends StatelessWidget {
                                                 companyPosition: jobPost.positionOffered,
                                                 logo: 'assets/application_submitted.svg',
                                                 companyName: jobPost.companyName,
-                                                jobType: 'Internship'
+                                                jobType: jobPost.jobType
                                             );
                                           }
                                           else {
@@ -117,6 +118,7 @@ class HomeTab extends StatelessWidget {
                   );
           },
         ));
+
   }
 }
 

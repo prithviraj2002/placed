@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
@@ -42,14 +43,19 @@ class _ChatScreenState extends State<ChatScreen> {
               const SizedBox(width: 8),
               Text(
                 widget.jobPost.companyName, // Replace with the profile name
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: PlacedColors.PrimaryBlack),
               ),
             ],
-          ),
-        ),
+          )),
         body: Obx(() {
           return controller.relevantMessages[widget.jobPost.jobId] != null ?
-            ListView.separated(itemBuilder: (ctx, index) {
+            ListView.separated(
+            reverse: true,
+            padding: const EdgeInsets.all(20.0),
+            itemBuilder: (ctx, index) {
             return CustomMessage(
               msgText: controller.relevantMessages[widget.jobPost.jobId]![index]
                   .message,

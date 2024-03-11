@@ -247,9 +247,11 @@ class _PersonalTabState extends State<PersonalTab> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: PlacedColors.bgColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      color: Color(0xFFE5ECF6),
                   ),
                   width: double.infinity,
+                  height: 48,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

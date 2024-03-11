@@ -123,12 +123,14 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Obx(() =>
-                    widget.controller.imagePath.isEmpty
-                        ? Image.memory(
-                      homeController.profileImage.value, fit: BoxFit.cover,)
-                        : Image.file(File(widget.controller.imagePath.value),
-                        fit: BoxFit.cover)),
+                    child: Obx((){
+                        return widget.controller.imagePath.isEmpty
+                            ? Image.memory(
+                          homeController.profileImage.value, fit: BoxFit.cover,)
+                            : widget.controller.imagePath.isNotEmpty ? Image.file(File(widget.controller.imagePath.value),
+                            fit: BoxFit.cover) : Center(child: CircularProgressIndicator(),);
+                      }
+                    ),
                   ),
                   Positioned(
                     bottom: 2.0,

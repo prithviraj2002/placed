@@ -29,18 +29,24 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
         itemBuilder: (ctx, i) {
           int index = homeController.jobPosts.length - 1 - i;
           return Container(
-            // color: PlacedColors.PrimaryBlueDark,
             decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black12),
-                borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: PlacedColors.PrimaryBlueMain.withOpacity(0.1),
+                  blurRadius: 16,
+                  offset: Offset(3, 4), // changes position of shadow
                 ),
+              ],
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: PlacedColors.PrimaryOffWhite,
+            ),
             padding: const EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width * 0.8,
             height: 213,
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SvgPicture.asset(
@@ -57,25 +63,27 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                         homeController.jobPosts[index].companyName,
                         textAlign: TextAlign.start,
                         style: GoogleFonts.poppins(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: PlacedColors.PrimaryBlack),
                       ),
                     ),
-                    const SizedBox(width: 104),
-                    //ToDo: Check for filters and display visibility.
-                    // Container(
-                    //   margin: EdgeInsets.all(6),
-                    //   height: 20,
-                    //   width: 55,
-                    //   decoration:
-                    //       BoxDecoration(color: PlacedColors.SecondaryGreen),
-                    //   child: Center(
-                    //     child: Text(
-                    //       'Eligible',
-                    //       style: TextStyle(
-                    //           fontSize: 12, color: PlacedColors.PrimaryBlack),
-                    //     ),
-                    //   ),
-                    // )
+                    Spacer(),
+                    //ToDo: Check for eligibility and display here.
+                    Container(
+                      margin: EdgeInsets.all(6),
+                      height: 20,
+                      width: 55,
+                      decoration:
+                          BoxDecoration(color: PlacedColors.SecondaryGreen),
+                      child: Center(
+                        child: Text(
+                          'Eligible',
+                          style: GoogleFonts.poppins(
+                              fontSize: 12, color: Color(0xFF39B070)),
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -93,7 +101,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                       height: 4,
                     ),
                     CustomRow(
-                      title: 'Internship',
+                      title: homeController.jobPosts[index].jobType,
                       icon: 'assets/window_clock.svg',
                     ),
                     const SizedBox(
@@ -189,6 +197,7 @@ class CustomRow extends StatelessWidget {
           style: GoogleFonts.poppins(
             color: Color(0xFF6C6C6C),
             fontSize: 12,
+              fontWeight: FontWeight.w500
           ),
         ),
       ],
