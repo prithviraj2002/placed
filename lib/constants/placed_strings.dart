@@ -17,4 +17,13 @@ class PlacedStrings{
     ];
     return options;
   }
+  static List<String> GenderOption(){
+    List<String> options = [
+      "Male",
+      "Female",
+      "Other",
+      "Prefer not to describe",
+    ];
+    return options;
+  }
 }

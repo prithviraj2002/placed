@@ -79,7 +79,7 @@ class _HomeState extends State<Home> {
                     shape: BoxShape.circle,
                   ),
                   child: SvgPicture.asset(
-                    'assets/time_clock_circle.svg',
+                    'assets/announcement.svg',
                     color: _selectedIndex == 2 ? PlacedColors.PrimaryBlueMain : PlacedColors.PrimaryBlack,
                     height: PlacedDimens.home_icon_size,
                     width: PlacedDimens.home_icon_size,

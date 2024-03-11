@@ -32,7 +32,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       height: 48,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Color(0xFFE5ECF6),
+        color: PlacedColors.PrimaryWhite,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Center(
@@ -42,8 +42,14 @@ class _CustomDropDownState extends State<CustomDropDown> {
             elevation: 16,
             isExpanded: true,
             style: TextStyle(
-                color: PlacedColors.textfield_text_color, fontSize: 16.0),
-            onChanged: null,
+                color: PlacedColors.PrimaryGrey3, fontSize: 16.0),
+            onChanged: (String? changedValue) {
+              my_services = changedValue;
+              setState(() {
+                my_services;
+                _onclicked(my_services);
+              });
+            },
             value: my_services,
             items: dropDownOption,
           ),

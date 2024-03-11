@@ -196,7 +196,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                   Expanded(
                     flex: 2,
                     child: CustomTextFieldForm(
-                        hintText: 'Phone Number',
+                        hintText: 'Phone number',
                         textInputType: TextInputType.number,
                         validator: (val) =>
                         val!.isEmpty
@@ -211,7 +211,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Enrollment Number',
+                  hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
                   validator: (val) =>
                   val!.length == 0
