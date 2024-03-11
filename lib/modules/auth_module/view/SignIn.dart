@@ -25,8 +25,8 @@ class SignInScreenState extends State<SignInScreen> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  AuthController authController = AuthController();
+
 
   @override
   void dispose() {
@@ -39,10 +39,8 @@ class SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: BackArrow(),
-      ),
+        resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -87,13 +85,13 @@ class SignInScreenState extends State<SignInScreen> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomEYEFieldForm(
-                  hintText: 'Enter Password',
+                  hintText: 'Password',
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   controller: passwordController,
                   validator: (String? val) {
-                    return null;
-                  },
+                      return null;
+                    },
                 ),
               ),
               SizedBox(height: 32.0),
@@ -111,34 +109,32 @@ class SignInScreenState extends State<SignInScreen> {
                       child: Text(
                         'Forgot Password?',
                         style: GoogleFonts.poppins(
-                            fontSize: 16, fontWeight: FontWeight.w600,color: PlacedColors.PrimaryBlueMain),
+                            fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ),
                     GradiantButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          AuthController.login(
-                                  emailController.text, passwordController.text)
-                              .then((value) {
-                            if (value.$createdAt.isNotEmpty) {
+                        if(formKey.currentState!.validate()){
+                          showDialog(context: context, builder: (ctx){
+                            return AlertDialog(
+                              title: Text('Signing In'),
+                              content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()],),
+                            );
+                          });
+                          authController.login(
+                              emailController.text, passwordController.text).then((value) {
+                            if(value.$createdAt.isNotEmpty){
                               final box = GetStorage();
-                              final String userId = box.read('userId');
-                              if (userId.isNotEmpty) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Home()));
-                              } else if (userId.isEmpty) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PersonalDetail()));
+                              final String? userId = box.read('userId');
+                              if(userId != null && userId.isNotEmpty){
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
                               }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text('An error occurred!')));
+                              else if(userId == null || userId.isEmpty){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
+                              }
+                            }
+                            else {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred!')));
                             }
                           });
                         }
@@ -164,10 +160,7 @@ class SignInScreenState extends State<SignInScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()));
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => SignUpScreen()), (route) => false);
                           },
                           child: Text(
                             'Sign Up',

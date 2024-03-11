@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
+import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 
@@ -33,10 +34,10 @@ class AppWriteDb {
       String profileId) async {
     try {
       final response = await databases.updateDocument(
-          databaseId: AppWriteStrings.dbID,
-          collectionId: AppWriteStrings.profileCollectionsId,
-          documentId: profileId,
-          data: profile.toMap(),
+        databaseId: AppWriteStrings.dbID,
+        collectionId: AppWriteStrings.profileCollectionsId,
+        documentId: profileId,
+        data: profile.toMap(),
       );
       return response;
     } on AppwriteException catch (e) {
@@ -56,8 +57,6 @@ class AppWriteDb {
           collectionId: AppWriteStrings.profileCollectionsId,
           documentId: id
       );
-      print(response.data['name']);
-      print(response.data.toString());
       return Profile.fromJson(response.data, userId);
     } on AppwriteException catch (e) {
       print('An Exception occurred while gettingProfileById: $e');
@@ -66,7 +65,7 @@ class AppWriteDb {
   }
 
   //After applying to a job, that particular jobId should be added to profile's appliedJobs list in appwrite
-  static Future<void> addJobToProfile(List<String> appliedJobs) async {
+  static Future<void> addJobToProfile(List<dynamic> appliedJobs) async {
     final box = GetStorage();
     final String userId = box.read('userId');
     try {
@@ -115,15 +114,34 @@ class AppWriteDb {
   static Future<JobPost> getJobById(String id) async {
     try {
       final response = await databases.listDocuments(
-          databaseId: AppWriteStrings.dbID, collectionId: AppWriteStrings.jobsCollectionId,
-        queries: [
-          Query.equal('jobId', id)
-        ]
+          databaseId: AppWriteStrings.dbID,
+          collectionId: AppWriteStrings.jobsCollectionId,
+          queries: [
+            Query.equal('jobId', id)
+          ]
       );
-      return JobPost.fromJson(response.documents[0].data, AppWriteStrings.dbID);
+      return JobPost.fromJson(response.documents[0].data, response.documents[0].$id);
     } on AppwriteException catch (e) {
       print(
           'An error occurred while getting job post by id from appwrite_db!: $e');
+      rethrow;
+    }
+  }
+
+  //To get all broadcast messages
+  static Future<List<BroadcastMessage>> getBroadcastMessages() async {
+    List<BroadcastMessage> broadCastMessageList = [];
+    try {
+      final response = await databases.listDocuments(
+          databaseId: AppWriteStrings.dbID, collectionId: AppWriteStrings.broadcastCollectionId
+      );
+      for(var msg in response.documents){
+        broadCastMessageList.add(BroadcastMessage.fromJson(msg.data));
+      }
+      return broadCastMessageList;
+    } on AppwriteException catch (e) {
+      print(
+          'An error occurred while getting broadcast message from id in appwrite db!: $e');
       rethrow;
     }
   }

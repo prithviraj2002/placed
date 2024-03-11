@@ -15,7 +15,7 @@ class ProfileController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    // getUserId();
+    getUserId();
   }
 
   void getUserId(){
