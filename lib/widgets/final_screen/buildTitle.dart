@@ -13,7 +13,7 @@ class BuildTitle extends StatelessWidget {
       text,
       style: TextStyle(
         color: PlacedColors.PrimaryBlack,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
         fontSize: PlacedDimens.font_size_16,
       ),
       textAlign: TextAlign.center,

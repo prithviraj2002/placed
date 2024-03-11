@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
@@ -49,8 +50,10 @@ class Resume_Uploaded extends StatelessWidget {
                           SizedBox(height: 20),
                           Text(
                             'Resume Name',
-                            style: TextStyle(
-                                fontSize: 18, color: PlacedColors.textColor),
+                            style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                color: PlacedColors.PrimaryBlueDark,
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -68,7 +71,10 @@ class Resume_Uploaded extends StatelessWidget {
                     },
                     child: Text(
                       'Upload New',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: PlacedColors.PrimaryBlueMain),
                     ),
                   ),
                 ),

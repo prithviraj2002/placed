@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
 import 'package:placed_mobile_app/modules/announcement/controller/announcements_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/modules/announcement/view/chat_screen.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/widgets/custom_logo.dart';
-
 import '../../../constants/placed_colors.dart';
-import '../../../constants/placed_dimensions.dart';
 
 class Announcement extends StatefulWidget {
   Announcement({super.key});
@@ -35,12 +34,12 @@ class _AnnouncementState extends State<Announcement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Broadcast Channels',
-          style: TextStyle(
-            fontSize: PlacedDimens.heading_text,
-            fontWeight: FontWeight.bold,
-          ),
+          style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: PlacedColors.PrimaryBlack),
         ),
       ),
       body: Container(
@@ -49,10 +48,10 @@ class _AnnouncementState extends State<Announcement> {
           children: [
             Text(
               'Broadcast channels include one-sided messages from the T&P Dept. regarding the jobs you have applied to',
-              style: TextStyle(
-                color: PlacedColors.PrimaryGrey3,
-                fontSize: 16,
-              ),
+              style: GoogleFonts.poppins(
+                  color: PlacedColors.PrimaryGrey3,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: 16,
@@ -77,7 +76,10 @@ class _AnnouncementState extends State<Announcement> {
                                             ChatScreen(jobPost: jobPost,)));
                                   },
                                   leading: const CustomLogo(),
-                                  title: Text(jobPost.companyName),
+                                  title: Text(jobPost.companyName,  style: TextStyle(
+                                        color: PlacedColors.PrimaryBlack,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),),
                                   subtitle: Obx(() {
                                     if(announcementController.relevantMessages.containsKey(homeController.appliedJobs[index])){
                                       return announcementController.relevantMessages[homeController.appliedJobs[index]] != null ?
@@ -86,7 +88,12 @@ class _AnnouncementState extends State<Announcement> {
                                           .appliedJobs[index]]!.last.message,
                                         softWrap: true,
                                         maxLines: 1,
-                                        overflow: TextOverflow.fade,) : LinearProgressIndicator();
+                                        overflow: TextOverflow.fade,
+                                        style: GoogleFonts.poppins(
+                                        color: PlacedColors.PrimaryGrey3,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                        ) : LinearProgressIndicator();
                                     }
                                     else{
                                       return const Text('No new messages');
@@ -108,7 +115,7 @@ class _AnnouncementState extends State<Announcement> {
                         });
                   },
                   separatorBuilder: (ctx, index) {
-                    return const SizedBox(height: 4,);
+                    return const SizedBox(height: 16,);
                   },
                   itemCount: homeController.appliedJobs
                       .length) : const Center(

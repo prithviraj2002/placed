@@ -123,29 +123,29 @@ class HomeController extends GetxController {
     final realtime = Realtime(AppWriteDb.client);
     subscription = realtime
         .subscribe([
-          "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents"
-        ])
+      "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents"
+    ])
         .stream
         .listen((event) {
-          if (event.events.contains(
-              "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
-            final JobPost jobPost = JobPost.fromJson(event.payload, event.payload["\$id"]);
-            AwesomeNotifications().createNotification(
-                content: NotificationContent(
-                    id: 11,
-                    channelKey: 'basic_channel',
-                  title: '${jobPost.companyName} is looking for ${jobPost.positionOffered}'
-                )
-            );
-            jobPosts.add(JobPost.fromJson(event.payload, event.payload["\$id"]));
-          } else if (event.events.contains(
-              "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
-            getAllJobs();
-          } else if (event.events.contains(
-              "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.delete")) {
-            jobPosts.remove(JobPost.fromJson(event.payload, event.payload["\$id"]));
-          }
-        });
+      if (event.events.contains(
+          "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
+        final JobPost jobPost = JobPost.fromJson(event.payload, event.payload["\$id"]);
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
+                id: 11,
+                channelKey: 'basic_channel',
+                title: '${jobPost.companyName} is looking for ${jobPost.positionOffered}'
+            )
+        );
+        jobPosts.add(JobPost.fromJson(event.payload, event.payload["\$id"]));
+      } else if (event.events.contains(
+          "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.create")) {
+        getAllJobs();
+      } else if (event.events.contains(
+          "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.delete")) {
+        jobPosts.remove(JobPost.fromJson(event.payload, event.payload["\$id"]));
+      }
+    });
   }
 
   void stopListeningToJobs() {
