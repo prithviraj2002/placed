@@ -24,22 +24,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
-  AuthController authController = AuthController();
 
   @override
   void dispose() {
     // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
-    confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: BackArrow(),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -113,8 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return "Empty Password!";
                     } else if (val.length < 8) {
                       return 'Password should be at least of 8 characters!';
-                    } else if(val != passwordController.text){
-                      return 'Passwords do not match!';}
+                    }
                     return null;
                   },
                   controller: confirmPasswordController,
@@ -137,19 +136,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     GradiantButton(
                       onPressed: () {
-                        if(formKey.currentState!.validate() && confirmPasswordController.text == passwordController.text){
-                          showDialog(context: context, builder: (ctx){
-                            return AlertDialog(
-                              title: Text('Signing up'),
-                              content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()],),
-                            );
-                          });
-                          authController.signup(emailController.text, passwordController.text).then((value) {
-                            if(value.$createdAt.isNotEmpty){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
-                            }
-                            else {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred!')));
+                        if (formKey.currentState!.validate()) {
+                          AuthController.signup(
+                                  emailController.text, passwordController.text)
+                              .then((value) {
+                            if (value.$createdAt.isNotEmpty) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PersonalDetail()));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('An error occurred!')));
                             }
                           });
                         }
@@ -175,7 +174,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => SignInScreen()), (route) => false);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignInScreen()));
                           },
                           child: Text(
                             'Sign In',

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
-import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/personal_details_module/view/tabs/resume_uploaded.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../controller/profile_controller.dart';
@@ -75,25 +74,27 @@ class ResumeTab extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         child: GradiantButton(
           onPressed: () {
-            if(tabController.index == 2){
-              showDialog(context: context, builder: (ctx){
-                return AlertDialog(
-                  title: Text('Creating profile, taking you to drives!'),
-                  content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()],),
-                );
-              });
-              controller.selectedResumePath.isNotEmpty ?
-              controller.createProfileAndUpload().then((value){
-                if(value.$createdAt.isNotEmpty){
-                  controller.uploadResume();
-                  controller.uploadProfileImage();
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
-                }
-                else{
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred!')));
-                }
-              }) : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No Resume has been selected!')));
-            }else{
+            if (tabController.index == 2) {
+              controller.selectedResumePath.isNotEmpty
+                  ? controller.createProfileAndUpload().then((value) {
+                      if (value.$createdAt.isNotEmpty) {
+                        controller.uploadResume();
+                        controller.uploadProfileImage();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Resume_Uploaded(
+                                    controller: controller,
+                                    tabController: tabController)));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('An error occurred!')));
+                      }
+                    })
+                  : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('No Resume has been selected!')));
+            } else {
               tabController.animateTo((tabController.index + 1));
             }
           },

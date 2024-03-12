@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import '../constants/placed_colors.dart';
 import '../modules/home_module/controller/home_controller.dart';
 import '../modules/job_module/view/job_description.dart';
@@ -26,8 +25,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemBuilder: (ctx, i) {
-          int index = homeController.jobPosts.length - 1 - i;
+        itemBuilder: (ctx, index) {
           return Container(
             decoration: BoxDecoration(
               boxShadow: [
@@ -68,8 +66,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                             color: PlacedColors.PrimaryBlack),
                       ),
                     ),
-                    Spacer(),
-                    //ToDo: Check for eligibility and display here.
+                    new Spacer(),
                     Container(
                       margin: EdgeInsets.all(6),
                       height: 20,
@@ -94,21 +91,21 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomRow(
-                      title: homeController.jobPosts[index].positionOffered,
+                      title: 'Junior Software Engineer',
                       icon: 'assets/suitcase.svg',
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     CustomRow(
-                      title: homeController.jobPosts[index].jobType,
+                      title: 'Internship',
                       icon: 'assets/window_clock.svg',
                     ),
                     const SizedBox(
                       width: 4,
                     ),
                     CustomRow(
-                      title: "Apply by ${homeController.jobPosts[index].endDate.substring(0, 10)}",
+                      title: "Apply by 31/01/2024",
                       icon: 'assets/hourglass.svg',
                     ),
                     const SizedBox(
@@ -132,7 +129,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => JobDescription(jobPost: homeController.jobPosts[index])));
+                                builder: (context) => JobDescription()));
                       },
                       style: ButtonStyle(
                         shape:
@@ -165,7 +162,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
-            width: 8,
+            width: 4,
           );
         },
         itemCount: homeController.jobPosts.length,

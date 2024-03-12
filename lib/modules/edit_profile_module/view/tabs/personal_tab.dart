@@ -123,14 +123,12 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Obx((){
-                        return widget.controller.imagePath.isEmpty
-                            ? Image.memory(
-                          homeController.profileImage.value, fit: BoxFit.cover,)
-                            : widget.controller.imagePath.isNotEmpty ? Image.file(File(widget.controller.imagePath.value),
-                            fit: BoxFit.cover) : Center(child: CircularProgressIndicator(),);
-                      }
-                    ),
+                    child: Obx(() =>
+                    widget.controller.imagePath.isEmpty
+                        ? Image.memory(
+                      homeController.profileImage.value, fit: BoxFit.cover,)
+                        : Image.file(File(widget.controller.imagePath.value),
+                        fit: BoxFit.cover)),
                   ),
                   Positioned(
                     bottom: 2.0,
@@ -198,7 +196,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                   Expanded(
                     flex: 2,
                     child: CustomTextFieldForm(
-                        hintText: 'Phone Number',
+                        hintText: 'Phone number',
                         textInputType: TextInputType.number,
                         validator: (val) =>
                         val!.isEmpty
@@ -213,7 +211,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Enrollment Number',
+                  hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
                   validator: (val) =>
                   val!.length == 0

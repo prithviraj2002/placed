@@ -5,9 +5,7 @@ import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 import 'package:placed_mobile_app/modules/edit_profile_module/controller/edit_profile_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
-import 'package:placed_mobile_app/utils/utils.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class EditResumeTab extends StatefulWidget {
   EditProfileController controller;
@@ -67,12 +65,7 @@ class _EditResumeTabState extends State<EditResumeTab> {
             Obx(() =>
             widget.controller.selectedResumePath.isEmpty
                 ? Container()
-                : const Text('Resume selected Successfully!')),
-            const SizedBox(height: 10,),
-            OutlinedButton(onPressed: () {
-              final uri = Uri.parse(Utils.getResumeUrl(homeController.userId));
-              launchUrl(uri);
-            }, child: const Text('View Uploaded Resume'))
+                : const Text('Resume selected Successfully!'))
           ],
         );
       }),

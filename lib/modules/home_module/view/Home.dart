@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,11 +26,6 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed){
-      if(!isAllowed){
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
   }
 
   void _onItemTapped(int index) {
@@ -85,7 +79,7 @@ class _HomeState extends State<Home> {
                     shape: BoxShape.circle,
                   ),
                   child: SvgPicture.asset(
-                    'assets/time_clock_circle.svg',
+                    'assets/announcement.svg',
                     color: _selectedIndex == 2 ? PlacedColors.PrimaryBlueMain : PlacedColors.PrimaryBlack,
                     height: PlacedDimens.home_icon_size,
                     width: PlacedDimens.home_icon_size,

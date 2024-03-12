@@ -10,7 +10,6 @@ class EnterEmail extends StatelessWidget {
 
   final TextEditingController emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  AuthController authController = AuthController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class EnterEmail extends StatelessWidget {
               GradiantButton(
                 onPressed: () {
                   if(formKey.currentState!.validate()){
-                    authController.createRecovery(emailController.text).then((value) {
+                    AuthController.createRecovery(emailController.text).then((value) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
