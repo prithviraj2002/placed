@@ -15,6 +15,9 @@ import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../../../constants/placed_strings.dart';
+import '../../../../widgets/custom_drop_down.dart';
+
 class EditPersonalTab extends StatefulWidget {
   EditProfileController controller;
   TabController tabController;
@@ -183,11 +186,10 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: const Color(0xFFB5D8F6),
+                          color: PlacedColors.PrimaryWhite,
                           borderRadius: BorderRadius.circular(10)),
                       child: const CountryCodePicker(
                         boxDecoration: BoxDecoration(color: Colors.white),
-                        //Color(0xFFB5D8F6)
                         initialSelection: 'IN',
                       ),
                     ),
@@ -222,17 +224,16 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                   controller: IUController,
                   obscureText: false),
               const SizedBox(height: 16.0),
-              CustomTextFieldForm(
-                  hintText: 'Gender',
-                  textInputType: TextInputType.text,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Empty Gender value';
-                    }
-                    return null;
-                  },
-                  controller: genderController,
-                  obscureText: false),
+              CustomDropDown(
+                dropDownOption: PlacedStrings.GenderOption().map((
+                    String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                text: 'Gender',
+              ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               //ToDo: Implement generic Date picker
               GestureDetector(
@@ -243,8 +244,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                         return Dialog(
                           surfaceTintColor: Colors.white,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 4),
+                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,25 +253,18 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                                 SfDateRangePicker(
                                   showNavigationArrow: true,
                                   controller: dateController,
-                                  selectionColor: PlacedColors
-                                      .PrimaryBlueMain,
+                                  selectionColor: PlacedColors.PrimaryBlueMain,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
                                     TextButton(onPressed: () {
                                       setState(() {
-                                        selectedDate =
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(
-                                                dateController.selectedDate!)
-                                                .toString();
+                                        selectedDate = DateFormat('dd-MM-yyyy').format(dateController.selectedDate!).toString();
                                       });
                                       Navigator.pop(context);
                                     }, child: Text('OK')),
-                                    TextButton(onPressed: () {
-                                      Navigator.pop(context);
-                                    }, child: Text('Cancel'))
+                                    TextButton(onPressed: () {Navigator.pop(context);}, child: Text('Cancel'))
                                   ],
                                 ),
                               ],
@@ -283,21 +276,23 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: PlacedColors.bgColor,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    color: PlacedColors.PrimaryWhite,
                   ),
                   width: double.infinity,
+                  height: 48,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         selectedDate,
                         style: TextStyle(
-                          color: PlacedColors.textfield_text_color,
+                          color: PlacedColors.PrimaryGrey3,
                         ),
                       ),
                       Icon(
                         Icons.edit_calendar_outlined,
-                        color: PlacedColors.textfield_text_color,
+                        color: PlacedColors.PrimaryGrey3,
                       )
                     ],
                   ),
@@ -307,7 +302,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               // Descriptive Text Field
               //ToDo: Increase the size of the address text field according to the design.
               CustomTextFieldForm(
-                  hintText: 'Residential Address',
+                  hintText: 'Residential address',
                   textInputType: TextInputType.text,
                   validator: (val) =>
                   val!.length == 0

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "300767404611",
+    "project_id": "placed-ac030",
+    "storage_bucket": "placed-ac030.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300767404611:android:3bdf792e35d5823c716af6",
+        "android_client_info": {
+          "package_name": "com.example.placed_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiJuxbb4fQ6t7ocDzkMqFOch__FSRGweM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
