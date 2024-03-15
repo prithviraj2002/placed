@@ -113,7 +113,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
           child: Column(
             children: [
               CustomTextFieldForm(
-                  hintText: 'Current Semester*',
+                  hintText: 'Current semester*',
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null || val.isEmpty) {

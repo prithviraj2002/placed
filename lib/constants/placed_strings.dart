@@ -13,11 +13,16 @@ class PlacedStrings{
   }
   static List<String> degreeOption(){
     List<String> options = [
-      "IITE",
-      "IIMS",
-      "IIICT",
-      "IISHLS",
-      "IIDEA",
+      "B.Tech",
+    ];
+    return options;
+  }
+  static List<String> GenderOption(){
+    List<String> options = [
+      "Male",
+      "Female",
+      "Other",
+      "Prefer not to describe",
     ];
     return options;
   }

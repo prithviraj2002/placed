@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
+import 'package:placed_mobile_app/constants/placed_strings.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
+import 'package:placed_mobile_app/widgets/custom_drop_down.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../../../constants/placed_dimensions.dart';
@@ -126,7 +128,7 @@ class _PersonalTabState extends State<PersonalTab> {
               const SizedBox(height: 16.0),
               // Text Fields
               CustomTextFieldForm(
-                  hintText: 'Full Name',
+                  hintText: 'Full name',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty name'
@@ -157,7 +159,7 @@ class _PersonalTabState extends State<PersonalTab> {
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: const Color(0xFFB5D8F6),
+                          color: PlacedColors.PrimaryWhite,
                           borderRadius: BorderRadius.circular(10)),
                       child: const CountryCodePicker(
                         boxDecoration: BoxDecoration(color: Colors.white),
@@ -170,7 +172,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   Expanded(
                     flex: 2,
                     child: CustomTextFieldForm(
-                        hintText: 'Phone Number',
+                        hintText: 'Phone number',
                         textInputType: TextInputType.number,
                         validator: (val) => val!.isEmpty
                             ? 'Empty number'
@@ -184,7 +186,7 @@ class _PersonalTabState extends State<PersonalTab> {
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Enrollment Number',
+                  hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty IU'
@@ -194,17 +196,16 @@ class _PersonalTabState extends State<PersonalTab> {
                   controller: IUController,
                   obscureText: false),
               const SizedBox(height: 16.0),
-              CustomTextFieldForm(
-                  hintText: 'Gender',
-                  textInputType: TextInputType.text,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Empty Gender value';
-                    }
-                    return null;
-                  },
-                  controller: genderController,
-                  obscureText: false),
+              CustomDropDown(
+                dropDownOption: PlacedStrings.GenderOption().map((
+                    String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                text: 'Gender',
+              ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               //ToDo: Implement generic Date picker
               GestureDetector(
@@ -248,7 +249,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Color(0xFFE5ECF6),
+                      color: PlacedColors.PrimaryWhite,
                   ),
                   width: double.infinity,
                   height: 48,
@@ -258,12 +259,12 @@ class _PersonalTabState extends State<PersonalTab> {
                       Text(
                         selectedDate,
                         style: TextStyle(
-                          color: PlacedColors.textfield_text_color,
+                          color: PlacedColors.PrimaryGrey3,
                         ),
                       ),
                       Icon(
                         Icons.edit_calendar_outlined,
-                        color: PlacedColors.textfield_text_color,
+                        color: PlacedColors.PrimaryGrey3,
                       )
                     ],
                   ),
@@ -273,7 +274,7 @@ class _PersonalTabState extends State<PersonalTab> {
               // Descriptive Text Field
               //ToDo: Increase the size of the address text field according to the design.
               CustomTextFieldForm(
-                  hintText: 'Residential Address',
+                  hintText: 'Residential address',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Address'
@@ -284,7 +285,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Github Link',
+                  hintText: 'Github link',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Link'
@@ -295,7 +296,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'LinkedIn Profile Link',
+                  hintText: 'LinkedIn Profile link',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Link'
@@ -306,7 +307,7 @@ class _PersonalTabState extends State<PersonalTab> {
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Other Website Link (optional)',
+                  hintText: 'Other Website link (optional)',
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Link'

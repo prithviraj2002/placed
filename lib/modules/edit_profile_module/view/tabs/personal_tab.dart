@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/constants/placed_dimensions.dart';
+import 'package:placed_mobile_app/constants/placed_strings.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 import 'package:placed_mobile_app/modules/edit_profile_module/controller/edit_profile_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/utils/utils.dart';
+import 'package:placed_mobile_app/widgets/custom_drop_down.dart';
 import 'package:placed_mobile_app/widgets/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -185,7 +187,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: const Color(0xFFB5D8F6),
+                          color: PlacedColors.PrimaryWhite,
                           borderRadius: BorderRadius.circular(10)),
                       child: const CountryCodePicker(
                         boxDecoration: BoxDecoration(color: Colors.white),
@@ -198,7 +200,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                   Expanded(
                     flex: 2,
                     child: CustomTextFieldForm(
-                        hintText: 'Phone Number',
+                        hintText: 'Phone number',
                         textInputType: TextInputType.number,
                         validator: (val) =>
                         val!.isEmpty
@@ -213,7 +215,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
-                  hintText: 'Enrollment Number',
+                  hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
                   validator: (val) =>
                   val!.length == 0
@@ -224,17 +226,16 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                   controller: IUController,
                   obscureText: false),
               const SizedBox(height: 16.0),
-              CustomTextFieldForm(
-                  hintText: 'Gender',
-                  textInputType: TextInputType.text,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Empty Gender value';
-                    }
-                    return null;
-                  },
-                  controller: genderController,
-                  obscureText: false),
+              CustomDropDown(
+                dropDownOption: PlacedStrings.GenderOption().map((
+                    String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                text: 'Gender',
+              ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               //ToDo: Implement generic Date picker
               GestureDetector(
@@ -245,8 +246,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                         return Dialog(
                           surfaceTintColor: Colors.white,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 4),
+                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,21 +285,23 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: PlacedColors.bgColor,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    color: PlacedColors.PrimaryWhite,
                   ),
                   width: double.infinity,
+                  height: 48,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         selectedDate,
                         style: TextStyle(
-                          color: PlacedColors.textfield_text_color,
+                          color: PlacedColors.PrimaryGrey3,
                         ),
                       ),
                       Icon(
                         Icons.edit_calendar_outlined,
-                        color: PlacedColors.textfield_text_color,
+                        color: PlacedColors.PrimaryGrey3,
                       )
                     ],
                   ),
@@ -309,13 +311,13 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               // Descriptive Text Field
               //ToDo: Increase the size of the address text field according to the design.
               CustomTextFieldForm(
-                  hintText: 'Residential Address',
+                  hintText: 'Residential address',
                   textInputType: TextInputType.text,
                   validator: (val) =>
                   val!.length == 0
-                      ? 'Empty Address'
+                      ? 'Empty address'
                       : val.length < 2
-                      ? 'Invalid Address'
+                      ? 'Invalid address'
                       : null,
                   controller: AddressController,
                   obscureText: false),
