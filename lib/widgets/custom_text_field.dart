@@ -14,15 +14,25 @@ class CustomTextFieldForm extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText,
       style: GoogleFonts.poppins(
-            color: PlacedColors.PrimaryGrey3,
+            color: PlacedColors.PrimaryBlack,
             fontSize: 16,
             letterSpacing: 1.2,
       ),
       decoration: InputDecoration(
-        fillColor: PlacedColors.PrimaryBlueLight1,
+        errorMaxLines: 2,
+        fillColor: PlacedColors.PrimaryBlueLight2,
         filled: true,
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: PlacedColors.SecondaryRed)
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: PlacedColors.PrimaryBlueLight1)
+        ),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: PlacedColors.PrimaryBlueLight1)
+        ),
         border: OutlineInputBorder(
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: PlacedColors.PrimaryBlueLight1),
           borderRadius: BorderRadius.circular(8.0),
         ),
         contentPadding: EdgeInsets.all(12.0),
@@ -32,7 +42,7 @@ class CustomTextFieldForm extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
-        errorStyle: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, letterSpacing: 0.8),
+        errorStyle: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, letterSpacing: 0.8, color: PlacedColors.SecondaryRed, ),
       ),
       keyboardType: textInputType,
       controller: controller,
@@ -48,3 +58,9 @@ class CustomTextFieldForm extends StatelessWidget {
     required this.obscureText,
   });
 }
+
+// OutlineInputBorder(
+// borderSide: BorderSide.none,
+// borderRadius: BorderRadius.circular(8.0),
+// border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+// ),

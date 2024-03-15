@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 
@@ -40,20 +41,27 @@ class _CustomEYEFieldFormState extends State<CustomEYEFieldForm> {
         letterSpacing: 1.2,
       ),
       decoration: InputDecoration(
+        errorMaxLines: 2,
         suffixIcon: IconButton(
           onPressed: (){
             setState(() {
               passwordVisible = !passwordVisible;
             });
           },
-          icon: Icon(
-              passwordVisible
-                  ? Icons.visibility
-                  : Icons.visibility_off),),
-        fillColor: PlacedColors.PrimaryBlueLight1,
+          icon: passwordVisible ? SvgPicture.asset('assets/view_1.svg') : SvgPicture.asset('assets/view_off.svg')),
+        fillColor: PlacedColors.PrimaryBlueLight2,
         filled: true,
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: PlacedColors.SecondaryRed)
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: PlacedColors.PrimaryBlueLight1)
+        ),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: PlacedColors.PrimaryBlueLight1)
+        ),
         border: OutlineInputBorder(
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: PlacedColors.PrimaryBlueLight1),
           borderRadius: BorderRadius.circular(8.0),
         ),
         contentPadding: EdgeInsets.all(12.0),
@@ -63,7 +71,7 @@ class _CustomEYEFieldFormState extends State<CustomEYEFieldForm> {
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
-        errorStyle: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, letterSpacing: 0.8),
+        errorStyle: TextStyle(fontSize: MediaQuery.of(context).size.shortestSide * 0.03, letterSpacing: 0.8, color: PlacedColors.SecondaryRed),
       ),
       keyboardType: widget.textInputType,
       controller: widget.controller,
@@ -71,3 +79,8 @@ class _CustomEYEFieldFormState extends State<CustomEYEFieldForm> {
     );
   }
 }
+
+// Icon(
+// passwordVisible
+// ? Icons.visibility
+//     : Icons.visibility_off),

@@ -13,7 +13,7 @@ class BuildMessage extends StatelessWidget {
       text,
       style: GoogleFonts.poppins(
         color: PlacedColors.greyColor,
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
       ),
       textAlign: TextAlign.center,

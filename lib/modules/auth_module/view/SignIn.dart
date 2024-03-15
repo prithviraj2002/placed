@@ -26,7 +26,13 @@ class SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   AuthController authController = AuthController();
+  bool isEmpty = false;
 
+  void toggleVisibility(){
+    setState(() {
+      isEmpty = !isEmpty;
+    });
+  }
 
   @override
   void dispose() {
@@ -40,9 +46,12 @@ class SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
-      body: Padding(
+      appBar: AppBar(
+        backgroundColor: PlacedColors.PrimaryWhite,
+      ),
+      body: Container(
         padding: const EdgeInsets.all(16.0),
+        color: PlacedColors.PrimaryWhite,
         child: Form(
           key: formKey,
           child: Column(
@@ -60,17 +69,18 @@ class SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 26.0),
               Container(
                 decoration: BoxDecoration(
-                  color: PlacedColors.PrimaryBlueLight2,
-                  borderRadius: BorderRadius.circular(8.0),
+                  // color: PlacedColors.PrimaryBlueLight2,
+                  border: Border.all(color: PlacedColors.PrimaryWhite),
+                  // borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomTextFieldForm(
-                  hintText: 'Enter University Email',
+                  hintText: 'Enter university email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return 'Empty Email';
+                      return 'Please enter university email.';
                     } else if (!val.contains('@')) {
-                      return 'Invalid Email';
+                      return 'The entered email is invalid. Please enter university email.';
                     }
                     return null;
                   },
@@ -81,8 +91,9 @@ class SignInScreenState extends State<SignInScreen> {
               SizedBox(height: 16.0),
               Container(
                 decoration: BoxDecoration(
-                  color: PlacedColors.PrimaryBlueLight2,
-                  borderRadius: BorderRadius.circular(8.0),
+                  // color: PlacedColors.PrimaryBlueLight2,
+                  // border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                  // borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomEYEFieldForm(
                   hintText: 'Enter Password',
@@ -90,7 +101,12 @@ class SignInScreenState extends State<SignInScreen> {
                   obscureText: true,
                   controller: passwordController,
                   validator: (String? val) {
-                      return null;
+                    if (val == null || val.isEmpty) {
+                      return "Please enter a password.";
+                    } else if (val.length < 8) {
+                      return 'Password must be 8 or more characters and include only letters and numbers.';
+                    }
+                    return null;
                     },
                 ),
               ),
@@ -108,11 +124,12 @@ class SignInScreenState extends State<SignInScreen> {
                       },
                       child: Text(
                         'Forgot Password?',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                             fontSize: 16, fontWeight: FontWeight.w600, color: PlacedColors.PrimaryBlueMain),
                       ),
                     ),
                     GradiantButton(
+                      isEnabled: isEmpty,
                       onPressed: () {
                         if(formKey.currentState!.validate()){
                           showDialog(context: context, builder: (ctx){
@@ -145,9 +162,9 @@ class SignInScreenState extends State<SignInScreen> {
                     Container(
                       width: double.infinity,
                       height: 1.0,
-                      color: Colors.black.withOpacity(0.5),
+                      color: PlacedColors.PrimaryGrey4,
                     ),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -159,13 +176,18 @@ class SignInScreenState extends State<SignInScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                         TextButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              EdgeInsets.only(left: 4.0),
+                            ),
+                          ),
                           onPressed: () {
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => SignUpScreen()), (route) => false);
                           },
                           child: Text(
                             'Sign Up',
                             style: GoogleFonts.poppins(
-                                color: Colors.blue,
+                                color: PlacedColors.PrimaryBlueMain,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w500),
                           ),

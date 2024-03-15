@@ -15,6 +15,9 @@ class OnBoardingPage extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
           BuildImage(
             imageString: 'assets/onboarding.svg',
           ),

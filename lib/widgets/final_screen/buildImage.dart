@@ -9,8 +9,8 @@ class BuildImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(15, 55, 15, 8),
-      height: 390,
+      margin: EdgeInsets.fromLTRB(16, 55, 16, 0),
+      height: 330,
       width: 315,
       child: SvgPicture.asset(
         imageString,

@@ -5,21 +5,24 @@ import 'package:placed_mobile_app/constants/placed_colors.dart';
 class GradiantButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
+  bool isEnabled;
 
   GradiantButton(
-      {required this.onPressed, required this.text});
+      {required this.onPressed, required this.text, this.isEnabled = true});
 
   @override
   Widget build(BuildContext context) {
 
     return Container(
-
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: LinearGradient(
+        borderRadius: BorderRadius.circular(8.0),
+        gradient: isEnabled ? LinearGradient(
             begin: Alignment(1.00, -0.09),
             end: Alignment(-1, 0.09),
-            colors: PlacedColors.gradiantColor),
+            colors: PlacedColors.gradiantColor) : LinearGradient(
+            begin: Alignment(1.00, -0.09),
+            end: Alignment(-1, 0.09),
+            colors: PlacedColors.disabledGradiantColor),
       ),
       width: double.infinity,
       child: ElevatedButton(
@@ -28,7 +31,7 @@ class GradiantButton extends StatelessWidget {
           shape:
           MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(8.0),
             ),
           ),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -40,7 +43,7 @@ class GradiantButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.white,
             fontWeight: FontWeight.w600,
             fontSize: 20.0,

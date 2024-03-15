@@ -23,12 +23,24 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   AnnouncementController controller = Get.find<AnnouncementController>();
+  ScrollController listScrollController = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     controller.getAllMessages();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToEnd();
+    });
+  }
+
+  void _scrollToEnd() {
+    listScrollController.animateTo(
+      listScrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 50),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -64,6 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Obx(() {
           return controller.relevantMessages[widget.jobPost.jobId] != null
               ? ListView.separated(
+            controller: listScrollController,
                   padding: const EdgeInsets.all(20.0),
                   itemBuilder: (ctx, index) {
                     if (controller

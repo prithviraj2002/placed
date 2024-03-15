@@ -39,8 +39,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
-      body: Padding(
+      appBar: AppBar(
+        backgroundColor: PlacedColors.PrimaryWhite,
+      ),
+      body: Container(
+        color: PlacedColors.PrimaryWhite,
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: formKey,
@@ -59,17 +62,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 26.0),
               Container(
                 decoration: BoxDecoration(
-                  color: PlacedColors.PrimaryBlueLight2,
-                  borderRadius: BorderRadius.circular(8.0),
+                  // color: PlacedColors.PrimaryBlueLight2,
+                  // border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                  // borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomTextFieldForm(
-                  hintText: 'Enter University Email',
+                  hintText: 'Enter university email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return 'Empty Email';
+                      return 'Empty email';
                     } else if (!val.contains('@') || !val.contains('indus')) {
-                      return 'Invalid Email';
+                      return 'The entered email is invalid. Please enter university email.';
                     }
                     return null;
                   },
@@ -80,18 +84,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 16.0),
               Container(
                 decoration: BoxDecoration(
-                  color: PlacedColors.PrimaryBlueLight2,
-                  borderRadius: BorderRadius.circular(8.0),
+                  // color: PlacedColors.PrimaryBlueLight2,
+                  // border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                  // borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomEYEFieldForm(
-                  hintText: 'Set Password',
+                  hintText: 'Set password',
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return "Empty Password!";
+                      return "Please enter a password.";
                     } else if (val.length < 8) {
-                      return 'Password should be at least of 8 characters!';
+                      return 'Password must be 8 or more characters and include only letters and numbers.';
                     }
                     return null;
                   },
@@ -101,31 +106,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 16.0),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white70,
-                  borderRadius: BorderRadius.circular(8.0),
+                  // color: Colors.white70,
+                  // border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                  // borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: CustomEYEFieldForm(
-                  hintText: 'Confirm Password',
+                  hintText: 'Confirm password',
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return "Empty Password!";
-                    } else if (val.length < 8) {
-                      return 'Password should be at least of 8 characters!';
-                    } else if(val != passwordController.text){
-                      return 'Passwords do not match!';}
+                      return "Please enter a password.";
+                    }else if(val != passwordController.text){
+                      return 'Passwords do not match. Please try again';}
                     return null;
                   },
                   controller: confirmPasswordController,
                 ),
               ),
+              const SizedBox(height: 4,),
               Container(
                 margin: EdgeInsets.fromLTRB(4, 4, 0, 0),
                 child: Text(
                   'Your password must range between 8 to 12 characters including letters and numbers.',
                   style: GoogleFonts.poppins(
-                      fontSize: 10,
+                      fontSize: 12,
                       color: PlacedColors.PrimaryGrey3,
                       fontWeight: FontWeight.w600),
                 ),
@@ -160,9 +165,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Container(
                       width: double.infinity,
                       height: 1.0,
-                      color: Colors.black.withOpacity(0.5),
+                      color: PlacedColors.PrimaryGrey4,
                     ),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -174,16 +179,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                         TextButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              EdgeInsets.only(left: 4.0),
+                            ),
+                          ),
                           onPressed: () {
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => SignInScreen()), (route) => false);
                           },
                           child: Text(
                             'Sign In',
                             style: GoogleFonts.poppins(
-                              color: PlacedColors.PrimaryBlueMain,
-                              fontSize: 16.0,
-                                fontWeight: FontWeight.w500
-                            ),
+                                color: PlacedColors.PrimaryBlueMain,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
                       ],
