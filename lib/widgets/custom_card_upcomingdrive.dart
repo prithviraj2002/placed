@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:placed_mobile_app/utils/utils.dart';
 import '../constants/placed_colors.dart';
 import '../modules/home_module/controller/home_controller.dart';
 import '../modules/job_module/view/job_description.dart';
@@ -49,11 +50,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      'assets/application_submitted.svg',
-                      height: 32,
-                      width: 32,
-                    ),
+                    Image.network(Utils.getDeptDocUrl(homeController.jobPosts[index].jobId), scale: 10, height: 32, width: 32,),
                     const SizedBox(
                       width: 14,
                     ),
@@ -204,3 +201,9 @@ class CustomRow extends StatelessWidget {
     );
   }
 }
+
+// SvgPicture.asset(
+// 'assets/application_submitted.svg',
+// height: 32,
+// width: 32,
+// ),

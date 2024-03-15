@@ -7,6 +7,7 @@ import 'package:placed_mobile_app/modules/announcement/controller/announcements_
 import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/modules/announcement/view/chat_screen.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
+import 'package:placed_mobile_app/utils/utils.dart';
 import 'package:placed_mobile_app/widgets/custom_logo.dart';
 import '../../../constants/placed_colors.dart';
 
@@ -75,7 +76,7 @@ class _AnnouncementState extends State<Announcement> {
                                         builder: (ctx) =>
                                             ChatScreen(jobPost: jobPost,)));
                                   },
-                                  leading: const CustomLogo(),
+                                  leading: Image.network(Utils.getDeptDocUrl(homeController.appliedJobs[index]), height: 32, width: 32, scale: 10,),
                                   title: Text(jobPost.companyName,  style: TextStyle(
                                         color: PlacedColors.PrimaryBlack,
                                         fontSize: 16,

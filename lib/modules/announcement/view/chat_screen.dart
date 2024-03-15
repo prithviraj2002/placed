@@ -5,6 +5,8 @@ import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
 import 'package:placed_mobile_app/modules/announcement/controller/announcements_controller.dart';
+import 'package:placed_mobile_app/modules/job_module/view/job_description.dart';
+import 'package:placed_mobile_app/utils/utils.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/custom_message.dart';
 import 'package:placed_mobile_app/widgets/custom_message_withPDF.dart';
@@ -20,7 +22,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
   AnnouncementController controller = Get.find<AnnouncementController>();
 
   @override
@@ -34,40 +35,68 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Row(
-            children: [
-              const BackArrow(),
-              const SizedBox(width: 6),
-              const CustomLogo(),
-              const SizedBox(width: 8),
-              Text(
-                widget.jobPost.companyName, // Replace with the profile name
-                style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                color: PlacedColors.PrimaryBlack),
-              ),
-            ],
-          )),
-        body: Obx(() {
-          return controller.relevantMessages[widget.jobPost.jobId] != null ?
-            ListView.separated(
-            reverse: true,
-            padding: const EdgeInsets.all(20.0),
-            itemBuilder: (ctx, index) {
-            return CustomMessage(
-              msgText: controller.relevantMessages[widget.jobPost.jobId]![index]
-                  .message,
-            );
-          },
-              separatorBuilder: (ctx, index) {
-                return const SizedBox(height: 2,);
+            automaticallyImplyLeading: false,
+            title: InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (ctx) => JobDescription(jobPost: widget.jobPost)));
               },
-              itemCount: controller.relevantMessages[widget.jobPost.jobId]!
-                  .length) : const Center(child: CircularProgressIndicator(),);
-        })
-    );
+              child: Row(
+                children: [
+                  const BackArrow(),
+                  const SizedBox(width: 6),
+                  Container(
+                      height: 32, width: 32,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: PlacedColors.greyColor),
+                      ),
+                      child: Image.network(Utils.getDeptDocUrl(widget.jobPost.jobId), height: 32, width: 32, scale: 10, fit: BoxFit.cover,)),
+                  const SizedBox(width: 8),
+                  Text(
+                    widget.jobPost.companyName, // Replace with the profile name
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: PlacedColors.PrimaryBlack),
+                  ),
+                ],
+              ),
+            )),
+        body: Obx(() {
+          return controller.relevantMessages[widget.jobPost.jobId] != null
+              ? ListView.separated(
+                  padding: const EdgeInsets.all(20.0),
+                  itemBuilder: (ctx, index) {
+                    if (controller
+                        .relevantMessages[widget.jobPost.jobId]![index]
+                        .pdfUrl
+                        .isNotEmpty) {
+                      return CustomMessageWithPDF(
+                        text: controller
+                            .relevantMessages[widget.jobPost.jobId]![index]
+                            .message,
+                        pdfUrl: controller
+                            .relevantMessages[widget.jobPost.jobId]![index]
+                            .pdfUrl,
+                      );
+                    } else {
+                      return CustomMessage(
+                        msgText: controller
+                            .relevantMessages[widget.jobPost.jobId]![index]
+                            .message,
+                      );
+                    }
+                  },
+                  separatorBuilder: (ctx, index) {
+                    return const SizedBox(
+                      height: 2,
+                    );
+                  },
+                  itemCount:
+                      controller.relevantMessages[widget.jobPost.jobId]!.length)
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        }));
   }
 }
 
