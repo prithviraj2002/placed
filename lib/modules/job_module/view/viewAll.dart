@@ -45,10 +45,7 @@ class ViewAll extends StatelessWidget {
                     if (snapshot.hasData) {
                       if(jobPost != null){
                         return MyDriveCard(
-                            companyPosition: jobPost.positionOffered,
-                            logo: 'assets/application_submitted.svg',
-                            companyName: jobPost.companyName,
-                            jobType: jobPost.jobType
+                            jobPost: jobPost,
                         );
                       }
                       else{

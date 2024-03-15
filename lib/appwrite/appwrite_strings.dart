@@ -11,6 +11,7 @@ class AppWriteStrings{
   //Storage
   static const String imageBucketId = '65b35832b94925a129da';
   static const String resumeBucketId = '65b108a4e427ecd7669c';
+  static const String deptBucketId = '65e59e475d2b35953495';
 
   //urls
   static const String resumeViewUrl = '$endPoint/storage/buckets/$resumeBucketId/files/65d843736885561b6a1d/view?project=$projectId&mode=admin';

@@ -32,18 +32,14 @@ class HomeTab extends StatelessWidget {
         ),
         body: Obx(
           () {
-            return homeController.jobPosts.isEmpty
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
+            return Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        UpcomingDriveCard(),
+                        homeController.jobPosts.isNotEmpty ? UpcomingDriveCard() : homeController.jobPosts.isEmpty ? Expanded(child: Center(child: Text('No job posts yet!'),)) : Expanded(child: Center(child: CircularProgressIndicator(),),),
                         const SizedBox(
                           height: 20,
                         ),
@@ -93,10 +89,7 @@ class HomeTab extends StatelessWidget {
                                         if (snapshot.hasData) {
                                           if(jobPost != null){
                                             return MyDriveCard(
-                                                companyPosition: jobPost.positionOffered,
-                                                logo: 'assets/application_submitted.svg',
-                                                companyName: jobPost.companyName,
-                                                jobType: jobPost.jobType
+                                                jobPost: jobPost,
                                             );
                                           }
                                           else {
@@ -112,7 +105,7 @@ class HomeTab extends StatelessWidget {
                                 separatorBuilder: (ctx, index) {
                                   return const SizedBox(height: 4,);
                                 },
-                                itemCount: homeController.appliedJobs.length > 3 ? 3 : homeController.appliedJobs.length) : Center(child: Text('Not applied to any drives yet!'),)),
+                                itemCount: homeController.appliedJobs.length > 3 ? 3 : homeController.appliedJobs.length) : homeController.appliedJobs.isEmpty ? Center(child: Text('Not applied to any drives yet!'),) : Center(child: CircularProgressIndicator(),)),
                       ],
                     ),
                   );

@@ -42,11 +42,19 @@ class Utils{
     return null;
   }
 
-  static Future<String> getImageUrl(String id) async{
-    return await '${AppWriteStrings.endPoint}/storage/buckets/${AppWriteStrings.imageBucketId}/files/$id/view?project=${AppWriteStrings.projectId}&mode=admin';
+  static String reverseString(String val){
+    return val.split('').reversed.join('');
+  }
+
+  static String getImageUrl(String id){
+    return '${AppWriteStrings.endPoint}/storage/buckets/${AppWriteStrings.imageBucketId}/files/$id/view?project=${AppWriteStrings.projectId}&mode=admin';
   }
 
   static String getResumeUrl(String id){
     return '${AppWriteStrings.endPoint}/storage/buckets/${AppWriteStrings.resumeBucketId}/files/$id/view?project=${AppWriteStrings.projectId}&mode=admin';
+  }
+
+  static String getDeptDocUrl(String id){
+    return '${AppWriteStrings.endPoint}/storage/buckets/${AppWriteStrings.deptBucketId}/files/$id/view?project=${AppWriteStrings.projectId}&mode=admin';
   }
 }

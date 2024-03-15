@@ -11,8 +11,11 @@ import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/job_module/view/job_applied.dart';
+import 'package:placed_mobile_app/modules/pdf_view_module/view/pdf_view_screen.dart';
+import 'package:placed_mobile_app/utils/utils.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDescription extends StatelessWidget {
   JobPost jobPost;
@@ -99,12 +102,15 @@ class JobDescription extends StatelessWidget {
             Container(
               width: 64,
               height: 64,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/default_profile_image.png'),
+                  image: NetworkImage(
+                      Utils.getDeptDocUrl(jobPost.jobId),
+                      scale: 10
+                  ),
                   // Replace with your image
-                  fit: BoxFit.cover,
+                  // fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -173,25 +179,31 @@ class JobDescription extends StatelessWidget {
                     width: 36,
                   ),
                   SizedBox(width: 8.0,),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 18,horizontal: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Campus Drive Nextnode Solu...PVT LTD',
-                          style: GoogleFonts.poppins(fontSize: 12, color: PlacedColors.PrimaryBlack),
-                        ),
-                        Text(
-                          '4.1 MB',
-                          style: GoogleFonts.poppins(
-                              fontSize: 8,
-                              color: PlacedColors.PrimaryGrey2,
-                              fontWeight: FontWeight.normal
+                  InkWell(
+                    onTap: () {
+                      // Navigator.push(context, MaterialPageRoute(builder: (ctx) => PdfViewScreen(pdfPath: Utils.getDeptDocUrl(Utils.reverseString(jobPost.jobId)))));
+                      launchUrl(Uri.parse(Utils.getDeptDocUrl(Utils.reverseString(jobPost.jobId))));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 18,horizontal: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Campus Drive ${jobPost.companyName}',
+                            style: GoogleFonts.poppins(fontSize: 12, color: PlacedColors.PrimaryBlack),
                           ),
-                        )
-                      ],
+                          Text(
+                            '4.1 MB',
+                            style: GoogleFonts.poppins(
+                                fontSize: 8,
+                                color: PlacedColors.PrimaryGrey2,
+                                fontWeight: FontWeight.normal
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -245,3 +257,5 @@ class CustomContainer extends StatelessWidget {
     );
   }
 }
+
+//AssetImage('assets/default_profile_image.png'),

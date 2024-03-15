@@ -32,7 +32,7 @@ class AnnouncementController extends GetxController{
   }
 
   List<BroadcastMessage> getMessageListById(String id){
-    return relevantMessages[id] ?? [BroadcastMessage(message: 'message', date: 'date', time: 'time', jobId: 'jobId')];
+    return relevantMessages[id] ?? [BroadcastMessage(message: 'message', date: 'date', time: 'time', jobId: 'jobId', pdfUrl: 'pdfUrl' ?? '')];
   }
 
   BroadcastMessage getLatestMessage(String id){

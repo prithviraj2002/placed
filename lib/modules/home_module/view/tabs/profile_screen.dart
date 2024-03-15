@@ -55,8 +55,8 @@ class _ProfileTabState extends State<ProfileTab> {
                 child: Obx(() {
                   return ClipOval(
                     child: widget.controller.profileImagePreview.value
-                        .isNotEmpty ? Image.memory(
-                      widget.controller.profileImagePreview.value,
+                        .isNotEmpty ? Image.network(
+                      Utils.getImageUrl(widget.controller.userId),
                       scale: 100,
                       fit: BoxFit.cover,
                       width: 70,
@@ -278,6 +278,18 @@ class _ProfileTabState extends State<ProfileTab> {
     ),);
   }
 }
+
+//For profile image
+//return ClipOval(
+//                     child: widget.controller.profileImagePreview.value
+//                         .isNotEmpty ? Image.memory(
+//                       widget.controller.profileImagePreview.value,
+//                       scale: 100,
+//                       fit: BoxFit.cover,
+//                       width: 70,
+//                       height: 70,
+//                     ) : CircularProgressIndicator(),
+//                   );
 
 
 

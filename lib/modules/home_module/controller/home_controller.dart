@@ -144,6 +144,7 @@ class HomeController extends GetxController {
       } else if (event.events.contains(
           "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.jobsCollectionId}.documents.*.delete")) {
         jobPosts.remove(JobPost.fromJson(event.payload, event.payload["\$id"]));
+        getAllJobs();
       }
     });
   }
