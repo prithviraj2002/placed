@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/password_changed.dart';
 import '../../../widgets/back_arrow.dart';
-import '../../../widgets/custom_text_field.dart';
+import '../../../widgets/custom_text_field/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
 
 class ResetPassword extends StatelessWidget {

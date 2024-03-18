@@ -4,7 +4,7 @@ import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../../../constants/placed_dimensions.dart';
 import '../../../../constants/placed_strings.dart';
 import '../../../../widgets/custom_drop_down.dart';
-import '../../../../widgets/custom_text_field.dart';
+import '../../../../widgets/custom_text_field/custom_text_field.dart';
 import '../../controller/profile_controller.dart';
 
 class EducationTab extends StatefulWidget {

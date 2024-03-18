@@ -9,8 +9,9 @@ import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_emai
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/personal_details_module/view/personal_detail.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
-import 'package:placed_mobile_app/widgets/custom_eye_field.dart';
-import 'package:placed_mobile_app/widgets/custom_text_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_auth_text_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_eye_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_text_field.dart';
 
 import '../../../widgets/gradiant_button.dart';
 
@@ -65,7 +66,7 @@ class SignInScreenState extends State<SignInScreen> {
                   color: PlacedColors.PrimaryBlueLight2,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: CustomTextFieldForm(
+                child: CustomAuthTextFieldForm(
                   hintText: 'Enter University Email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {

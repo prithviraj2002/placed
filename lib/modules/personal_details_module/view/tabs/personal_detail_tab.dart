@@ -9,7 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
-import 'package:placed_mobile_app/widgets/custom_text_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../../../constants/placed_dimensions.dart';
 import '../../../../constants/placed_strings.dart';

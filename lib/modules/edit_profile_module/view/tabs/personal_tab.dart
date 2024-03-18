@@ -11,7 +11,7 @@ import 'package:placed_mobile_app/modules/edit_profile_module/controller/edit_pr
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/utils/utils.dart';
-import 'package:placed_mobile_app/widgets/custom_text_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 

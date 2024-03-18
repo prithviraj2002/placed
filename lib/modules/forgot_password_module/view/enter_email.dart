@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_otp.dart';
 import '../../../widgets/back_arrow.dart';
-import '../../../widgets/custom_text_field.dart';
+import '../../../widgets/custom_text_field/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
 
 class EnterEmail extends StatelessWidget {

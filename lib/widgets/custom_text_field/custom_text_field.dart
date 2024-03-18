@@ -14,12 +14,12 @@ class CustomTextFieldForm extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText,
       style: GoogleFonts.poppins(
-            color: PlacedColors.PrimaryGrey3,
+            color: PlacedColors.PrimaryBlack,
             fontSize: 16,
             letterSpacing: 1.2,
       ),
       decoration: InputDecoration(
-        fillColor: PlacedColors.PrimaryBlueLight1,
+        fillColor: PlacedColors.PrimaryWhite,
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,

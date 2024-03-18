@@ -6,8 +6,9 @@ import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
-import 'package:placed_mobile_app/widgets/custom_eye_field.dart';
-import '../../../widgets/custom_text_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_eye_field.dart';
+import '../../../widgets/custom_text_field/custom_auth_text_field.dart';
+import '../../../widgets/custom_text_field/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
 import '../../personal_details_module/view/personal_detail.dart';
 
@@ -62,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: PlacedColors.PrimaryBlueLight2,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: CustomTextFieldForm(
+                child: CustomAuthTextFieldForm(
                   hintText: 'Enter University Email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {

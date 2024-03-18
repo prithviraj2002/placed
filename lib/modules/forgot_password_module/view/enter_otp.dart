@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/reset_password.dart';
 import '../../../widgets/back_arrow.dart';
-import '../../../widgets/custom_text_field.dart';
+import '../../../widgets/custom_text_field/custom_text_field.dart';
 import '../../../widgets/gradiant_button.dart';
 
 class EnterOTP extends StatelessWidget {

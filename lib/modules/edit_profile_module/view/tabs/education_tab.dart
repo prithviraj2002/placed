@@ -6,7 +6,7 @@ import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 import 'package:placed_mobile_app/modules/edit_profile_module/controller/edit_profile_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/widgets/custom_drop_down.dart';
-import 'package:placed_mobile_app/widgets/custom_text_field.dart';
+import 'package:placed_mobile_app/widgets/custom_text_field/custom_text_field.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 
 class EditEducationTab extends StatefulWidget {

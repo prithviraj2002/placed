@@ -42,7 +42,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
             elevation: 16,
             isExpanded: true,
             style: TextStyle(
-                color: PlacedColors.PrimaryGrey3, fontSize: 16.0),
+                color: PlacedColors.PrimaryBlack, fontSize: 16.0),
             onChanged: (String? changedValue) {
               my_services = changedValue;
               setState(() {
