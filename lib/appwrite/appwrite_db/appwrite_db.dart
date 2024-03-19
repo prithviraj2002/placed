@@ -3,6 +3,7 @@ import 'package:appwrite/models.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
 import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
+import 'package:placed_mobile_app/models/filter_model/filter_model.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
 
@@ -141,6 +142,21 @@ class AppWriteDb {
     } on AppwriteException catch (e) {
       print(
           'An error occurred while getting broadcast message from id in appwrite db!: $e');
+      rethrow;
+    }
+  }
+
+  //To get filters of a job post from job id.
+  static Future<Filter> getFilterById(String jobId) async{
+    try{
+      final response = await databases.getDocument(
+          databaseId: AppWriteStrings.dbID,
+          collectionId: AppWriteStrings.filtersCollectionId,
+          documentId: jobId);
+      Filter filter = Filter.fromJson(response.data, jobId);
+      return filter;
+    } on AppwriteException catch(e){
+      print('An error occurred while getting filter from database');
       rethrow;
     }
   }

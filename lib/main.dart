@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:placed_mobile_app/appwrite/appwrite_auth/appwrite_auth.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/modules/splash_module/view/splash_screen.dart';
 import 'package:placed_mobile_app/screen_bindings/bindings/bindings.dart';
@@ -12,6 +13,8 @@ void main() async{
   await GetStorage.init();
   final box = GetStorage();
   final String? userId = box.read('userId');
+  final user = await AppWriteAuth.getUser();
+  print('Here is the user!: ${user.toString()}');
   AwesomeNotifications().initialize(
     null,
     [
@@ -28,7 +31,7 @@ void main() async{
           debugShowCheckedModeBanner: false,
           initialBinding: PageBindings(),
           getPages: pages,
-          home: userId == null ? SplashScreen() : userId.isEmpty ? SplashScreen() : Home(),
+          home: user == null ? SplashScreen() : userId!.isEmpty ? SplashScreen() : Home(),
     )
   );
 }

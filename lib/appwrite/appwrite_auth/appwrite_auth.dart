@@ -56,7 +56,7 @@ class AppWriteAuth{
       return response;
     } on AppwriteException catch(e){
       if (kDebugMode) {
-        print('An error occurred while signing up user!: $e');
+        print('An error occurred while logging out user!: $e');
       }
       rethrow;
     }
@@ -105,13 +105,13 @@ class AppWriteAuth{
     }
   }
 
-  static Future<User> getUser() async{
+  static Future<User?> getUser() async{
     try{
-      final User response = await account.get();
+      final User? response = await account.get();
       return response;
     } on AppwriteException catch(e){
       print('An error occurred while getting user email in appwrite auth: $e');
-      rethrow;
+      return null;
     }
   }
 
