@@ -27,6 +27,7 @@ class AnnouncementController extends GetxController{
   }
 
   Future<void> getAllMessages() async{
+    allBroadcastMessages.value = [];
     allBroadcastMessages.value = await AppWriteDb.getBroadcastMessages();
     getRelevantMessages();
   }
@@ -41,7 +42,7 @@ class AnnouncementController extends GetxController{
   }
 
   void getRelevantMessages(){
-    RxList<dynamic> appliedJobs = homeController.appliedJobs;
+    RxList<String> appliedJobs = RxList.generate(homeController.appliedJobs.length, (index) => homeController.appliedJobs[index].toString());
     for (var id in appliedJobs) {
       RxList<BroadcastMessage> msgList = <BroadcastMessage>[].obs;
       for (BroadcastMessage msg in allBroadcastMessages) {
@@ -75,8 +76,9 @@ class AnnouncementController extends GetxController{
                 )
             );
             relevantMessages['${msg.jobId}']!.add(msg);
+            getAllMessages();
           }
-          getAllMessages();
+          // getAllMessages();
         } else if (event.events.contains(
             "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.broadcastCollectionId}.documents.*.delete")) {
           getAllMessages();

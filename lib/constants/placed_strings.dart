@@ -5,9 +5,9 @@ class PlacedStrings{
   static const String resume = "Resume";
   static List<String> branchOption(){
     List<String> options = [
-      "Computer Science Engineering(CSE)",
-      "Computer Engineering(CE)",
-      "Information Technology(IT)",
+      "CSE",
+      "CE",
+      "IT",
     ];
     return options;
   }

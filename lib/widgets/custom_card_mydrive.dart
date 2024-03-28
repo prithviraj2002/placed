@@ -19,15 +19,16 @@ class MyDriveCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
+          border: Border.all(color: PlacedColors.PrimaryBlueLight1),
           boxShadow: [
             BoxShadow(
-              color: PlacedColors.PrimaryBlueMain.withOpacity(0.1),
-              blurRadius: 16,
+              color: PlacedColors.CardShadowBlack,
+              blurRadius: 20,
               offset: Offset(3, 4), // changes position of shadow
             ),
           ],
           borderRadius: BorderRadius.all(Radius.circular(8)),
-          color: PlacedColors.PrimaryOffWhite,
+          color: PlacedColors.PrimaryWhite,
         ),
         margin: EdgeInsets.all(5.0),
         child: Row(
@@ -35,17 +36,23 @@ class MyDriveCard extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.symmetric(vertical: 14,horizontal: 12),
+              padding: EdgeInsets.only(left: 16,top: 8),
               decoration: BoxDecoration(
+                color: PlacedColors.PrimaryWhite,
                 shape: BoxShape.circle,
                 border: Border.all(color: PlacedColors.PrimaryWhite, width: 1.0),
               ),
-              child: Image.network(Utils.getDeptDocUrl(jobPost.jobId), height: 32, width: 32, scale: 10,)
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                  child: ClipOval(child: Image.network(Utils.getDeptDocUrl(jobPost.jobId), height: 32, width: 32, scale: 10, fit: BoxFit.cover,)))
             ),
             // Second part with text
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(top: 8.0, right: 8.0, bottom: 12.0, left: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

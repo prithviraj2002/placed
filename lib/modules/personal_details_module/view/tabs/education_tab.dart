@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/home_module/view/Home.dart';
 import 'package:placed_mobile_app/widgets/gradiant_button.dart';
 import '../../../../constants/placed_dimensions.dart';
@@ -79,6 +82,7 @@ class _EducationTabState extends State<EducationTab> {
           child: Column(
             children: [
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Current semester*',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -94,6 +98,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'CGPA (till last semester)',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -105,30 +110,39 @@ class _EducationTabState extends State<EducationTab> {
                   controller: cgpaController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
-
-              SizedBox(height: PlacedDimens.textfield_space_height),
-              CustomDropDown(
-                dropDownOption: PlacedStrings.degreeOption().map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                text: 'Choose Degree',
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                child: CustomDropDown(
+                  dropDownOption: PlacedStrings.degreeOption().map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  text: widget.controller.degree.isEmpty ? 'Choose Degree' : widget.controller.degree.value,
+                ),
               ),
               SizedBox(height: PlacedDimens.textfield_space_height),
-              CustomDropDown(
-                dropDownOption: PlacedStrings.branchOption().map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                text: 'Choose Branch',
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                child: CustomDropDown(
+                  dropDownOption: PlacedStrings.branchOption().map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  text: widget.controller.course.isEmpty ? 'Choose Branch' : widget.controller.course.value,
+                ),
               ),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Year',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if(val == null){
@@ -145,6 +159,7 @@ class _EducationTabState extends State<EducationTab> {
               //ToDo: Implement year picker
               CustomTextFieldForm(
                   hintText: 'Year of Graduation',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if(val == null){
@@ -159,6 +174,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Active Backlogs',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -174,6 +190,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Total Backlogs',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -186,6 +203,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Percentage in 12th',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -198,6 +216,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height,),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Board in 12th',
                   textInputType: TextInputType.text,
                   validator: (val) {
@@ -213,6 +232,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: '12th Year of Passing',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -228,6 +248,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Percentage in 10th',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -240,6 +261,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height,),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Board in 10th',
                   textInputType: TextInputType.text,
                   validator: (val) {
@@ -255,6 +277,7 @@ class _EducationTabState extends State<EducationTab> {
                   obscureText: false),
               SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: '10th Year of Passing',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -284,8 +307,6 @@ class _EducationTabState extends State<EducationTab> {
               if(formKey.currentState!.validate()){
                 widget.controller.sem.value = int.parse(semController.text);
                 widget.controller.cgpa.value = double.parse(cgpaController.text);
-                widget.controller.degree.value = degreeController.text;
-                widget.controller.course.value = branchController.text;
                 widget.controller.engYearOfPassing.value = yearOfGraduationController.text;
                 widget.controller.year.value = int.parse(yearController.text);
                 widget.controller.activeBackLog.value = int.parse(activeBackLogController.text);
@@ -301,7 +322,11 @@ class _EducationTabState extends State<EducationTab> {
               }
             }
           },
-          text: 'Save & Continue',
+          widget: Text('Save & Continue', style: GoogleFonts.lato(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),),
         ),
       ),
     );

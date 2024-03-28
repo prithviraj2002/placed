@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
+import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
 import 'package:placed_mobile_app/modules/announcement/controller/announcements_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +13,8 @@ import 'package:placed_mobile_app/widgets/custom_logo.dart';
 import '../../../constants/placed_colors.dart';
 
 class Announcement extends StatefulWidget {
-  Announcement({super.key});
+  HomeController homeController;
+  Announcement({required this.homeController, super.key});
 
   @override
   State<Announcement> createState() => _AnnouncementState();
@@ -29,76 +31,83 @@ class _AnnouncementState extends State<Announcement> {
     // TODO: implement initState
     super.initState();
     announcementController.getAllMessages();
+    if(widget.homeController.appliedJobs.isNotEmpty){
+      print('Applied jobs: ${homeController.appliedJobs.first}');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Broadcast Channels',
-          style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: PlacedColors.PrimaryBlack),
-        ),
-      ),
+      backgroundColor: PlacedColors.PrimaryWhite,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 52,),
             Text(
-              'Broadcast channels include one-sided messages from the T&P Dept. regarding the jobs you have applied to',
+              'Broadcast Channels',
+              style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: PlacedColors.PrimaryBlack),
+            ),
+            const SizedBox(height: 4,),
+            Text(
+              'Broadcast channels include messages from the T&P Dept regarding the jobs you have applied to.',
               style: GoogleFonts.poppins(
                   color: PlacedColors.PrimaryGrey3,
-                  fontSize: 10,
+                  fontSize: 14,
                   fontWeight: FontWeight.w400),
             ),
-            SizedBox(
-              height: 16,
-            ),
             Obx(() {
-              return homeController.appliedJobs.isNotEmpty ?
+              return widget.homeController.appliedJobs.isNotEmpty ?
               ListView.separated(
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 0, left: 0, right: 0),
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {
                     return FutureBuilder(
                         future: AppWriteDb.getJobById(
-                            homeController.appliedJobs[index]),
+                            widget.homeController.appliedJobs[index]),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           final JobPost? jobPost = snapshot.data;
                           if (snapshot.hasData) {
                             if (jobPost != null) {
                               return ListTile(
+                                  contentPadding: const EdgeInsets.all(0.0),
                                   onTap: () {
                                     Navigator.push(context, MaterialPageRoute(
                                         builder: (ctx) =>
                                             ChatScreen(jobPost: jobPost,)));
                                   },
-                                  leading: Image.network(Utils.getDeptDocUrl(homeController.appliedJobs[index]), height: 32, width: 32, scale: 10,),
+                                  leading: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                                        shape: BoxShape.circle
+                                    ),
+                                    child: ClipOval(
+                                        child: Image.network(Utils.getDeptDocUrl(widget.homeController.appliedJobs[index]), height: 32, width: 32, fit: BoxFit.cover,)),
+                                  ),
                                   title: Text(jobPost.companyName,  style: TextStyle(
                                         color: PlacedColors.PrimaryBlack,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),),
                                   subtitle: Obx(() {
-                                    if(announcementController.relevantMessages.containsKey(homeController.appliedJobs[index])){
-                                      return announcementController.relevantMessages[homeController.appliedJobs[index]] != null ?
-                                      Text(announcementController
-                                          .relevantMessages[homeController
-                                          .appliedJobs[index]]!.last.message,
-                                        softWrap: true,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.fade,
-                                        style: GoogleFonts.poppins(
-                                        color: PlacedColors.PrimaryGrey3,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400),
-                                        ) : LinearProgressIndicator();
-                                    }
-                                    else{
-                                      return const Text('No new messages');
-                                    }
+                                    return announcementController.relevantMessages[widget.homeController.appliedJobs[index]]!.isNotEmpty ?
+                                    Text(
+                                        announcementController.relevantMessages[widget.homeController.appliedJobs[index]]!.last.message,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12, color: PlacedColors.PrimaryGrey3
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.fade,
+                                    ) : Text('No new messages', style: GoogleFonts.poppins(
+                                        fontSize: 12, color: PlacedColors.PrimaryGrey3
+                                    ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.fade,);
                                   })
                               );
                             }
@@ -116,9 +125,9 @@ class _AnnouncementState extends State<Announcement> {
                         });
                   },
                   separatorBuilder: (ctx, index) {
-                    return const SizedBox(height: 16,);
+                    return const SizedBox(height: 0,);
                   },
-                  itemCount: homeController.appliedJobs
+                  itemCount: widget.homeController.appliedJobs
                       .length) : const Center(
                 child: Text('You have not applied to any drives yet!'),);
             })
@@ -129,6 +138,9 @@ class _AnnouncementState extends State<Announcement> {
   }
 }
 
-
+//
+// announcementController
+//     .relevantMessages[homeController
+//     .appliedJobs[index]]!.last.message
 
 

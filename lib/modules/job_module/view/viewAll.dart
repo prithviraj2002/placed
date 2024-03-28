@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
 import 'package:placed_mobile_app/widgets/back_arrow.dart';
 import '../../../constants/placed_dimensions.dart';
@@ -15,6 +16,7 @@ class ViewAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PlacedColors.PrimaryWhite,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: const BackArrow(),

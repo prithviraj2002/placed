@@ -4,11 +4,11 @@ import 'package:placed_mobile_app/constants/placed_colors.dart';
 
 class GradiantButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
+  final Widget widget;
   bool isEnabled;
 
   GradiantButton(
-      {required this.onPressed, required this.text, this.isEnabled = true});
+      {required this.onPressed, required this.widget, this.isEnabled = true});
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +41,7 @@ class GradiantButton extends StatelessWidget {
             Colors.transparent,
           ),
         ),
-        child: Text(
-          text,
-          style: GoogleFonts.lato(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 20.0,
-          ),
-        )
+        child: widget
       ),
     );
   }

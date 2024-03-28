@@ -8,6 +8,7 @@ class CustomTextFieldForm extends StatelessWidget {
   final TextInputType textInputType;
   final String? Function(String?)? validator;
   final bool obscureText;
+  Color bgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CustomTextFieldForm extends StatelessWidget {
       ),
       decoration: InputDecoration(
         errorMaxLines: 2,
-        fillColor: PlacedColors.PrimaryBlueLight2,
+        fillColor: bgColor,
         filled: true,
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: PlacedColors.SecondaryRed)
@@ -56,6 +57,7 @@ class CustomTextFieldForm extends StatelessWidget {
     required this.validator,
     required this.controller,
     required this.obscureText,
+    this.bgColor = const Color(0xFFF1F5FA),
   });
 }
 

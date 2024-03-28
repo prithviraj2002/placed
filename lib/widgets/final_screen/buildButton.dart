@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../gradiant_button.dart';
 
 class BuildButton extends StatelessWidget {
@@ -15,7 +16,11 @@ class BuildButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: GradiantButton(
-            text: text,
+            widget: Text(text, style: GoogleFonts.lato(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+            ),),
             onPressed: onPressed,
           ),
         ),

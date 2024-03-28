@@ -27,6 +27,13 @@ class SignInScreenState extends State<SignInScreen> {
   final TextEditingController passwordController = TextEditingController();
   AuthController authController = AuthController();
   bool isEmpty = false;
+  bool isLoading = false;
+
+  void toggleLoading(){
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
 
   void toggleVisibility(){
     setState(() {
@@ -129,15 +136,10 @@ class SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     GradiantButton(
-                      isEnabled: isEmpty,
+                      isEnabled: true,
                       onPressed: () {
                         if(formKey.currentState!.validate()){
-                          showDialog(context: context, builder: (ctx){
-                            return AlertDialog(
-                              title: Text('Signing In'),
-                              content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()],),
-                            );
-                          });
+                          toggleLoading();
                           authController.login(
                               emailController.text, passwordController.text).then((value) {
                             if(value.$createdAt.isNotEmpty){
@@ -145,18 +147,25 @@ class SignInScreenState extends State<SignInScreen> {
                               final String? userId = box.read('userId');
                               if(userId != null && userId.isNotEmpty){
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
+                                toggleLoading();
                               }
                               else if(userId == null || userId.isEmpty){
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
+                                toggleLoading();
                               }
                             }
                             else {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred!')));
+                              toggleLoading();
                             }
                           });
                         }
                       },
-                      text: 'Sign In',
+                      widget: isLoading ? Center(child: CircularProgressIndicator(color: PlacedColors.PrimaryWhite,)) : Text('Sign In', style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.0,
+                      ),),
                     ),
                     SizedBox(height: 16.0),
                     Container(

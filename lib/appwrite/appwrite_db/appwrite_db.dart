@@ -30,6 +30,19 @@ class AppWriteDb {
     }
   }
 
+  static Future<dynamic> delProfile(Profile profile, String profileId) async{
+    try{
+      final response = await databases.deleteDocument(
+          databaseId: AppWriteStrings.dbID,
+          collectionId: AppWriteStrings.profileCollectionsId,
+          documentId: profileId);
+      return response;
+    } on AppwriteException catch(e){
+      print('An error occurred while deleting user profile!: $e');
+      rethrow;
+    }
+  }
+
   //To update profile to appwrite database.
   static Future<Document> updateProfile(Profile profile,
       String profileId) async {
@@ -138,12 +151,40 @@ class AppWriteDb {
       for(var msg in response.documents){
         broadCastMessageList.add(BroadcastMessage.fromJson(msg.data));
       }
+      print('msgs in broadCastMessageList: ${broadCastMessageList.length}');
       return broadCastMessageList;
     } on AppwriteException catch (e) {
       print(
           'An error occurred while getting broadcast message from id in appwrite db!: $e');
       rethrow;
     }
+  }
+
+  static Future<List<BroadcastMessage>> getMessageByID(String jobId) async{
+    List<BroadcastMessage> msgList = [];
+    try {
+      final response = await databases.listDocuments(
+          databaseId: AppWriteStrings.dbID, collectionId: AppWriteStrings.broadcastCollectionId
+      );
+      for(var msg in response.documents){
+        if(msg.data['jobId'] == jobId){
+          msgList.add(BroadcastMessage.fromJson(msg.data));
+        }
+      }
+      return msgList;
+    } on AppwriteException catch (e) {
+      print(
+          'An error occurred while getting broadcast message from id in appwrite db!: $e');
+      rethrow;
+    }
+  }
+
+  static Future<BroadcastMessage> getLastMessageById(String jobId) async{
+    BroadcastMessage msg = BroadcastMessage(message: '', date: 'date', time: 'time', jobId: 'jobId', pdfUrl: '');
+    await getMessageByID(jobId).then((value) {
+      msg = value.last;
+    });
+    return msg;
   }
 
   //To get filters of a job post from job id.

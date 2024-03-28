@@ -9,7 +9,7 @@ class PlacedColors{
   static Color textColor = Color(0xFF0B2A7F);
   static Color textfield_text_color = Colors.black54;
 
-
+  static Color CardShadowBlack = Color(0xff1C1C1C).withOpacity(0.08);
   static Color PrimaryBlack = Color(0xFF1C1C1C);
   static Color PrimaryGrey1 = Color(0xFF494949);
   // static Color PrimaryGrey2 = Color(0xFF1C1C1C).withOpacity(0.4);

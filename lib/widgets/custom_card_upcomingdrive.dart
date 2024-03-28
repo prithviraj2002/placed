@@ -22,7 +22,7 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 213,
+      height: 216,
       width: MediaQuery.of(context).size.width,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
@@ -31,15 +31,9 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
           int index = homeController.jobPosts.length - 1 - i;
           return Container(
             decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: PlacedColors.PrimaryBlueMain.withOpacity(0.1),
-                  blurRadius: 16,
-                  offset: Offset(3, 4), // changes position of shadow
-                ),
-              ],
+              border: Border.all(color: PlacedColors.PrimaryBlueLight1),
               borderRadius: BorderRadius.all(Radius.circular(8)),
-              color: PlacedColors.PrimaryOffWhite,
+              color: PlacedColors.PrimaryWhite,
             ),
             padding: const EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width * 0.8,
@@ -50,9 +44,16 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(Utils.getDeptDocUrl(homeController.jobPosts[index].jobId), scale: 10, height: 32, width: 32,),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                          border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                      ),
+                      child: ClipOval(
+                          child: Image.network(Utils.getDeptDocUrl(homeController.jobPosts[index].jobId), scale: 10, height: 32, width: 32, fit: BoxFit.cover,)),
+                    ),
                     const SizedBox(
-                      width: 14,
+                      width: 4,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -72,12 +73,13 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                       height: 20,
                       width: 55,
                       decoration:
-                          BoxDecoration(color: PlacedColors.SecondaryGreen),
+                          BoxDecoration(color: PlacedColors.SecondaryGreen3, borderRadius: BorderRadius.circular(2)),
                       child: Center(
                         child: Text(
                           'Eligible',
                           style: GoogleFonts.poppins(
-                              fontSize: 12, color: Color(0xFF39B070)),
+                            fontWeight: FontWeight.w600,
+                              fontSize: 12, color: PlacedColors.SecondaryGreen2),
                         ),
                       ),
                     )
@@ -102,14 +104,14 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                       icon: 'assets/window_clock.svg',
                     ),
                     const SizedBox(
-                      width: 4,
+                      height: 4,
                     ),
                     CustomRow(
                       title: "Apply by ${homeController.jobPosts[index].endDate.substring(0, 10)}",
                       icon: 'assets/hourglass.svg',
                     ),
                     const SizedBox(
-                      width: 4,
+                      height: 4,
                     ),
                   ],
                 ),
@@ -118,12 +120,12 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(4.0),
                     gradient:
                         LinearGradient(colors: PlacedColors.gradiantColor),
                   ),
                   width: 255,
-                  height: 45,
+                  height: 36,
                   child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -135,11 +137,8 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
+                            borderRadius: BorderRadius.circular(4.0),
                           ),
-                        ),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.all(12.0),
                         ),
                         backgroundColor: MaterialStateProperty.all<Color>(
                           Colors.transparent,
@@ -150,8 +149,8 @@ class _UpcomingDriveCardState extends State<UpcomingDriveCard> {
                           'View Details',
                           style: GoogleFonts.poppins(
                             color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
                           ),
                         ),
                       )),
@@ -192,7 +191,7 @@ class CustomRow extends StatelessWidget {
         Text(
           title,
           style: GoogleFonts.poppins(
-            color: Color(0xFF6C6C6C),
+            color: PlacedColors.PrimaryGrey2,
             fontSize: 12,
               fontWeight: FontWeight.w500
           ),

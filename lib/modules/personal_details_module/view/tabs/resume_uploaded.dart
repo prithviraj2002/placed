@@ -93,7 +93,11 @@ class Resume_Uploaded extends StatelessWidget {
           onPressed: () {
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => Home()), (route) => false);
           },
-          text: 'Save & Continue',
+          widget: Text('Save & Continue', style: GoogleFonts.lato(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),),
         ),
       ),
     );

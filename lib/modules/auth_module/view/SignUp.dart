@@ -25,6 +25,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   AuthController authController = AuthController();
+  bool isLoading = false;
+
+  void toggleLoading(){
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
 
   @override
   void dispose() {
@@ -143,23 +150,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     GradiantButton(
                       onPressed: () {
                         if(formKey.currentState!.validate() && confirmPasswordController.text == passwordController.text){
-                          showDialog(context: context, builder: (ctx){
-                            return AlertDialog(
-                              title: Text('Signing up'),
-                              content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [CircularProgressIndicator()],),
-                            );
-                          });
+                          toggleLoading();
                           authController.signup(emailController.text, passwordController.text).then((value) {
                             if(value.$createdAt.isNotEmpty){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDetail()));
+                              toggleLoading();
                             }
                             else {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred!')));
+                              toggleLoading();
                             }
                           });
                         }
                       },
-                      text: 'Sign Up',
+                      widget: isLoading ? Center(child: CircularProgressIndicator(color: PlacedColors.PrimaryWhite,),) : Text('Sign Up', style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.0,
+                      ),),
                     ),
                     SizedBox(height: 16.0),
                     Container(

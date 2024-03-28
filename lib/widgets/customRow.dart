@@ -23,7 +23,7 @@ class CustomRow extends StatelessWidget {
         Text(
           companyName,
           style: GoogleFonts.poppins(
-            color: PlacedColors.greyColor,
+            color: PlacedColors.PrimaryGrey2,
             fontSize: 12,
               fontWeight: FontWeight.w500
           ),

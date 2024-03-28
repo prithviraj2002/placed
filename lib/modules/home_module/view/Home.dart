@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
+import 'package:placed_mobile_app/modules/announcement/controller/announcements_controller.dart';
 import 'package:placed_mobile_app/modules/announcement/view/announcement.dart';
+import 'package:placed_mobile_app/modules/chat_ai/view/chat_ai.dart';
 import 'package:placed_mobile_app/modules/home_module/controller/home_controller.dart';
 import 'package:placed_mobile_app/modules/home_module/view/tabs/home_screen.dart';
 import 'package:placed_mobile_app/modules/home_module/view/tabs/profile_screen.dart';
@@ -22,6 +25,7 @@ class _HomeState extends State<Home> {
 
   int _selectedIndex = 0;
   HomeController homeController = Get.find<HomeController>();
+  AnnouncementController announcementController = Get.find<AnnouncementController>();
 
   @override
   void initState() {
@@ -43,6 +47,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: PlacedColors.PrimaryWhite,
+        onPressed:() {
+        Navigator.push(context, MaterialPageRoute(builder: (ctx) => const ChatScreen()));
+      },
+        child: Text('AI', style: GoogleFonts.poppins(color: PlacedColors.PrimaryBlueMain, fontWeight: FontWeight.bold),),
+      ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _selectedIndex,
             unselectedItemColor:  PlacedColors.PrimaryBlack,
@@ -98,7 +109,7 @@ class _HomeState extends State<Home> {
           index: _selectedIndex,
           children: [
             HomeTab(homeController: homeController),
-            Announcement(),
+            Announcement(homeController: homeController,),
             ProfileTab(controller: homeController),
           ],
         )

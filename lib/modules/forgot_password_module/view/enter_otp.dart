@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/reset_password.dart';
 import '../../../widgets/back_arrow.dart';
@@ -77,7 +78,11 @@ class EnterOTP extends StatelessWidget {
                             builder: (context) => ResetPassword(otp: otpController.text, email: email,)));
                   }
                 },
-                text: 'Continue',
+                widget: Text('Continue', style: GoogleFonts.lato(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0,
+                ),),
               ),
             ],
           ),

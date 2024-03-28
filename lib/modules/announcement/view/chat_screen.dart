@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
 import 'package:placed_mobile_app/models/job_model.dart';
@@ -30,9 +31,9 @@ class _ChatScreenState extends State<ChatScreen> {
     // TODO: implement initState
     super.initState();
     controller.getAllMessages();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToEnd();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _scrollToEnd();
+    // });
   }
 
   void _scrollToEnd() {
@@ -59,9 +60,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   Container(
                       height: 32, width: 32,
                       decoration: BoxDecoration(
-                        border: Border.all(color: PlacedColors.greyColor),
+                        border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                        shape: BoxShape.circle
                       ),
-                      child: Image.network(Utils.getDeptDocUrl(widget.jobPost.jobId), height: 32, width: 32, scale: 10, fit: BoxFit.cover,)),
+                      child: ClipOval(child: Image.network(Utils.getDeptDocUrl(widget.jobPost.jobId), height: 32, width: 32, scale: 10, fit: BoxFit.cover,))),
                   const SizedBox(width: 8),
                   Text(
                     widget.jobPost.companyName, // Replace with the profile name
@@ -76,36 +78,35 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Obx(() {
           return controller.relevantMessages[widget.jobPost.jobId] != null
               ? ListView.separated(
-            controller: listScrollController,
-                  padding: const EdgeInsets.all(20.0),
-                  itemBuilder: (ctx, index) {
-                    if (controller
-                        .relevantMessages[widget.jobPost.jobId]![index]
-                        .pdfUrl
-                        .isNotEmpty) {
-                      return CustomMessageWithPDF(
-                        text: controller
-                            .relevantMessages[widget.jobPost.jobId]![index]
-                            .message,
-                        pdfUrl: controller
-                            .relevantMessages[widget.jobPost.jobId]![index]
-                            .pdfUrl,
-                      );
-                    } else {
-                      return CustomMessage(
-                        msgText: controller
-                            .relevantMessages[widget.jobPost.jobId]![index]
-                            .message,
-                      );
-                    }
-                  },
-                  separatorBuilder: (ctx, index) {
-                    return const SizedBox(
-                      height: 2,
-                    );
-                  },
-                  itemCount:
-                      controller.relevantMessages[widget.jobPost.jobId]!.length)
+              shrinkWrap: true,
+              controller: listScrollController,
+              padding: const EdgeInsets.all(20.0),
+              itemBuilder: (ctx, index) {
+                if (controller.relevantMessages[widget.jobPost.jobId]![index]
+                    .pdfUrl
+                    .isNotEmpty) {
+                  return CustomMessageWithPDF(
+                    text: controller.relevantMessages[widget.jobPost.jobId]![index]
+                        .message,
+                    pdfUrl: controller.relevantMessages[widget.jobPost.jobId]![index]
+                        .pdfUrl,
+                    time: controller.relevantMessages[widget.jobPost.jobId]![index].time,
+                  );
+                } else {
+                  return CustomMessage(
+                      msgText: controller.relevantMessages[widget.jobPost.jobId]![index]
+                          .message,
+                      time: controller.relevantMessages[widget.jobPost.jobId]![index].time
+                  );
+                }
+              },
+              separatorBuilder: (ctx, index) {
+                return const SizedBox(
+                  height: 2,
+                );
+              },
+              itemCount:
+              controller.relevantMessages[widget.jobPost.jobId]!.length)
               : const Center(
                   child: CircularProgressIndicator(),
                 );

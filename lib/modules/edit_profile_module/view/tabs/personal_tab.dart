@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/constants/placed_dimensions.dart';
@@ -114,24 +115,38 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
             children: <Widget>[
               Stack(
                 children: [
-                  Container(
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/default_profile_image.png'),
-                        // replace with your image
-                        fit: BoxFit.cover,
+                  InkWell(
+                    onTap: () async{
+                      await Utils.chooseImage('gallery').then((value) {
+                        widget.controller.setImagePath(value);
+                      });
+                    },
+                    child: Container(
+                      width: 100.0,
+                      height: 100.0,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/default_profile_image.png'),
+                          // replace with your image
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    child: Obx((){
-                        return widget.controller.imagePath.isEmpty
-                            ? Image.memory(
-                          homeController.profileImage.value, fit: BoxFit.cover,)
-                            : widget.controller.imagePath.isNotEmpty ? Image.file(File(widget.controller.imagePath.value),
-                            fit: BoxFit.cover) : Center(child: CircularProgressIndicator(),);
-                      }
+                      child: Obx((){
+                          return widget.controller.imagePath.isEmpty
+                              ? Container(
+                                width: 100.0,
+                                height: 100.0,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.memory(
+                                  homeController.profileImage.value, height: 100, width: 100, fit: BoxFit.cover,),
+                              )
+                              : widget.controller.imagePath.isNotEmpty ? Image.file(File(widget.controller.imagePath.value),
+                              fit: BoxFit.cover) : Center(child: CircularProgressIndicator(),);
+                        }
+                      ),
                     ),
                   ),
                   Positioned(
@@ -146,11 +161,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                       ),
                       child: IconButton(
                         icon: Image.asset('assets/edit_image_photo.png'),
-                        onPressed: () async {
-                          await Utils.chooseImage('gallery').then((value) {
-                            widget.controller.setImagePath(value);
-                          });
-                        },
+                        onPressed: () async {},
                       ),
                     ),
                   ),
@@ -166,11 +177,13 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                       ? 'Invalid name'
                       : null,
                   controller: nameController,
+                  bgColor: PlacedColors.PrimaryWhite,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Email',
                   textInputType: TextInputType.emailAddress,
+                  bgColor: PlacedColors.PrimaryWhite,
                   validator: (val) {
                     if (!val!.contains('@') || !val.contains('indus')) {
                       return 'Enter a valid Indus Id';
@@ -188,6 +201,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                     child: Container(
                       decoration: BoxDecoration(
                           color: PlacedColors.PrimaryWhite,
+                          border: Border.all(color: PlacedColors.PrimaryBlueLight1),
                           borderRadius: BorderRadius.circular(10)),
                       child: const CountryCodePicker(
                         boxDecoration: BoxDecoration(color: Colors.white),
@@ -202,6 +216,7 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                     child: CustomTextFieldForm(
                         hintText: 'Phone number',
                         textInputType: TextInputType.number,
+                        bgColor: PlacedColors.PrimaryWhite,
                         validator: (val) =>
                         val!.isEmpty
                             ? 'Empty number'
@@ -215,28 +230,34 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
                   validator: (val) =>
-                  val!.length == 0
+                  val!.isEmpty
                       ? 'Empty IU'
-                      : val.length <= 12
+                      : val.length != 12
                       ? 'Invalid IU'
                       : null,
                   controller: IUController,
                   obscureText: false),
               const SizedBox(height: 16.0),
-              CustomDropDown(
-                dropDownOption: PlacedStrings.GenderOption().map((
-                    String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                text: 'Gender',
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                child: CustomDropDown(
+                  dropDownOption: PlacedStrings.GenderOption().map((
+                      String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  text: widget.profile.gender,
+                ),
               ),
-              const SizedBox(height: PlacedDimens.textfield_space_height),
+              const SizedBox(height: 16),
               //ToDo: Implement generic Date picker
               GestureDetector(
                 onTap: () {
@@ -246,6 +267,9 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                         return Dialog(
                           surfaceTintColor: Colors.white,
                           child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                            ),
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -283,20 +307,22 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                       });
                 },
                 child: Container(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1),
                     color: PlacedColors.PrimaryWhite,
                   ),
                   width: double.infinity,
-                  height: 48,
+                  height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         selectedDate,
-                        style: TextStyle(
-                          color: PlacedColors.PrimaryGrey3,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: PlacedColors.PrimaryBlack,
                         ),
                       ),
                       Icon(
@@ -312,9 +338,10 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               //ToDo: Increase the size of the address text field according to the design.
               CustomTextFieldForm(
                   hintText: 'Residential address',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.text,
                   validator: (val) =>
-                  val!.length == 0
+                  val!.isEmpty
                       ? 'Empty address'
                       : val.length < 2
                       ? 'Invalid address'
@@ -324,37 +351,31 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Github Link',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.text,
-                  validator: (val) =>
-                  val!.length == 0
-                      ? 'Empty Link'
-                      : val.length < 2
-                      ? 'Invalid Link'
-                      : null,
+                  validator: (val) {
+                    return null;
+                  },
                   controller: GithubLinkController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'LinkedIn Profile Link',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.text,
-                  validator: (val) =>
-                  val!.length == 0
-                      ? 'Empty Link'
-                      : val.length < 2
-                      ? 'Invalid Link'
-                      : null,
+                  validator: (val) {
+                    return null;
+                  },
                   controller: LinkedinLinkController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Other Website Link (optional)',
                   textInputType: TextInputType.text,
-                  validator: (val) =>
-                  val!.length == 0
-                      ? 'Empty Link'
-                      : val.length < 2
-                      ? 'Invalid Link'
-                      : null,
+                  bgColor: PlacedColors.PrimaryWhite,
+                  validator: (val) {
+                    return null;
+                  },
                   controller: OtherWebsiteLinkController,
                   obscureText: false),
               const SizedBox(
@@ -389,7 +410,6 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
                     LinkedinLinkController.text;
                 widget.controller.otherLink.value =
                     OtherWebsiteLinkController.text;
-                widget.controller.gender.value = genderController.text;
                 widget.tabController
                     .animateTo((widget.tabController.index + 1));
                 widget.controller.dateOfBirth.value =
@@ -399,7 +419,11 @@ class _EditPersonalTabState extends State<EditPersonalTab> {
               }
             }
           },
-          text: 'Continue',
+          widget: Text('Continue', style: GoogleFonts.lato(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),),
         ),
       ),
     );

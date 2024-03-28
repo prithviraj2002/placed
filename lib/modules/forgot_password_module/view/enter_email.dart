@@ -1,5 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
+import 'package:placed_mobile_app/modules/auth_module/view/SignIn.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/enter_otp.dart';
 import '../../../widgets/back_arrow.dart';
 import '../../../widgets/custom_text_field.dart';
@@ -26,15 +30,19 @@ class EnterEmail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Forgot Password',
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 36.0),
+              const SizedBox(height: 4,),
+              Text('Enter your university email and we will share a reset link to it.', style: GoogleFonts.poppins(
+                fontSize: 12, color: PlacedColors.PrimaryGrey3
+              ),),
+              const SizedBox(height: 32.0),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white70,
@@ -44,13 +52,10 @@ class EnterEmail extends StatelessWidget {
                   hintText: 'Enter University Email',
                   textInputType: TextInputType.emailAddress,
                   validator: (String? val){
-                    // if(val == null){
-                    //   return 'Empty email is invalid!';
-                    // }
-                    // else if(!val.contains('@') || !val.contains('indus')){
-                    //   return 'Not a valid indus email id!';
-                    // }
-                    // return '';
+                    if(val == null){
+                      return 'Email is empty.';
+                    }
+                    return null;
                   },
                   controller: emailController,
                   obscureText: false,
@@ -63,14 +68,43 @@ class EnterEmail extends StatelessWidget {
                 onPressed: () {
                   if(formKey.currentState!.validate()){
                     authController.createRecovery(emailController.text).then((value) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EnterOTP(email: emailController.text,)));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => EnterOTP(email: emailController.text,)));
+                      showDialog(context: context, builder: (ctx){
+                        return CupertinoAlertDialog(
+                          title: Text('Link sent!', style: GoogleFonts.poppins(fontSize: 16),),
+                          content: Text('We have sent a password reset link to your registered email.' ,style: GoogleFonts.poppins(fontSize: 12, ),),
+                          actions: [
+                            TextButton(onPressed: () {
+                              showDialog(context: context, builder: (ctx){
+                                Future.delayed(Duration(seconds: 2), () {
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => SignInScreen()), (route) => false);
+                                });
+                                return CupertinoAlertDialog(
+                                  title: Text('Going back to Sign in screen'),
+                                  content: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      CircularProgressIndicator()
+                                    ],
+                                  ),
+                                );
+                              });
+                            }, child: Text('Okay', style: GoogleFonts.poppins(fontSize: 16, color: PlacedColors.PrimaryBlueMain),))
+                          ],
+                        );
+                      });
                     });
                   }
                 },
-                text: 'Get OTP',
+                widget: Text('Send Link', style: GoogleFonts.lato(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0,
+                ),),
               ),
             ],
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/constants/placed_dimensions.dart';
 import 'package:placed_mobile_app/constants/placed_strings.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
@@ -113,6 +115,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
           child: Column(
             children: [
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Current semester*',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -128,6 +131,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'CGPA (till last semester)',
                   textInputType: TextInputType.number,
                   validator: (val) {
@@ -139,31 +143,43 @@ class _EditEducationTabState extends State<EditEducationTab> {
                   controller: cgpaController,
                   obscureText: false),
               const SizedBox(height: PlacedDimens.textfield_space_height),
-              CustomDropDown(
-                dropDownOption: PlacedStrings.degreeOption().map((
-                    String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                text: widget.profile.degree,
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                child: CustomDropDown(
+                  enabled: false,
+                  dropDownOption: PlacedStrings.degreeOption().map((
+                      String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  text: widget.profile.degree,
+                ),
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
-              CustomDropDown(
-                dropDownOption: PlacedStrings.branchOption().map((
-                    String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                text: widget.profile.course,
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                child: CustomDropDown(
+                  dropDownOption: PlacedStrings.branchOption().map((
+                      String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  text: widget.profile.course,
+                ),
               ),
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Year',
                   textInputType: TextInputType.number,
+                  bgColor: PlacedColors.PrimaryWhite,
                   validator: (val) {
                     if (val == null) {
                       return 'Empty Year';
@@ -179,6 +195,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               //ToDo: Implement year picker
               CustomTextFieldForm(
                   hintText: 'Year of Graduation',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -194,6 +211,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Active Backlogs',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -209,6 +227,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Total Backlogs',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -221,6 +240,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Percentage in 12th',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -233,6 +253,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height,),
               CustomTextFieldForm(
                   hintText: 'Board in 12th',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.text,
                   validator: (val) {
                     if (val == null) {
@@ -248,6 +269,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: '12th Year of Passing',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -263,6 +285,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Percentage in 10th',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -275,6 +298,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height,),
               CustomTextFieldForm(
                   hintText: 'Board in 10th',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.text,
                   validator: (val) {
                     if (val == null) {
@@ -290,6 +314,7 @@ class _EditEducationTabState extends State<EditEducationTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: '10th Year of Passing',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.number,
                   validator: (val) {
                     if (val == null) {
@@ -323,8 +348,6 @@ class _EditEducationTabState extends State<EditEducationTab> {
                 widget.controller.sem.value = int.parse(semController.text);
                 widget.controller.cgpa.value =
                     double.parse(cgpaController.text);
-                widget.controller.degree.value = degreeController.text;
-                widget.controller.course.value = branchController.text;
                 widget.controller.engYearOfPassing.value =
                     yearOfGraduationController.text;
                 widget.controller.year.value = int.parse(yearController.text);
@@ -348,7 +371,11 @@ class _EditEducationTabState extends State<EditEducationTab> {
               }
             }
           },
-          text: 'Continue',
+          widget: Text('Continue', style: GoogleFonts.lato(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),),
         ),
       ),
     );

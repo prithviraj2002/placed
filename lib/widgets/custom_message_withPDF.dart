@@ -7,8 +7,8 @@ import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomMessageWithPDF extends StatelessWidget {
-  String text; String pdfUrl;
-  CustomMessageWithPDF({required this.text, required this.pdfUrl, super.key});
+  String text; String pdfUrl; String time;
+  CustomMessageWithPDF({required this.text, required this.pdfUrl, required this.time, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +79,14 @@ class CustomMessageWithPDF extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text('${DateTime.parse(time).hour.toString().padLeft(2, '0')}:${DateTime.parse(time).minute.toString().padLeft(2, '0')}', style: GoogleFonts.poppins(
+                      fontSize: 12, fontWeight: FontWeight.w600, color: PlacedColors.PrimaryGrey3
+                  ),)
+                ],
               ),
             ],
           ),

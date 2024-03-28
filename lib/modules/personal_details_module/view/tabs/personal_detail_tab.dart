@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:placed_mobile_app/constants/placed_colors.dart';
 import 'package:placed_mobile_app/constants/placed_strings.dart';
@@ -87,21 +88,28 @@ class _PersonalTabState extends State<PersonalTab> {
             children: [
               Stack(
                 children: [
-                  Container(
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/default_profile_image.png'),
-                        // replace with your image
-                        fit: BoxFit.cover,
+                  InkWell(
+                    onTap: () async{
+                      await Utils.chooseImage('gallery').then((value) {
+                        widget.controller.setImagePath(value);
+                      });
+                    },
+                    child: Container(
+                      width: 100.0,
+                      height: 100.0,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/default_profile_image.png'),
+                          // replace with your image
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                      child: Obx(() => widget.controller.imagePath.isEmpty
+                          ? Container()
+                          : Image.file(File(widget.controller.imagePath.value),
+                              fit: BoxFit.cover)),
                     ),
-                    child: Obx(() => widget.controller.imagePath.isEmpty
-                        ? Container()
-                        : Image.file(File(widget.controller.imagePath.value),
-                            fit: BoxFit.cover)),
                   ),
                   Positioned(
                     bottom: 2.0,
@@ -115,11 +123,7 @@ class _PersonalTabState extends State<PersonalTab> {
                       ),
                       child: IconButton(
                         icon: Image.asset('assets/edit_image_photo.png'),
-                        onPressed: () async {
-                          await Utils.chooseImage('gallery').then((value) {
-                            widget.controller.setImagePath(value);
-                          });
-                        },
+                        onPressed: () async {},
                       ),
                     ),
                   ),
@@ -128,9 +132,10 @@ class _PersonalTabState extends State<PersonalTab> {
               const SizedBox(height: 16.0),
               // Text Fields
               CustomTextFieldForm(
+                  bgColor: PlacedColors.PrimaryWhite,
                   hintText: 'Full name',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  validator: (val) => val!.isEmpty
                       ? 'Empty name'
                       : val.length < 2
                           ? 'Invalid name'
@@ -141,6 +146,7 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'Email',
                   textInputType: TextInputType.emailAddress,
+                  bgColor: PlacedColors.PrimaryWhite,
                   validator: (val) {
                     if (val!.isEmpty) {
                       return 'Empty Email';
@@ -160,6 +166,7 @@ class _PersonalTabState extends State<PersonalTab> {
                     child: Container(
                       decoration: BoxDecoration(
                           color: PlacedColors.PrimaryWhite,
+                          border: Border.all(color: PlacedColors.PrimaryBlueLight1),
                           borderRadius: BorderRadius.circular(10)),
                       child: const CountryCodePicker(
                         boxDecoration: BoxDecoration(color: Colors.white),
@@ -174,6 +181,7 @@ class _PersonalTabState extends State<PersonalTab> {
                     child: CustomTextFieldForm(
                         hintText: 'Phone number',
                         textInputType: TextInputType.number,
+                        bgColor: PlacedColors.PrimaryWhite,
                         validator: (val) => val!.isEmpty
                             ? 'Empty number'
                             : val.length < 10
@@ -188,25 +196,31 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'Enrollment number',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
+                  bgColor: PlacedColors.PrimaryWhite,
+                  validator: (val) => val!.isEmpty
                       ? 'Empty IU'
-                      : val.length <= 12
+                      : val.length != 12
                           ? 'Invalid IU'
                           : null,
                   controller: IUController,
                   obscureText: false),
               const SizedBox(height: 16.0),
-              CustomDropDown(
-                dropDownOption: PlacedStrings.GenderOption().map((
-                    String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                text: 'Gender',
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1)
+                ),
+                child: CustomDropDown(
+                  dropDownOption: PlacedStrings.GenderOption().map((
+                      String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  text: widget.controller.gender.isEmpty ? 'Gender' : widget.controller.gender.value,
+                ),
               ),
-              const SizedBox(height: PlacedDimens.textfield_space_height),
+              const SizedBox(height: 16),
               //ToDo: Implement generic Date picker
               GestureDetector(
                 onTap: () {
@@ -246,20 +260,22 @@ class _PersonalTabState extends State<PersonalTab> {
                       });
                 },
                 child: Container(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: PlacedColors.PrimaryWhite,
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: PlacedColors.PrimaryBlueLight1),
+                    color: PlacedColors.PrimaryWhite,
                   ),
                   width: double.infinity,
-                  height: 48,
+                  height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         selectedDate,
-                        style: TextStyle(
-                          color: PlacedColors.PrimaryGrey3,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: selectedDate != 'Date of Birth' ? PlacedColors.PrimaryBlack : PlacedColors.PrimaryGrey3,
                         ),
                       ),
                       Icon(
@@ -276,6 +292,7 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'Residential address',
                   textInputType: TextInputType.text,
+                  bgColor: PlacedColors.PrimaryWhite,
                   validator: (val) => val!.length == 0
                       ? 'Empty Address'
                       : val.length < 2
@@ -286,6 +303,7 @@ class _PersonalTabState extends State<PersonalTab> {
               const SizedBox(height: PlacedDimens.textfield_space_height),
               CustomTextFieldForm(
                   hintText: 'Github link',
+                  bgColor: PlacedColors.PrimaryWhite,
                   textInputType: TextInputType.text,
                   validator: (val) => val!.length == 0
                       ? 'Empty Link'
@@ -298,6 +316,7 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'LinkedIn Profile link',
                   textInputType: TextInputType.text,
+                  bgColor: PlacedColors.PrimaryWhite,
                   validator: (val) => val!.length == 0
                       ? 'Empty Link'
                       : val.length < 2
@@ -309,11 +328,10 @@ class _PersonalTabState extends State<PersonalTab> {
               CustomTextFieldForm(
                   hintText: 'Other Website link (optional)',
                   textInputType: TextInputType.text,
-                  validator: (val) => val!.length == 0
-                      ? 'Empty Link'
-                      : val.length < 2
-                          ? 'Invalid Link'
-                          : null,
+                  bgColor: PlacedColors.PrimaryWhite,
+                  validator: (val) {
+                    return null;
+                  },
                   controller: OtherWebsiteLinkController,
                   obscureText: false),
               const SizedBox(
@@ -345,14 +363,17 @@ class _PersonalTabState extends State<PersonalTab> {
                     LinkedinLinkController.text;
                 widget.controller.otherLink.value =
                     OtherWebsiteLinkController.text;
-                widget.controller.gender.value = genderController.text;
                 widget.tabController
                     .animateTo((widget.tabController.index + 1));
                 widget.controller.dateOfBirth.value = selectedDate == 'Date of Birth' ? DateTime.now().toString() : selectedDate;
               }
             }
           },
-          text: 'Save & Continue',
+          widget: Text('Save & Continue', style: GoogleFonts.lato(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:placed_mobile_app/modules/auth_module/controller/auth_controller.dart';
 import 'package:placed_mobile_app/modules/forgot_password_module/view/password_changed.dart';
 import '../../../widgets/back_arrow.dart';
@@ -99,7 +100,11 @@ class ResetPassword extends StatelessWidget {
                     });
                   }
                 },
-                text: 'Reset Password',
+                widget: Text('Reset Password', style: GoogleFonts.lato(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0,
+                ),),
               ),
             ],
           ),

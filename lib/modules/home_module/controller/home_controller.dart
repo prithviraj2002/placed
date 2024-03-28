@@ -11,7 +11,10 @@ import 'package:placed_mobile_app/appwrite/appwrite_db/appwrite_db.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_storage/appwrite_storage.dart';
 import 'package:placed_mobile_app/appwrite/appwrite_strings.dart';
 import 'package:placed_mobile_app/models/broadcast_message_model/broadcast_message.dart';
+import 'package:placed_mobile_app/models/filter_model/filter_model.dart';
 import 'package:placed_mobile_app/models/profile_model/profile_model.dart';
+import 'package:placed_mobile_app/modules/announcement/controller/announcements_controller.dart';
+import 'package:placed_mobile_app/modules/announcement/view/announcement.dart';
 
 import '../../../models/job_model.dart';
 
@@ -53,6 +56,7 @@ class HomeController extends GetxController {
     initializeUser();
     getAllJobs();
     listenToJobs();
+    listenToProfile();
   }
 
   Future<void> initializeUser() async {
@@ -96,6 +100,19 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> delProfile()async{
+    final box = GetStorage();
+    userId = await box.read('userId');
+   try{
+     final response = await AppWriteDb.delProfile(profile.value, userId);
+     await AppWriteStorage.delImage(userId);
+     await AppWriteStorage.delResume(userId);
+   } on AppwriteException catch(e){
+     print('An error occurred while deleting user from db!: $e');
+     rethrow;
+   }
+  }
+
   Future<Profile> getProfileFromUserId(String id) async {
     try {
       final Profile profile = await AppWriteDb.getProfileById(id);
@@ -110,6 +127,7 @@ class HomeController extends GetxController {
   Future<void> getAllJobs() async {
     try {
       final response = await AppWriteDb.getJobPosts();
+      jobPosts.value = [];
       for (Document job in response.documents) {
         jobPosts.add(JobPost.fromJson(job.data, job.$id));
       }
@@ -117,6 +135,32 @@ class HomeController extends GetxController {
       print('An error occurred while getting all jobs!: $e');
       rethrow;
     }
+  }
+
+  void listenToProfile() {
+    final realtime = Realtime(AppWriteDb.client);
+    final box = GetStorage();
+    final Id = box.read('userId');
+    print('listen to profiles');
+    subscription = realtime
+        .subscribe([
+      "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.profileCollectionsId}.documents"
+    ])
+        .stream
+        .listen((event) {
+      if (event.events.contains(
+          "databases.${AppWriteStrings.dbID}.collections.${AppWriteStrings.profileCollectionsId}.documents.[$Id]")) {
+        // profiles.add(Profile.fromJson(event.payload, event.payload["\$id"]));
+        Profile eventProfile = Profile.fromJson(event.payload, event.payload["\$id"]);
+        profile.value = eventProfile;
+        appliedJobs.value = [];
+        appliedJobs.value = eventProfile.appliedJobs!;
+        // profileImagePreview.value = await getProfileImagePreview();
+        // profileResumePreview.value = await getProfileResumePreview();
+        // profileResume.value = await AppWriteStorage.getResumeById(userId);
+        // profileImage.value = await AppWriteStorage.getImageView(userId);
+      }
+    });
   }
 
   void listenToJobs() {
@@ -162,6 +206,19 @@ class HomeController extends GetxController {
     } on AppwriteException catch (e) {
       print('An exception occurred while applying to a job!: $e');
       rethrow;
+    }
+  }
+
+  Future<bool> checkEligibility(String jobId) async{
+    Filter filter = await AppWriteDb.getFilterById(jobId);
+    if(filter.currentSemester == null){
+      return true;
+    }
+    else if(filter.currentSemester != null && filter.currentSemester! >= profile.value.sem){
+      return true;
+    }
+    else{
+      return true;
     }
   }
 
