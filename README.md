@@ -5,8 +5,5 @@ Features
 1. Authentication: Signup / Login, forgot password powered by app write
 2. Profile Creation: CRUD operations in appwrite database, file upload.
 3. Real-time: Receive job drive information, updates and announcements in real time.
-4. 
-5. Uploading placed mobile app working.mp4…
-
-6. https://github.com/user-attachments/assets/e1477d4b-08f1-47c8-a561-bdd741f2a3d9
+4. https://github.com/user-attachments/assets/e1477d4b-08f1-47c8-a561-bdd741f2a3d9
 
